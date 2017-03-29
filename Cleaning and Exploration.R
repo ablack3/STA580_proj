@@ -42,6 +42,7 @@ chisq.test(working.data$hlthpln1, working.data$checkup1)
 #| data:  working.data$hlthpln1 and working.data$checkup1
 #| X-squared = 23186, df = 4, p-value < 2.2e-16
 
+# below we replace the variables with more representative values
 
 working.data$hlthpln1[working.data$hlthpln1==1] <- "1: Yes"
 working.data$hlthpln1[working.data$hlthpln1=="2"] <- "2: No"
@@ -52,12 +53,118 @@ working.data$checkup1[working.data$checkup1=="3"] <- "3: < 5 Years"
 working.data$checkup1[working.data$checkup1=="4"] <- "4: > 5 Years"
 working.data$checkup1[working.data$checkup1=="8"] <- "8: Never"
 
+# recreate unweighted nationwide table
+table(working.data$hlthpln1, working.data$checkup1)
+#|         1: < 1 Year   2: < 2 Years   3: < 5 Years   4: > 5 Years   8: Never
+#|  1: Yes      310594          45150          23695          20172       2761
+#|  2: No        13800           5148           4702           6610       1051
+
+# Import gmodel library and make a nicer looking table for unweighted nationwide data
+library(gmodels)
 HvC <- CrossTable(working.data$hlthpln1, working.data$checkup1, dnn = c("Health Plan", "Last Checkup"),
                   prop.chisq = FALSE, prop.c = FALSE, prop.t = FALSE)
 
-state_strat_HvC <- table(working.data$hlthpln1, working.data$checkup1, working.data$x.state)
 
+#|        Cell Contents
+#|    |-------------------------|
+#|    |                       N |
+#|    |           N / Row Total |
+#|    |-------------------------|
+#|    
+#|    
+#|    Total Observations in Table:  433683 
+#|  
+#|  
+#|                 | Last Checkup 
+#|     Health Plan |  1: < 1 Year | 2: < 2 Years | 3: < 5 Years | 4: > 5 Years |     8: Never |    Row Total | 
+#|    -------------|--------------|--------------|--------------|--------------|--------------|--------------|
+#|          1: Yes |       310594 |        45150 |        23695 |        20172 |         2761 |       402372 | 
+#|                 |        0.772 |        0.112 |        0.059 |        0.050 |        0.007 |        0.928 | 
+#|    -------------|--------------|--------------|--------------|--------------|--------------|--------------|
+#|           2: No |        13800 |         5148 |         4702 |         6610 |         1051 |        31311 | 
+#|                 |        0.441 |        0.164 |        0.150 |        0.211 |        0.034 |        0.072 | 
+#|    -------------|--------------|--------------|--------------|--------------|--------------|--------------|
+#|    Column Total |       324394 |        50298 |        28397 |        26782 |         3812 |       433683 | 
+#|    -------------|--------------|--------------|--------------|--------------|--------------|--------------|
+#|
+
+# create a state stratified table/array of unweighted data
+state_strat_HvC <- table(working.data$hlthpln1, working.data$checkup1, working.data$x.state)
+# performs a Cochran-Mantel-Haenszel test of within strata independence
 mantelhaen.test(state_strat_HvC, conf.level = 0.95)
+#|  
+#|      Cochran-Mantel-Haenszel test
+#|  
+#|  data:  state_strat_HvC
+#|  Cochran-Mantel-Haenszel M^2 = 21976, df = 4, p-value < 2.2e-16
+#|  
+
+# since we are going to need to use the weighting variables we should check whether there are any missing
+# values and if so how many
+dim(working.data[is.na(working.data$x.llcpwt),])
+#|[1]  1 28
+
+working.data[is.na(working.data$x.llcpwt),]
+#|  hlthpln1 persdoc2 medcost checkup1 x.asthms1 aservist diabete3 diabage2 pdiabtst prediab1 insulin
+#|  <NA>     NA       NA      <NA>     NA        NA       NA       NA       NA       NA       NA
+#|  bldsugar feetchk2 feetchk doctdiab chkhemo3 eyeexam diabedu diabeye x.incomg x.educag x.chldcnt
+#|  NA       NA       NA      NA       NA       NA      NA      NA      NA       NA       NA      
+#|  x.age.g x.age80 x.age65yr x.ageg5yr x.llcpwt x.state
+#|  NA      NA      NA        NA        NA       NA      
+
+# There is only one data point with a missing value for the weighting variable and this data point
+# happens to also have missing values for all the other variables. We can safely eliminate one data
+# point without biasing our data.
+
+# remove the missing value from dataset
+working.data <- working.data[!is.na(working.data$x.llcpwt),]
+
+# create a nationwide table of weighted data
+Weighted_Nation = matrix(data = c(
+                                sum(working.data[working.data$hlthpln1=="1: Yes"&working.data$checkup1=="1: < 1 Year",27]),
+                                sum(working.data[working.data$hlthpln1=="1: Yes"&working.data$checkup1=="2: < 2 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="1: Yes"&working.data$checkup1=="3: < 5 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="1: Yes"&working.data$checkup1=="4: > 5 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="1: Yes"&working.data$checkup1=="8: Never",27]),
+                                sum(working.data[working.data$hlthpln1=="1: Yes",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No"&working.data$checkup1=="1: < 1 Year",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No"&working.data$checkup1=="2: < 2 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No"&working.data$checkup1=="3: < 5 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No"&working.data$checkup1=="4: > 5 Years",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No"&working.data$checkup1=="8: Never",27]),
+                                sum(working.data[working.data$hlthpln1=="2: No",27]),
+                                sum(working.data[working.data$checkup1=="1: < 1 Year",27]),
+                                sum(working.data[working.data$checkup1=="2: < 2 Years",27]),
+                                sum(working.data[working.data$checkup1=="3: < 5 Years",27]),
+                                sum(working.data[working.data$checkup1=="4: > 5 Years",27]),
+                                sum(working.data[working.data$checkup1=="8: Never",27]),
+                                sum(working.data[,27])
+                                ),
+                         byrow = TRUE,
+                         nrow = 3, ncol = 6,
+                         dimnames = list(
+                                    c("Insured", "Uninsured", "Total"), 
+                                    c("1: < 1 Year", "2: < 2 Years", "3: < 5 Years", "4: > 5 Years", "8: Never", "Total")))
+
+Weighted_Nation
+#|            1: < 1 Year 2: < 2 Years 3: < 5 Years 4: > 5 Years 8: Never     Total
+#|  Insured     160339386     27353809     15358862     12118123  1638083 216808262
+#|  Uninsured    12546600      5364603      4640374      6014475  1203376  29769427
+#|  Total       172885986     32718411     19999235     18132597  2841459 246577690
+#|
+
+# While having the margin totals is nice to look at we need to remove them to perform the chi-square test
+Weighted_NationNOMARGINS <- Weighted_Nation[1:2,1:5]
+
+chisq.test(Weighted_NationNOMARGINS)
+#|  
+#|          Pearson's Chi-squared test
+#|  
+#|  data:  Weighted_NationNOMARGINS
+#|  X-squared = 16743000, df = 4, p-value < 2.2e-16
+
+# This low p-value indicates that there is some sort of general associatation between insurance status
+# and frequency of visits to a primary care physician
 
 
 #######################################################################################################
