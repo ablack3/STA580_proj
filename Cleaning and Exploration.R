@@ -153,6 +153,20 @@ Weighted_Nation
 #|  Total       172885986     32718411     19999235     18132597  2841459 246577690
 #|
 
+#######################################
+# mabye try this? Not sure if it will work
+library(dplyr)
+# test data
+# working.data=data.frame(hlthpln1=sort(rep(c("Y","N"),10)),  checkup1 = rep(1:5,4), x.llcpwt=1:20)
+
+# group, summarize, and transpose data to create summary table
+summary_table <- working.data %>% group_by(hlthpln1, checkup1) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tidyr::spread(key = checkup1, value = wt_sum) %>% ungroup()
+
+# then convert to numeric matrix and run test
+summary_table %>% select(-hlthpln1) %>% as.matrix() %>% chisq.test()
+#######################################
+
 # While having the margin totals is nice to look at we need to remove them to perform the chi-square test
 Weighted_NationNOMARGINS <- Weighted_Nation[1:2,1:5]
 

@@ -1,7 +1,37 @@
 # create dataset for analysis
+#
+# variables of interest
+# "hlthpln1"
+# "persdoc2" 
+# "medcost", 
+# "checkup1", 
+# "x.asthms1", 
+# "aservist", 
+# "diabete3", 
+# "diabage2",
+#  "pdiabtst", 
+# "prediab1", 
+# "insulin", 
+# "bldsugar",
+#  "feetchk2", 
+# "feetchk", 
+# "doctdiab", 
+# "chkhemo3",
+#  "eyeexam", 
+# "diabedu", 
+# "diabeye", 
+# "x.incomg",
+#  "x.educag", 
+# "x.chldcnt", 
+# "x.age.g", 
+# "x.age80", 
+#  "x.age65yr", 
+# "x.ageg5yr", 
+# "x.llcpwt", 
+# "x.state"
 
 # install.packages("RSocrata")
-# full <- read.csv("/Users/adamblack/Downloads/Behavioral_Risk_Factor_Surveillance_System__BRFSS__Prevalence_Data__2011_to_present_.csv", stringsAsFactors = F)
+full <- read.csv("/Users/adamblack/Downloads/Behavioral_Risk_Factor_Surveillance_System__BRFSS__Prevalence_Data__2011_to_present_.csv", stringsAsFactors = F)
 
 library("RSocrata")
 library(dplyr)

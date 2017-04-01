@@ -21,8 +21,25 @@ The passage of the ACA in 2010 and the following expansion of Medicaid in many s
       
 ## Data sources
 * BRFSS (years)
-* Dartmouth Atlas (years)
 
 
 
-      
+ins~ doc
+ins~selfcare (diabetes)
+
+checkup
+have doctor
+self care
+preventative care & screenings
+
+ins~screenings
+
+tests:
+
+
+stratify by age education employment income.
+
+
+
+
+
