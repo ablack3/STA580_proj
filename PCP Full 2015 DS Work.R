@@ -165,12 +165,14 @@ summary_table <- working.data %>% group_by(hlthpln1, checkup1) %>% summarize(wt_
 
 # then convert to numeric matrix and run test
 summary_table %>% select(-hlthpln1) %>% as.matrix() %>% chisq.test()
+
+### RESPONSE: Haha sweet, I've never used the %>% operator or the dplyr package. It's a bit confusing
+###           at first but it does make it a lot shorter. Thanks!
 #######################################
 
-# While having the margin totals is nice to look at we need to remove them to perform the chi-square test
-Weighted_NationNOMARGINS <- Weighted_Nation[1:2,1:5]
+# chi-square test of general association
 
-chisq.test(Weighted_NationNOMARGINS)
+chisq.test(Weighted_Nation[1:2,1:5])
 #|  
 #|          Pearson's Chi-squared test
 #|  
@@ -179,6 +181,64 @@ chisq.test(Weighted_NationNOMARGINS)
 
 # This low p-value indicates that there is some sort of general associatation between insurance status
 # and frequency of visits to a primary care physician
+
+######################################################################################################
+
+# Rank Correlation
+
+# First calculate the number of concordant pairs, discordant pairs, and tied pairs
+
+C.pairs <- 0
+D.pairs <- 0
+T.pairs <- 0
+for(i in 1:4){
+  for(j in (i + 1):5){
+    C.pairs <- C.pairs + Weighted_Nation[1,i]*Weighted_Nation[2,j]
+    D.pairs <- D.pairs + Weighted_Nation[2,i]*Weighted_Nation[1,j]
+    T.pairs <- T.pairs + Weighted_Nation[1,i]*Weighted_Nation[1,j]
+    T.pairs <- T.pairs + Weighted_Nation[2,i]*Weighted_Nation[2,j]
+  }
+}
+
+K.Tied.Ins <- 0
+K.Tied.Uns <- 0
+K.vi <- 0
+K.vu <- 0
+K.v1.a <- 0
+K.v1.b <- 0
+K.v2.a <- 0
+K.v2.b <- 0
+for(i in 1:5){
+  T.pairs <- T.pairs + Weighted_Nation[1,i]*Weighted_Nation[2,i]
+  T.pairs <- T.pairs + Weighted_Nation[1,i]*(Weighted_Nation[1,i]-1)/2
+  Tied.Ins <- Tied.Ins + Weighted_Nation[1,i]*(Weighted_Nation[1,i]-1)/2
+  K.vi <- K.vi + Weighted_Nation[1,i]*(Weighted_Nation[1,i]-1)*(2*Weighted_Nation[1,i]+5)
+  K.v1.a <- K.v1.a + Weighted_Nation[1,i]*(Weighted_Nation[1,i]-1)
+  K.v2.a <- K.v2.a + Weighted_Nation[1,i]*(Weighted_Nation[1,i]-1)*(Weighted_Nation[1,i]-1)
+  T.pairs <- T.pairs + Weighted_Nation[2,i]*(Weighted_Nation[2,i]-1)/2
+  Tied.Uns <- Tied.Uns + Weighted_Nation[2,i]*(Weighted_Nation[2,i]-1)/2
+  K.vu <- K.vu + Weighted_Nation[2,i]*(Weighted_Nation[2,i]-1)*(2*Weighted_Nation[2,i]+5)
+  K.v1.b <- K.v1.b + Weighted_Nation[2,i]*(Weighted_Nation[2,i]-1)
+  K.v2.b <- K.v2.b + Weighted_Nation[2,i]*(Weighted_Nation[2,i]-1)*(Weighted_Nation[2,i]-1)
+}
+
+All_Pairs <- Weighted_Nation[3,6]*(Weighted_Nation[3,6]-1)/2
+n <- Weighted_Nation[3,6]
+
+# Kendall's tau-a (doesn't take ties into account) and tau-b (which does take ties into account)
+K.tau_a <- (C.pairs - D.pairs)/All_Pairs
+K.tau_b <- (C.pairs - D.pairs)/sqrt((All_Pairs - K.Tied.Ins)*(All_Pairs - K.Tied.Uns))
+
+# Test statistics for Kendall's taus, these have approximately standard normal distributions
+Z.Ka <- (3*(C.pairs - D.pairs))/sqrt(All_Pairs*(2*n+5))
+
+K.v1 <- K.v1.a*K.v1.b/(2*n*(n-1))
+K.v2 <- K.v2.a*K.v2.b/(9*n*(n-1)*(n-2))
+K.vo <- n*(n-1)*(2*n+5)
+
+Z.Kb <- (C.pairs - D.pairs)/sqrt((K.vo - K.vi - K.vu)/18 + K.v1 + K.v2)
+
+
 
 
 #######################################################################################################
