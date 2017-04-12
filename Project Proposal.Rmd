@@ -1,0 +1,43 @@
+---
+title: "Project Proposal"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+## Background
+In the years following the passage of the Patient Protection and Affordable Care Act (ACA) the uninsured rate has dropped from around 15% in 2010 to around 9% in 2015. Insurance coverage is thought to be associated with greater access to primary care. Greater access to primary care is strongly linked with better health outcomes and lower healthcare costs. We are interested in how presence of insurance is linked with utilization of primary care.
+
+## Research questions
+1. Verify that the uninsured rate has decreased since the passage of the ACA and that the decrease was more substantial in states that expanded Medicaid.
+      + How should we test this? *How about comparing change in insured rates in states that expanded Medicaid versus those that didn't? Check if the average year to year decrease in uninsured rate is the same or different between states that expanded Medicaid and those that didn't for each year.* 
+2. Verify the association between insurance coverage and access to primary care
+      + Association between having insurance and having a doctor
+      + Association between having insurance and utilization of doctor
+
+## Data sources
+* BRFSS (2011 - 2015)
+
+
+
+ins~ doc
+ins~selfcare (diabetes)
+
+checkup
+have doctor
+self care
+preventative care & screenings
+
+ins~screenings
+
+tests:
+
+
+stratify by age education employment income.
+
+
+
+
+
