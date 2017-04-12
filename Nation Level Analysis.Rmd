@@ -1,0 +1,258 @@
+---
+title: "Nation_Level_Analysis"
+author: "Andrew Deighan"
+date: "April 11, 2017"
+output: html_document
+---
+
+Import 2015 BRFSS and select only variables of interest and export as CSV files for future use.
+```{r}
+
+library(Hmisc)
+#BRFSS2015full <- sasxport.get("LLCP2015.XPT")
+#BRFSS2014full <- sasxport.get("LLCP2014.XPT")
+#BRFSS2013full <- sasxport.get("LLCP2013.XPT")
+#BRFSS2012full <- sasxport.get("LLCP2012.XPT")
+#BRFSS2011full <- sasxport.get("LLCP2011.XPT")
+
+#t15.data <- BRFSS2015full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t14.data <- BRFSS2014full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t13.data <- BRFSS2013full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t12.data <- BRFSS2012full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t11.data <- BRFSS2011full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+
+#write.csv(t15.data, '2015 BRFSS Data.csv')
+#write.csv(t14.data, '2014 BRFSS Data.csv')
+#write.csv(t13.data, '2013 BRFSS Data.csv')
+#write.csv(t12.data, '2012 BRFSS Data.csv')
+#write.csv(t11.data, '2011 BRFSS Data.csv')
+
+#rm(BRFSS2011full, BRFSS2012full, BRFSS2013full, BRFSS2014full, BRFSS2015full)
+
+```
+
+```{r}
+### this is dummy code to aid in knitting
+
+t15.data <- data.frame(read.csv("2015 BRFSS Data.csv")[,2:6])
+t14.data <- data.frame(read.csv("2014 BRFSS Data.csv")[,2:6])
+t13.data <- data.frame(read.csv("2013 BRFSS Data.csv")[,2:6])
+t12.data <- data.frame(read.csv("2012 BRFSS Data.csv")[,2:6])
+t11.data <- data.frame(read.csv("2011 BRFSS Data.csv")[,2:6])
+
+```
+
+Clean data sets of missing values:
+
+* For hlthpln1
+      + 1: yes insurance
+      + 2: no insurance
+      + 7: unsure
+      + 9: refused to answer
+* For persdoc2
+      + 1: yes one personal doctor
+      + 2: yes more than one
+      + 3: no personal doctor
+      + 7: unsure
+      + 9: refused to answer
+* For checkup1
+      + 1: checkup within past year
+      + 2: checkup within two years
+      + 3: checkup within five years
+      + 4: more than five years since checkup
+      + 7: unsure
+      + 8: never had checkup
+      + 9: refused to answer
+```{r}
+
+cleaner <- function(x){
+      df <- x
+      for(i in 1:5){
+            df <- df[!is.na(df[,i]),] 
+      }
+      
+      for(i in 1:3){
+           df <- df[df[,i] != 7 & df[,i] != 9,] 
+      }
+
+      
+      df
+}
+
+t11.data <- cleaner(t11.data)
+t12.data <- cleaner(t12.data)
+t13.data <- cleaner(t13.data)
+t14.data <- cleaner(t14.data)
+t15.data <- cleaner(t15.data)
+
+# Since we are only interested in whether or not respondents have a personal doctor we will treat those who reported having multiple doctors and those who reported only having one doctor the same. Now individuals with personal doctors will be coded as '1' and those without as '3'.
+
+persdocmod <- function(x){
+      df <- x
+      df[df[,2] == 2,2] <- 1
+      
+      df
+}
+
+t11.data <- persdocmod(t11.data)
+t12.data <- persdocmod(t12.data)
+t13.data <- persdocmod(t13.data)
+t14.data <- persdocmod(t14.data)
+t15.data <- persdocmod(t15.data)
+
+allyears <- rbind(t11.data, t12.data, t13.data, t14.data, t15.data)
+
+```
+
+Below we create summary tables of the data for each year and for all years combined. For each data set I made three 2 by *c* summary tables:
+
+1. Insurance status by possession of a personal doctor
+2. Insurance status by doctor utilization
+3. Insruance status by doctor utilization given possesion of a personal doctor
+```{r}
+
+library(dplyr)
+
+persdoc.table <- function(x){
+      
+      tab <- x %>% group_by(hlthpln1, persdoc2) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tidyr::spread(key = persdoc2, value = wt_sum) %>% ungroup()
+      
+      tab
+}
+
+ST_PD_t11 <- persdoc.table(t11.data)
+ST_PD_t12 <- persdoc.table(t12.data)
+ST_PD_t13 <- persdoc.table(t13.data)
+ST_PD_t14 <- persdoc.table(t14.data)
+ST_PD_t15 <- persdoc.table(t15.data)
+ST_PD_ay <- persdoc.table(allyears)
+
+checkup.table <- function(x){
+      
+      tab <- x %>% group_by(hlthpln1, checkup1) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tidyr::spread(key = checkup1, value = wt_sum) %>% ungroup()
+      
+      tab
+}
+
+ST_CU_t11 <- checkup.table(t11.data)
+ST_CU_t12 <- checkup.table(t12.data)
+ST_CU_t13 <- checkup.table(t13.data)
+ST_CU_t14 <- checkup.table(t14.data)
+ST_CU_t15 <- checkup.table(t15.data)
+ST_CU_ay <- checkup.table(allyears)
+
+ST_CUgPD_t11 <- checkup.table(t11.data[t11.data$persdoc2 == 1,])
+ST_CUgPD_t12 <- checkup.table(t12.data[t12.data$persdoc2 == 1,])
+ST_CUgPD_t13 <- checkup.table(t13.data[t13.data$persdoc2 == 1,])
+ST_CUgPD_t14 <- checkup.table(t14.data[t14.data$persdoc2 == 1,])
+ST_CUgPD_t15 <- checkup.table(t15.data[t15.data$persdoc2 == 1,])
+ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
+
+```
+
+Next we will display some frequency bar charts to get a visual in the proportional differences between the insured and uninsured. First let us look at possession of a personal doctor.
+```{r}
+
+
+PD.props <- function(x){
+      vec <- rep(0,4)
+      c <- 0
+      for(i in 1:2){
+            for(j in 2:3){
+                  c <- c + 1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:3]))   
+            }
+      }
+      matrix(vec, nrow = 2, ncol = 2, byrow = TRUE)
+}
+
+
+PD11 <- PD.props(ST_PD_t11)
+PD12 <- PD.props(ST_PD_t12)
+PD13 <- PD.props(ST_PD_t13)
+PD14 <- PD.props(ST_PD_t14)
+PD15 <- PD.props(ST_PD_t15)
+PDay <- PD.props(ST_PD_ay)
+
+par(mfrow=c(2,3))
+
+barplot(PD11, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2011'), col = c('green', 'forestgreen'))
+barplot(PD12, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2012'), col = c('green', 'forestgreen'))
+barplot(PD13, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2013'), col = c('green', 'forestgreen'))
+barplot(PD14, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2014'), col = c('green', 'forestgreen'))
+barplot(PD15, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2015'), col = c('green', 'forestgreen'))
+barplot(PDay, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('All Years'), col = c('green', 'forestgreen'))
+
+
+```
+
+Next lets look at doctor utilization
+```{r}
+
+CU.props <- function(x){
+      
+      vec <- rep(0,10)
+      c <- 0
+      
+      for(i in 1:2){
+            for(j in 2:6){
+                  c <- c+1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:6]))
+            }
+      }
+      
+      matrix(vec, nrow = 2, ncol = 5, byrow = TRUE)
+}
+
+CU11 <- CU.props(ST_CU_t11)
+CU12 <- CU.props(ST_CU_t12)
+CU13 <- CU.props(ST_CU_t13)
+CU14 <- CU.props(ST_CU_t14)
+CU15 <- CU.props(ST_CU_t15)
+CUay <- CU.props(ST_CU_ay)
+
+par(mfrow=c(1,2))
+barplot(CU11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2011'), col = c('green', 'forestgreen'))
+barplot(CU12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2012'), col = c('green', 'forestgreen'))
+barplot(CU13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2013'), col = c('green', 'forestgreen'))
+barplot(CU14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2014'), col = c('green', 'forestgreen'))
+barplot(CU15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2015'), col = c('green', 'forestgreen'))
+barplot(CUay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('All Years'), col = c('green', 'forestgreen'))
+
+```
+
+Now let us look at doctor utilization given possession of a doctor.
+```{r}
+
+CUgPD.props <- function(x){
+      
+      vec <- rep(0,10)
+      c <- 0
+      
+      for(i in 1:2){
+            for(j in 2:6){
+                  c <- c+1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:6]))
+            }
+      }
+      
+      matrix(vec, nrow = 2, ncol = 5, byrow = TRUE)
+}
+
+CUgPD11 <- CUgPD.props(ST_CUgPD_t11)
+CUgPD12 <- CUgPD.props(ST_CUgPD_t12)
+CUgPD13 <- CUgPD.props(ST_CUgPD_t13)
+CUgPD14 <- CUgPD.props(ST_CUgPD_t14)
+CUgPD15 <- CUgPD.props(ST_CUgPD_t15)
+CUgPDay <- CUgPD.props(ST_CUgPD_ay)
+
+par(mfrow=c(1,2))
+barplot(CUgPD11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2011: Given  Doctor'), col = c('green', 'forestgreen'))
+barplot(CUgPD12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2012: Given  Doctor'), col = c('green', 'forestgreen'))
+barplot(CUgPD13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2013: Given  Doctor'), col = c('green', 'forestgreen'))
+barplot(CUgPD14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2014: Given  Doctor'), col = c('green', 'forestgreen'))
+barplot(CUgPD15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2015: Given  Doctor'), col = c('green', 'forestgreen'))
+barplot(CUgPDay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('All Years: Given  Doctor'), col = c('green', 'forestgreen'))
+```
