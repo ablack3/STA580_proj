@@ -5,10 +5,12 @@ date: "April 11, 2017"
 output: html_document
 ---
 
+### Importing, Cleaning, and Summarizing Data
+
 Import 2015 BRFSS and select only variables of interest and export as CSV files for future use.
 ```{r}
 
-library(Hmisc)
+#library(Hmisc)
 #BRFSS2015full <- sasxport.get("LLCP2015.XPT")
 #BRFSS2014full <- sasxport.get("LLCP2014.XPT")
 #BRFSS2013full <- sasxport.get("LLCP2013.XPT")
@@ -152,6 +154,8 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
 
 ```
 
+### Proportional Frequency Bar Charts
+
 Next we will display some frequency bar charts to get a visual in the proportional differences between the insured and uninsured. First let us look at possession of a personal doctor.
 ```{r}
 
@@ -176,7 +180,7 @@ PD14 <- PD.props(ST_PD_t14)
 PD15 <- PD.props(ST_PD_t15)
 PDay <- PD.props(ST_PD_ay)
 
-par(mfrow=c(2,3))
+par(mfrow=c(1,2))
 
 barplot(PD11, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2011'), col = c('green', 'forestgreen'))
 barplot(PD12, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Doctor'), legend.text = c('Insured', 'Uninsured'), main = c('2012'), col = c('green', 'forestgreen'))
@@ -188,7 +192,7 @@ barplot(PDay, beside = TRUE, names.arg = c('Personal Doctor', 'No Personal Docto
 
 ```
 
-Next lets look at doctor utilization
+Next lets look at doctor utilization and doctor utilization given that the individual has a personal doctor
 ```{r}
 
 CU.props <- function(x){
@@ -205,26 +209,6 @@ CU.props <- function(x){
       
       matrix(vec, nrow = 2, ncol = 5, byrow = TRUE)
 }
-
-CU11 <- CU.props(ST_CU_t11)
-CU12 <- CU.props(ST_CU_t12)
-CU13 <- CU.props(ST_CU_t13)
-CU14 <- CU.props(ST_CU_t14)
-CU15 <- CU.props(ST_CU_t15)
-CUay <- CU.props(ST_CU_ay)
-
-par(mfrow=c(1,2))
-barplot(CU11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2011'), col = c('green', 'forestgreen'))
-barplot(CU12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2012'), col = c('green', 'forestgreen'))
-barplot(CU13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2013'), col = c('green', 'forestgreen'))
-barplot(CU14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2014'), col = c('green', 'forestgreen'))
-barplot(CU15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2015'), col = c('green', 'forestgreen'))
-barplot(CUay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('All Years'), col = c('green', 'forestgreen'))
-
-```
-
-Now let us look at doctor utilization given possession of a doctor.
-```{r}
 
 CUgPD.props <- function(x){
       
@@ -248,11 +232,85 @@ CUgPD14 <- CUgPD.props(ST_CUgPD_t14)
 CUgPD15 <- CUgPD.props(ST_CUgPD_t15)
 CUgPDay <- CUgPD.props(ST_CUgPD_ay)
 
-par(mfrow=c(1,2))
-barplot(CUgPD11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2011: Given  Doctor'), col = c('green', 'forestgreen'))
-barplot(CUgPD12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2012: Given  Doctor'), col = c('green', 'forestgreen'))
-barplot(CUgPD13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2013: Given  Doctor'), col = c('green', 'forestgreen'))
-barplot(CUgPD14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2014: Given  Doctor'), col = c('green', 'forestgreen'))
-barplot(CUgPD15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('2015: Given  Doctor'), col = c('green', 'forestgreen'))
-barplot(CUgPDay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), legend.text = c('Insured', 'Uninsured'), xlab = 'Last Checkup', main = c('All Years: Given  Doctor'), col = c('green', 'forestgreen'))
+CU11 <- CU.props(ST_CU_t11)
+CU12 <- CU.props(ST_CU_t12)
+CU13 <- CU.props(ST_CU_t13)
+CU14 <- CU.props(ST_CU_t14)
+CU15 <- CU.props(ST_CU_t15)
+CUay <- CU.props(ST_CU_ay)
+
+par(mfrow=c(1,2), mai = c(.7,.35,.35,.1), cex = c(.75), oma = c(0,0,2,0), font.main = 1, cex.axis = .8)
+
+barplot(CU11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPD11, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('2011', outer = TRUE, font = 2)
+
+barplot(CU12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPD12, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('2012', outer = TRUE, font = 2)
+
+barplot(CU13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPD13, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('2013', outer = TRUE, font = 2)
+
+barplot(CU14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPD14, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('2014', outer = TRUE, font = 2)
+
+barplot(CU15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPD15, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('2015', outer = TRUE, font = 2)
+
+barplot(CUay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', main = c('All'), col = c('green', 'forestgreen'), space = c(0,.7))
+barplot(CUgPDay, beside = TRUE, names.arg = c('< 1 Year', '< 2 Years', '< 5 Years', '> 5 Years', 'Never'), xlab = 'Last Checkup', legend.text = c('Insured', 'Uninsured'), main = c('Individuals with a Personal Doctor'), col = c('green', 'forestgreen'), space = c(0,.7))
+mtext('All Years', outer = TRUE, font = 2)
+
 ```
+
+### Pearson Chi-Square Tests for General Association
+
+Now that we have had a graphical look at the difference in proportions for our variables of interest between the insured and uninsured. Let's do Pearson Chi-Square tests for each variable to see if there is general association with insurance status. First we look at the association between insurance status and personal doctor status.
+```{r}
+
+ST_PD_t11 %>% select(-hlthpln1) %>% chisq.test()
+ST_PD_t12 %>% select(-hlthpln1) %>% chisq.test()
+ST_PD_t13 %>% select(-hlthpln1) %>% chisq.test()
+ST_PD_t14 %>% select(-hlthpln1) %>% chisq.test()
+ST_PD_t15 %>% select(-hlthpln1) %>% chisq.test()
+ST_PD_ay %>% select(-hlthpln1) %>% chisq.test()
+
+```
+
+The extremely large chi-square test-statistics and correspondingly low p-values for each year and for all years combined indicate that there is a strong association between insurance status and whether or not a person has a personal doctor.
+
+Next we will look at the association between insurance status and doctor utilization (time since last checkup).
+```{r}
+
+ST_CU_t11 %>% select(-hlthpln1) %>% chisq.test()
+ST_CU_t12 %>% select(-hlthpln1) %>% chisq.test()
+ST_CU_t13 %>% select(-hlthpln1) %>% chisq.test()
+ST_CU_t14 %>% select(-hlthpln1) %>% chisq.test()
+ST_CU_t15 %>% select(-hlthpln1) %>% chisq.test()
+ST_CU_ay %>% select(-hlthpln1) %>% chisq.test()
+
+```
+
+Again, the large test-statistics and correspondingly low p-values for each year and for all years combined indicate that there is a strong association between insurance status and doctor utilization.
+
+Now we will look at the association between insurance status and doctor utilization given that the person has a personal doctor.
+```{r}
+
+ST_CUgPD_t11 %>% select(-hlthpln1) %>% chisq.test()
+ST_CUgPD_t12 %>% select(-hlthpln1) %>% chisq.test()
+ST_CUgPD_t13 %>% select(-hlthpln1) %>% chisq.test()
+ST_CUgPD_t14 %>% select(-hlthpln1) %>% chisq.test()
+ST_CUgPD_t15 %>% select(-hlthpln1) %>% chisq.test()
+ST_CUgPD_ay %>% select(-hlthpln1) %>% chisq.test()
+
+```
+
+As with the other two variables, the large test-statistics and low p-values for each year and all years combined indicate that there is a strong association between insurance status and doctor utilization gven that a person has a personal doctor.
+
+### Confidence Intervals for Proportional Differences
+
+Now that we know there is general association between all our variables of interest and insurance status, we want to estimate the confidence intervals for the difference in proportions between insured individuals and uninsured individuals at each level of our variables. So, for presence of personal doctor, we want to estimate the difference between the proportion of insured individuals that have a personal doctor and uninsured individuals that have a personal doctor. For doctor utilization we went to estimate the difference between the proportion of insured individuals that have had a checkup within a year and uninsured individuals that have had a checkup within a year, insured individuals that have had a checkup within two years and uninsured individuals that have had a checkup within two years, etc.
