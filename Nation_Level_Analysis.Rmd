@@ -315,7 +315,7 @@ As with the other two variables, the large test-statistics and low p-values for 
 
 Now that we know there is general association between all our variables of interest and insurance status, we want to estimate the 95% confidence intervals for the difference in proportions between insured individuals and uninsured individuals at each level of our variables. So, for presence of personal doctor, we want to estimate the difference between the proportion of insured individuals that have a personal doctor and uninsured individuals that have a personal doctor. For doctor utilization we went to estimate the difference between the proportion of insured individuals that have had a checkup within a year and uninsured individuals that have had a checkup within a year, insured individuals that have had a checkup within two years and uninsured individuals that have had a checkup within two years, etc.
 
-First lets take a look at the difference in proportions for presence of personal doctor.
+First let's take a look at the difference in proportions for presence of personal doctor.
 ```{r}
 
 PD.propdif <- function(x, alpha){
@@ -345,10 +345,185 @@ PD.pd <- c(PD.pd, PD.propdif(ST_PD_t14, 0.05))
 PD.pd <- c(PD.pd, PD.propdif(ST_PD_t15, 0.05))
 PD.pd <- c(PD.pd, PD.propdif(ST_PD_ay, 0.05))
 
- Persdoc.pdif.95CI <- matrix(PD.pd, nrow = 6, ncol = 3, byrow = TRUE, dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All"), c("Lower.Bound", "Point.Estimate", "Upper.Bound")))
+Persdoc.pdif.95CI <- matrix(PD.pd, nrow = 6, ncol = 3, byrow = TRUE, 
+                            dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All"), 
+                                            c("Lower.Bound", "Point.Estimate", "Upper.Bound")))
+
+Persdoc.pdif.95CI
  
-barcenters <- barplot(Persdoc.pdif.95CI[,2], ylim = c( min(Persdoc.pdif.95CI[,1]) - 0.001  , max(Persdoc.pdif.95CI[,3]) ), xpd = FALSE )
-barcenters
+barcenters <- barplot(Persdoc.pdif.95CI[,2], ylim = c( min(Persdoc.pdif.95CI[,1]) - 0.001  , max(Persdoc.pdif.95CI[,3]) ),
+                      main = "Difference of Proportion of Persons with a Personal Doctor \n Insured v.s. Uninsured", 
+                      xpd = FALSE, cex.names = .9 )
+
 segments(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], lwd = 1.5)
-arrows(barcenters, Persdoc.pdif.95CI[,1], barcenters,Persdoc.pdif.95CI[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+arrows(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+```
+
+Now let's take a look at doctor utilization
+```{r}
+
+CU.propdif <- function(x, alpha){
+  df <- x
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  n1 <- as.numeric( sum(df[1,2:6]) )
+  n2 <- as.numeric( sum(df[2,2:6]) )
+  
+  pe <- c()
+  LB <- c()
+  UB <- c()
+  
+  for(i in 2:6){
+  
+    p1 <- as.numeric( df[1,i]/sum(df[1,2:6]) )
+    p2 <- as.numeric( df[2,i]/sum(df[2,2:6]) )
+    dif <- p1 - p2
+  
+    pe <- c(pe, dif)
+    LB <- c(LB, dif - z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 ) )
+    UB <- c(UB, dif + z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 ) )
+    
+  }
+  
+  p1 <- as.numeric( sum(df[1,4:6])/sum(df[1,2:6]) )
+  p2 <- as.numeric( sum(df[2,4:6])/sum(df[2,2:6]) )
+  dif <- p1 - p2
+  
+  pe <- c(pe, dif)
+  LB <- c(LB, dif - z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 ) )
+  UB <- c(UB, dif + z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 ) )
+  
+  
+  out <- matrix(data = c(UB, pe, LB), nrow = 3, ncol = 6, byrow = TRUE,
+                dimnames = list(c("Upper Bound", "Point Estimate", "Lower Bound"),
+                                c("< 1 Year", "< 2 Years", "< 5 Years", 
+                                  "> 5 Years", "Never", "All > 2 Years")))
+  out
+}
+
+CU.pdif.t11 <- CU.propdif(ST_CU_t11, 0.05)
+CU.pdif.t12 <- CU.propdif(ST_CU_t12, 0.05)
+CU.pdif.t13 <- CU.propdif(ST_CU_t13, 0.05)
+CU.pdif.t14 <- CU.propdif(ST_CU_t14, 0.05)
+CU.pdif.t15 <- CU.propdif(ST_CU_t15, 0.05)
+CU.pdif.ay <- CU.propdif(ST_CU_ay, 0.05)
+
+CU.pdif.t11
+CU.pdif.t12
+CU.pdif.t13
+CU.pdif.t14
+CU.pdif.t15 
+CU.pdif.ay 
+
+barplot(CU.pdif.t11[2,1:5], ylim = c( min(CU.pdif.t11[3,1:5]) , max(CU.pdif.t11[1,1:5]) ),
+        main = "2011: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+barplot(CU.pdif.t12[2,1:5], ylim = c( min(CU.pdif.t12[3,1:5]) , max(CU.pdif.t12[1,1:5]) ),
+        main = "2012: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+barplot(CU.pdif.t13[2,1:5], ylim = c( min(CU.pdif.t13[3,1:5]) , max(CU.pdif.t13[1,1:5]) ),
+        main = "2013: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+barplot(CU.pdif.t14[2,1:5], ylim = c( min(CU.pdif.t14[3,1:5]) , max(CU.pdif.t14[1,1:5]) ),
+        main = "2014: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+barplot(CU.pdif.t15[2,1:5], ylim = c( min(CU.pdif.t15[3,1:5]) , max(CU.pdif.t15[1,1:5]) ),
+        main = "2015: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+barplot(CU.pdif.ay[2,1:5], ylim = c( min(CU.pdif.ay[3,1:5]) , max(CU.pdif.ay[1,1:5]) ),
+        main = "All Years: Difference of in Doctor Utilization \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9 )
+abline(h = 0)
+
+CU.extremes.dif <- matrix(data = c(CU.pdif.t11[3:1,c(1, 6)], CU.pdif.t12[3:1,c(1, 6)], CU.pdif.t13[3:1,c(1, 6)], 
+                                   CU.pdif.t14[3:1,c(1, 6)], CU.pdif.t15[3:1,c(1, 6)], CU.pdif.ay[3:1,c(1, 6)]),
+                          nrow = 6, ncol = 6, byrow = TRUE,
+                          dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"), 
+                                          c("Lower Bound < 1", "Point Estimate < 1", "Upper Bound < 1",
+                                            "Lower Bound > 5", "Point Estimate > 5", "Upper Bound > 5")))
+
+barcenters <- barplot(CU.extremes.dif[,2], ylim = c( min(CU.extremes.dif[,1]) - 0.01 , max(CU.extremes.dif[,3]) ),
+        main = "Difference in Proportion of Individuals Having a Checkup within One Year: \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9, cex.main = .8 )
+segments(barcenters, CU.extremes.dif[,1], barcenters, CU.extremes.dif[,3], lwd = 1.5)
+arrows(barcenters, CU.extremes.dif[,1], barcenters, CU.extremes.dif[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+barcenters <- barplot(CU.extremes.dif[,5], ylim = c( min(CU.extremes.dif[,4]) - 0.01 , max(CU.extremes.dif[,6]) ),
+        main = "Difference in Proportion of Individuals without a Checkup within Two Years: \n Insured v.s. Uninsured", 
+        xpd = FALSE, cex.names = .9, cex.main = .8 )
+segments(barcenters, CU.extremes.dif[,4], barcenters, CU.extremes.dif[,6], lwd = 1.5)
+arrows(barcenters, CU.extremes.dif[,4], barcenters, CU.extremes.dif[,6], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+```
+
+Now we'll look at doctor utilization for those individuals that have a personal doctor
+```{r}
+
+CUgD.pdif.t11 <- CU.propdif(ST_CUgPD_t11, 0.05)
+CUgD.pdif.t12 <- CU.propdif(ST_CUgPD_t12, 0.05)
+CUgD.pdif.t13 <- CU.propdif(ST_CUgPD_t13, 0.05)
+CUgD.pdif.t14 <- CU.propdif(ST_CUgPD_t14, 0.05)
+CUgD.pdif.t15 <- CU.propdif(ST_CUgPD_t15, 0.05)
+CUgD.pdif.ay <- CU.propdif(ST_CUgPD_ay, 0.05)
+
+barplot(CUgD.pdif.t11[2,1:5], ylim = c( min(CUgD.pdif.t11[3,1:5]) , max(CUgD.pdif.t11[1,1:5]) ),
+         main = "2011: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+barplot(CUgD.pdif.t12[2,1:5], ylim = c( min(CUgD.pdif.t12[3,1:5]) , max(CUgD.pdif.t12[1,1:5]) ),
+         main = "2012: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+barplot(CUgD.pdif.t13[2,1:5], ylim = c( min(CUgD.pdif.t13[3,1:5]) , max(CUgD.pdif.t13[1,1:5]) ),
+         main = "2013: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+barplot(CUgD.pdif.t14[2,1:5], ylim = c( min(CUgD.pdif.t14[3,1:5]) , max(CUgD.pdif.t14[1,1:5]) ),
+         main = "2014: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+barplot(CUgD.pdif.t15[2,1:5], ylim = c( min(CUgD.pdif.t15[3,1:5]) , max(CUgD.pdif.t15[1,1:5]) ),
+         main = "2015: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+barplot(CUgD.pdif.ay[2,1:5], ylim = c( min(CUgD.pdif.ay[3,1:5]) , max(CUgD.pdif.ay[1,1:5]) ),
+         main = "All Years: Difference of in Doctor Utilization for Individuals with a Doctor \n Insured v.s. Uninsured", 
+         xpd = FALSE, cex.names = .9, cex.main = 0.9 )
+abline(h = 0)
+
+CUgD.extremes.dif <- matrix(data = c(CUgD.pdif.t11[3:1,c(1, 6)], CUgD.pdif.t12[3:1,c(1, 6)], CUgD.pdif.t13[3:1,c(1, 6)], 
+                                   CUgD.pdif.t14[3:1,c(1, 6)], CUgD.pdif.t15[3:1,c(1, 6)], CUgD.pdif.ay[3:1,c(1, 6)]),
+                          nrow = 6, ncol = 6, byrow = TRUE,
+                          dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"), 
+                                          c("Lower Bound < 1", "Point Estimate < 1", "Upper Bound < 1",
+                                            "Lower Bound > 5", "Point Estimate > 5", "Upper Bound > 5")))
+
+barcenters <- barplot(CUgD.extremes.dif[,2], ylim = c( min(CUgD.extremes.dif[,1]) - 0.01 , max(CUgD.extremes.dif[,3]) ),
+        main = "Difference in Proportion of Individuals Having a Checkup within One Year: \n Insured v.s. Uninsured",
+        sub = "Individuals with Personal Doctors",
+        xpd = FALSE, cex.names = .9, cex.main = .8 )
+segments(barcenters, CUgD.extremes.dif[,1], barcenters, CUgD.extremes.dif[,3], lwd = 1.5)
+arrows(barcenters, CUgD.extremes.dif[,1], barcenters, CUgD.extremes.dif[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+barcenters <- barplot(CUgD.extremes.dif[,5], ylim = c( min(CUgD.extremes.dif[,4]) - 0.01 , max(CUgD.extremes.dif[,6]) ),
+        main = "Difference in Proportion of Individuals without a Checkup within Two Years: \n Insured v.s. Uninsured",
+        sub = "Individuals with Personal Doctors",
+        xpd = FALSE, cex.names = .9, cex.main = .8 )
+segments(barcenters, CUgD.extremes.dif[,4], barcenters, CUgD.extremes.dif[,6], lwd = 1.5)
+arrows(barcenters, CUgD.extremes.dif[,4], barcenters, CUgD.extremes.dif[,6], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
 ```
