@@ -313,4 +313,42 @@ As with the other two variables, the large test-statistics and low p-values for 
 
 ### Confidence Intervals for Proportional Differences
 
-Now that we know there is general association between all our variables of interest and insurance status, we want to estimate the confidence intervals for the difference in proportions between insured individuals and uninsured individuals at each level of our variables. So, for presence of personal doctor, we want to estimate the difference between the proportion of insured individuals that have a personal doctor and uninsured individuals that have a personal doctor. For doctor utilization we went to estimate the difference between the proportion of insured individuals that have had a checkup within a year and uninsured individuals that have had a checkup within a year, insured individuals that have had a checkup within two years and uninsured individuals that have had a checkup within two years, etc.
+Now that we know there is general association between all our variables of interest and insurance status, we want to estimate the 95% confidence intervals for the difference in proportions between insured individuals and uninsured individuals at each level of our variables. So, for presence of personal doctor, we want to estimate the difference between the proportion of insured individuals that have a personal doctor and uninsured individuals that have a personal doctor. For doctor utilization we went to estimate the difference between the proportion of insured individuals that have had a checkup within a year and uninsured individuals that have had a checkup within a year, insured individuals that have had a checkup within two years and uninsured individuals that have had a checkup within two years, etc.
+
+First lets take a look at the difference in proportions for presence of personal doctor.
+```{r}
+
+PD.propdif <- function(x, alpha){
+  
+  df <- x
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  n1 <- as.numeric( sum(df[1,2:3]) )
+  n2 <- as.numeric( sum(df[2,2:3]) )
+
+  p1 <- as.numeric( df[1,2]/sum(df[1,2:3]) )
+  p2 <- as.numeric( df[2,2]/sum(df[2,2:3]) )
+  dif <- p1 - p2
+  
+  LB <- dif - z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  UB <- dif + z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  
+  vec <- c(LB, dif, UB)
+  vec
+}
+
+PD.pd <- c()
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t11, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t12, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t13, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t14, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t15, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_ay, 0.05))
+
+ Persdoc.pdif.95CI <- matrix(PD.pd, nrow = 6, ncol = 3, byrow = TRUE, dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All"), c("Lower.Bound", "Point.Estimate", "Upper.Bound")))
+ 
+barcenters <- barplot(Persdoc.pdif.95CI[,2], ylim = c( min(Persdoc.pdif.95CI[,1]) - 0.001  , max(Persdoc.pdif.95CI[,3]) ), xpd = FALSE )
+barcenters
+segments(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], lwd = 1.5)
+arrows(barcenters, Persdoc.pdif.95CI[,1], barcenters,Persdoc.pdif.95CI[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+```
