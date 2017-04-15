@@ -170,7 +170,8 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
     + 7: Don't know/Not sure
     + 8: Never
     + 9: Refused  
-<br>     
+<br>
+<br>
     
   The first part of our study considers that nation as a whole when investigating the relationships between insurance status and our measures of access to, and utilization of, primary care. For this part of the study we considered three measures as proxies of primary care access and utilization:
 
@@ -179,6 +180,7 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
     + Within past year
     + Not within past five years (aggregate of "5 or more years ago" and "Never")
 * Doctor Utilization: Same as above, but only including individuals who reported have a personal doctor  
+<br>
 <br>
 
   First we will look at some bar charts to get a quick visualization of the data. Figure 1 shows the proportion of insured and uninsured individuals with a personal doctor for years 2011 through 2015 and all years combined.
@@ -241,6 +243,7 @@ dev.off()
 ***
 
   From the barplot above it appears evident that the proportion of individuals that have a personal doctor is higher for those with insurance than those without. The presence of this trend appears consistent from 2011 through 2015.  
+<br>
 <br>
 
   Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor. For more information on the proportions for all the individual levels of the doctor utilization measure see the appendix (***link here***).
@@ -409,19 +412,26 @@ dev.off()
 
 ![**Figure 2:** The plots above show the difference in the time since last general health checkup between insured and uninsured individuals. The plot on the left shows the proportion of individuals that have had a checkup within the past year for both insured and uninsured groups. The plot to the right shows the proportion of individuals that have not had a checkup in the last five years (including those that have never had a checkup) for both insured and uninsured groups. Note the difference in the range of the y-axis between the plot on the left and the plot on the right.](plots\Difference_in_Doctor_Utilization.png)
 
+<br>
+
 ![**Figure 3:** The plots above depict the same measures as those shown in figure 2, but only for individuals who reported having a personal doctor.](plots\Difference_in_Doctor_Utilization_Given_PD.png)
 
 ***
 
  From figures 2 and 3 above we can see that the proportion of insured individuals that had had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor.
 <br>
+<br>
+
   Next we will perform Peason Chi-Square tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
+<br>
 <br>
 
 ### Tests of General Association and Rank Correlation
 
   The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (***link required***).
+  
 ***
+
 ```{r, include=F}
 ### Calculating pearson statistics
 
@@ -549,8 +559,11 @@ library(pander)
 
 pandoc.table(pcs.PD, caption = "**Table 1**: The Pearson chi-squared test-statistics for the general association between insurance status and having a personal doctor. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and whether or not an individual has a personal doctor is highly statistically significant.", split.table = Inf)
 
+```
 
+<br>
 
+```{r echo=FALSE,results='asis'}
 
 ### Table 2, concordance statistics
 
@@ -610,7 +623,11 @@ rm(t11, t12, t13, t14, t15, tay)
 pandoc.table(rcts.PD, caption = "**Table 2**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.", split.table = Inf)
 
 ```
+
+<br>
+
 ***
+
 <br>
 
   The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-bs indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor. 
@@ -618,6 +635,7 @@ pandoc.table(rcts.PD, caption = "**Table 2**: The rank correlation statistics fo
 ***
 
 ```{r, echo=F, results="asis"}
+
 ### Caculate Pearson Statistics
 
 vec <- c()
@@ -650,9 +668,19 @@ pcs.CUgPD <- matrix(vec, nrow = 6, ncol = 3,
 
 pandoc.table(pcs.CU, caption = "**Table 3**: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.", split.table = Inf)
 
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
 
 pandoc.table(pcs.CUgPD, caption = "**Table 4**: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.", split.table = Inf)
 
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
 
 ### Calculate rank correlation statistics
 
@@ -778,16 +806,171 @@ rm(t11, t12, t13, t14, t15, tay)
 
 pandoc.table(rcts.CU, caption = "**Table 5**: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.", split.table = Inf)
 
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
 
 pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics for the relationship between insurance status and having and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.", split.table = Inf)
 
 ```
 
+<br>
+
 ***
-
-
+  For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed that a general association between insurance status and primary care access. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the appendix (***link required**)
+  
+  Now that we have confirmed the presence and direction of association between insurance status and our measures of primary care access, we will examine in more detail the degree of this relationship.
 
 <br>
+
+### Absolute and Relative Difference of Proportions
+
+  For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. For more details on how the absolute and relative differences in proportions were calculated please see the appendix.
+  
+  In the previous sections we showed that there is a positiv correlation between having insurance and having a personal doctor. Table 7 lists the the estimated absolute difference in proportion between individuals in the insured group that have a doctor and individuals in the uninsured group that have a doctor. Figure 4 graphically shows these absolute differences in proportions. The small line segments on top of each bar show the 95% confidence intervals for the difference in proportions. Note that the y-axis only covers a small range, so although the differences in proportions may vary in a *statistically* significant manner (note the confidence intervals do not overlap, except for 2013 and 2014), the magnitude of this variation appears small.
+  
+***
+
+```{r, include=F}
+
+PD.propdif <- function(x, alpha){
+  
+  df <- x
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  n1 <- as.numeric( sum(df[1,2:3]) )
+  n2 <- as.numeric( sum(df[2,2:3]) )
+
+  p1 <- as.numeric( df[1,2]/sum(df[1,2:3]) )
+  p2 <- as.numeric( df[2,2]/sum(df[2,2:3]) )
+  dif <- p1 - p2
+  
+  LB <- dif - z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  UB <- dif + z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  
+  vec <- c(LB, dif, UB)
+  vec
+}
+
+PD.pd <- c()
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t11, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t12, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t13, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t14, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t15, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_ay, 0.05))
+
+Persdoc.pdif.95CI <- matrix(PD.pd, nrow = 6, ncol = 3, byrow = TRUE, 
+                            dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All"), 
+                                            c("Lower Bound", "Estimate", "Upper Bound")))
+
+png("plots/Difference_in_Props_PD.png",
+     height = 400, width = 480)
+ 
+barcenters <- barplot(Persdoc.pdif.95CI[,2], ylim = c( min(Persdoc.pdif.95CI[,1]) - 0.001  , max(Persdoc.pdif.95CI[,3]) ),
+                      main = "Absolute Difference of Proportion of Persons with a Personal Doctor \n Insured v.s. Uninsured", 
+                      xpd = FALSE, cex.names = .9, cex.main = 1 )
+abline(h=min(Persdoc.pdif.95CI[,1]) - 0.001)
+
+segments(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], lwd = 1.5)
+arrows(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+dev.off()
+
+```
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(Persdoc.pdif.95CI, caption = "**Table 7:** 95% Confidence intervals for the absolute differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the absolute differences are very close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+![**Figure 4:** Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. Note that the range of the y-axis is small so that although the absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. ](plots/Difference_in_Props_PD.png)
+
+***
+
+<br>
+
+  Table 8 and figure 5 show the confidence intervals for the relative difference in the proportion of insured individuals with a doctor to uninsured individuals with a doctor. When looking at all the years combined, insured individuals were 2.13 times more likely to have a personal doctor than uninsured individuals. While it is true that each year insured individuals were more likely to have a doctor when compared to unisured individuals, this increased likelihood is not constant through all years. Rather, it appears to increase from 2.11 in 2011 to 2.17 in 2014 before dropping back down to 2.13 in 2015. This is in contrast to the change in absolute difference in proportion (table 7 and figure 4) which appeared to continually decrease from 2011 through 2015.
+  
+***
+  
+```{r, echo=F, results="asis"}
+
+Relative.Risk <- function(x, coi = c(1), alpha = 0.05){
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  
+  n1 <- as.numeric( sum(x[1,]) )
+  n2 <- as.numeric( sum(x[2,]) )
+  
+  p1 <- as.numeric( x[1,coi]/n1 )
+  p2 <- as.numeric( x[2,coi]/n2 )
+  
+  rr <- p1/p2
+  v <- sqrt( (1-p1)/x[1,coi] + (1-p2)/x[2,coi] )
+  
+  LB <- rr*exp(-z*v)
+  UB <- rr*exp(z*v)
+  
+  vec <- c(LB, rr, UB)
+  vec
+
+}
+
+PD.RR <- matrix(c(Relative.Risk(ST_PD_t11[,2:3]),
+                  Relative.Risk(ST_PD_t12[,2:3]),
+                  Relative.Risk(ST_PD_t13[,2:3]),
+                  Relative.Risk(ST_PD_t14[,2:3]),
+                  Relative.Risk(ST_PD_t15[,2:3]),
+                  Relative.Risk(ST_PD_ay[,2:3])),
+                nrow = 6, ncol = 3, byrow = T,
+                dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                                c("Lower Bound", "Estimate", "Upper Bound"))
+                )
+
+pandoc.table(PD.RR, caption = "**Table 8:** 95% Confidence intervals for the relative differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the relative differences are very close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+```{r, include=F}
+
+png("plots/Relative_Difference_in_Props_PD.png",
+     height = 480, width = 480)
+
+plot(x = c(1:6), y = PD.RR[,2], 
+     main = "Relative Difference of Proportion of Persons with a Personal Doctor \n Insured v.s. Uninsured", 
+     ylab = "Relative Difference",
+     xlab = NA,
+     xlim = c(1,6), 
+     ylim = c(2.09, 2.17), 
+     pch=20, col = "red",
+     axes = FALSE, cex.main = 1, cex = 1, cex.lab = 1)
+box()
+
+axis(1, at = c(1:6), labels = c ("2011", "2012", "2013", "2014", "2015", "All Years"), cex.axis = 1)
+axis(2, at = seq(from = 2.09, to = 2.17, by = 0.01), las = 2, cex.axis = .8)
+
+
+segments(c(1:6), as.numeric(PD.RR[,1]), c(1:6), as.numeric(PD.RR[,3]), lwd = 1.5)
+arrows(c(1:6), as.numeric(PD.RR[,1]), c(1:6), as.numeric(PD.RR[,3]), lwd = 1.5, angle = 90, code = 3, length = 0.03)
+
+dev.off()
+
+```
+
+![**Figure 5:** 95% confidence intervals for relative difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. As with absoluter difference, the relative differences fluctuate from year to year but the magnitude of this variation is small (note the range of the y-axis). Also, while the absolute differences appeared to consistently decrease from 201 through 2015, that is not the case with the relative differences.](plots/Relative_Difference_in_Props_PD.png)
+
+***
+
+<br>
+
 <br>
 <br>
 <br>
