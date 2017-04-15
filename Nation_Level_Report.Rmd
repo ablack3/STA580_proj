@@ -1,0 +1,647 @@
+---
+title: "Untitled"
+author: "Andrew Deighan"
+date: "April 14, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+## Importing, clean, and organize data
+
+
+#library(Hmisc)
+#BRFSS2015full <- sasxport.get("LLCP2015.XPT")
+#BRFSS2014full <- sasxport.get("LLCP2014.XPT")
+#BRFSS2013full <- sasxport.get("LLCP2013.XPT")
+#BRFSS2012full <- sasxport.get("LLCP2012.XPT")
+#BRFSS2011full <- sasxport.get("LLCP2011.XPT")
+
+#t15.data <- BRFSS2015full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t14.data <- BRFSS2014full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t13.data <- BRFSS2013full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t12.data <- BRFSS2012full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+#t11.data <- BRFSS2011full[,c("hlthpln1", "persdoc2", "checkup1", "x.llcpwt", "x.state")]
+
+#write.csv(t15.data, '2015 BRFSS Data.csv')
+#write.csv(t14.data, '2014 BRFSS Data.csv')
+#write.csv(t13.data, '2013 BRFSS Data.csv')
+#write.csv(t12.data, '2012 BRFSS Data.csv')
+#write.csv(t11.data, '2011 BRFSS Data.csv')
+
+#rm(BRFSS2011full, BRFSS2012full, BRFSS2013full, BRFSS2014full, BRFSS2015full)
+
+t15.data <- data.frame(read.csv("2015 BRFSS Data.csv")[,2:6])
+t14.data <- data.frame(read.csv("2014 BRFSS Data.csv")[,2:6])
+t13.data <- data.frame(read.csv("2013 BRFSS Data.csv")[,2:6])
+t12.data <- data.frame(read.csv("2012 BRFSS Data.csv")[,2:6])
+t11.data <- data.frame(read.csv("2011 BRFSS Data.csv")[,2:6])
+
+
+
+
+### Cleaning data ###
+
+#Clean data sets of missing values:
+#
+#* For hlthpln1
+#      + 1: yes insurance
+#      + 2: no insurance
+#      + 7: unsure
+#      + 9: refused to answer
+#* For persdoc2
+#      + 1: yes one personal doctor
+#      + 2: yes more than one
+#      + 3: no personal doctor
+#      + 7: unsure
+#      + 9: refused to answer
+#* For checkup1
+#      + 1: checkup within past year
+#      + 2: checkup within two years
+#      + 3: checkup within five years
+#      + 4: more than five years since checkup
+#      + 7: unsure
+#      + 8: never had checkup
+#      + 9: refused to answer
+
+cleaner <- function(x){
+      df <- x
+      for(i in 1:5){
+            df <- df[!is.na(df[,i]),] 
+      }
+      
+      for(i in 1:3){
+           df <- df[df[,i] != 7 & df[,i] != 9,] 
+      }
+
+      
+      df
+}
+
+t11.data <- cleaner(t11.data)
+t12.data <- cleaner(t12.data)
+t13.data <- cleaner(t13.data)
+t14.data <- cleaner(t14.data)
+t15.data <- cleaner(t15.data)
+
+# Since we are only interested in whether or not respondents have a personal doctor we will treat those who reported having multiple doctors and those who reported only having one doctor the same. Now individuals with personal doctors will be coded as '1' and those without as '3'.
+
+persdocmod <- function(x){
+      df <- x
+      df[df[,2] == 2,2] <- 1
+      
+      df
+}
+
+t11.data <- persdocmod(t11.data)
+t12.data <- persdocmod(t12.data)
+t13.data <- persdocmod(t13.data)
+t14.data <- persdocmod(t14.data)
+t15.data <- persdocmod(t15.data)
+
+allyears <- rbind(t11.data, t12.data, t13.data, t14.data, t15.data)
+
+
+### Create Summary Tables with Weighted Values ###
+
+
+library(dplyr)
+
+persdoc.table <- function(x){
+      
+      tab <- x %>% group_by(hlthpln1, persdoc2) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tidyr::spread(key = persdoc2, value = wt_sum) %>% ungroup()
+      
+      tab
+}
+
+ST_PD_t11 <- persdoc.table(t11.data)
+ST_PD_t12 <- persdoc.table(t12.data)
+ST_PD_t13 <- persdoc.table(t13.data)
+ST_PD_t14 <- persdoc.table(t14.data)
+ST_PD_t15 <- persdoc.table(t15.data)
+ST_PD_ay <- persdoc.table(allyears)
+
+checkup.table <- function(x){
+      
+      tab <- x %>% group_by(hlthpln1, checkup1) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tidyr::spread(key = checkup1, value = wt_sum) %>% ungroup()
+      
+      tab
+}
+
+ST_CU_t11 <- checkup.table(t11.data)
+ST_CU_t12 <- checkup.table(t12.data)
+ST_CU_t13 <- checkup.table(t13.data)
+ST_CU_t14 <- checkup.table(t14.data)
+ST_CU_t15 <- checkup.table(t15.data)
+ST_CU_ay <- checkup.table(allyears)
+
+ST_CUgPD_t11 <- checkup.table(t11.data[t11.data$persdoc2 == 1,])
+ST_CUgPD_t12 <- checkup.table(t12.data[t12.data$persdoc2 == 1,])
+ST_CUgPD_t13 <- checkup.table(t13.data[t13.data$persdoc2 == 1,])
+ST_CUgPD_t14 <- checkup.table(t14.data[t14.data$persdoc2 == 1,])
+ST_CUgPD_t15 <- checkup.table(t15.data[t15.data$persdoc2 == 1,])
+ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
+
+```
+
+
+## Methods
+
+  For our study we used data from the BRFSS surveys from 2011 through 2015 to study the relationship between insurance status and measures of primary care access and utilization.
+
+* Insurance Status: Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?
+    + 1: Yes
+    + 2: No
+    + 7: Don't know/Not Sure
+    + 9: Refused
+* Personal Doctor: Do you have one person you think of as your personal doctor or health care provider? (If "No" ask "Is there more than one or is there no person who you think of as your personal doctor or health care provider?".)
+    + 1: Yes, only one
+    + 2: More than one
+    + 3: No
+    + 7: Don't know/Not Sure
+    + 9: Refused
+* Doctor Utilization: About how long has it been since you last visited a doctor for a routine checkup? [A routine checkup is a general physical exam, not an exam for a specific injury, illness, or condition.]
+    + 1: Within past year (anytime less than 12 months ago)
+    + 2: Within past 2 years (1 year but less than 2 years ago)
+    + 3: Within past 5 years (2 years but less than 5 years ago)
+    + 4: 5 or more years ago
+    + 7: Don't know/Not sure
+    + 8: Never
+    + 9: Refused  
+<br>     
+    
+  The first part of our study considers that nation as a whole when investigating the relationships between insurance status and our measures of access to, and utilization of, primary care. For this part of the study we considered three measures as proxies of primary care access and utilization:
+
+* Personal Doctor: Whether or not an individual reported having a personal doctor
+* Doctor Utilization: The reported period of time since last general checkup. We only looked at two levels for this part of the analysis. For information on all levels see appendix.
+    + Within past year
+    + Not within past five years (aggregate of "5 or more years ago" and "Never")
+* Doctor Utilization: Same as above, but only including individuals who reported have a personal doctor  
+<br>
+
+  First we will look at some bar charts to get a quick visualization of the data. Figure 1 shows the proportion of insured and uninsured individuals with a personal doctor for years 2011 through 2015 and all years combined.
+
+```{r, include=F}
+
+PD.props <- function(x){
+      vec <- rep(0,4)
+      c <- 0
+      for(i in 1:2){
+            for(j in 2:3){
+                  c <- c + 1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:3]))   
+            }
+      }
+      matrix(vec, nrow = 2, ncol = 2, byrow = TRUE)
+}
+
+
+PD11 <- PD.props(ST_PD_t11)
+PD12 <- PD.props(ST_PD_t12)
+PD13 <- PD.props(ST_PD_t13)
+PD14 <- PD.props(ST_PD_t14)
+PD15 <- PD.props(ST_PD_t15)
+PDay <- PD.props(ST_PD_ay)
+
+PD.proportions <- matrix(c(PD11[,1],PD12[,1],PD13[,1],PD14[,1],PD15[,1],PDay[,1], 0, 0), nrow = 2, ncol = 7,
+                         dimnames = list(c("Insured", "Uninsured"),
+                                         c("2011", "2012", "2013", "2014", "2015", "All Years", "Empty"))
+                         )
+
+png("plots/Proportion_of_Individuals_with_a_Personal_Doctor.png",
+     height = 240, width = 480)
+
+par(mar = c(4, 2.5, 3, 2.5))
+barplot(PD.proportions, beside = TRUE, 
+        names.arg = c("2011", "2012", "2013", "2014", "2015", "All Years", ""),
+        main = c('Proportion of Individuals with a Personal Doctor'), 
+        col = c('green', 'forestgreen')
+        )
+legend("topright",
+       inset=0,
+       cex = 1,
+       c("Insured","Uninsured"),
+       pch=20,
+       pt.cex = 2,
+       col=c("green","forestgreen"),
+       bty = "n"
+       )
+abline(h=0)
+
+dev.off()
+
+```
+
+***
+
+![**Figure 1:** The proportion of insured and uninsured individuals who reported having a personal doctor.](plots\Proportion_of_Individuals_with_a_Personal_Doctor.png)
+
+***
+
+  From the barplot above it appears evident that the proportion of individuals that have a personal doctor is higher for those with insurance than those without. The presence of this trend appears consistent from 2011 through 2015.  
+<br>
+
+  Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor. For more information on the proportions for all the individual levels of the doctor utilization measure see the appendix (***link here***).
+  
+```{r, include=F}
+
+CU.props <- function(x){
+      
+      vec <- rep(0,10)
+      c <- 0
+      
+      for(i in 1:2){
+            for(j in 2:6){
+                  c <- c+1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:6]))
+            }
+      }
+      
+      matrix(vec, nrow = 2, ncol = 5, byrow = TRUE)
+}
+
+CUgPD.props <- function(x){
+      
+      vec <- rep(0,10)
+      c <- 0
+      
+      for(i in 1:2){
+            for(j in 2:6){
+                  c <- c+1
+                  vec[c] <- as.numeric(x[i,j]/sum(x[i,2:6]))
+            }
+      }
+      
+      matrix(vec, nrow = 2, ncol = 5, byrow = TRUE)
+}
+
+CUgPD11 <- CUgPD.props(ST_CUgPD_t11)
+CUgPD12 <- CUgPD.props(ST_CUgPD_t12)
+CUgPD13 <- CUgPD.props(ST_CUgPD_t13)
+CUgPD14 <- CUgPD.props(ST_CUgPD_t14)
+CUgPD15 <- CUgPD.props(ST_CUgPD_t15)
+CUgPDay <- CUgPD.props(ST_CUgPD_ay)
+
+CU11 <- CU.props(ST_CU_t11)
+CU12 <- CU.props(ST_CU_t12)
+CU13 <- CU.props(ST_CU_t13)
+CU14 <- CU.props(ST_CU_t14)
+CU15 <- CU.props(ST_CU_t15)
+CUay <- CU.props(ST_CU_ay)
+
+vec <- c(CU11[,1], CU12[,1], CU13[,1], CU14[,1], CU15[,1], CUay[,1])
+
+DU.l1.proportions <- matrix(vec, nrow = 2, ncol = 6,
+                         dimnames = list( c("Insured", "Uninsured"),
+                          c("2011", "2012", "2013", "2014", "2015", "All") )
+                         )
+
+vec <- c(sum(CU11[1,4:5]), sum(CU11[2,4:5]),
+         sum(CU12[1,4:5]), sum(CU12[2,4:5]),
+         sum(CU13[1,4:5]), sum(CU13[2,4:5]),
+         sum(CU14[1,4:5]), sum(CU14[2,4:5]),
+         sum(CU15[1,4:5]), sum(CU15[2,4:5]),
+         sum(CUay[1,4:5]), sum(CUay[2,4:5]),
+         0,0)
+
+
+DU.g1.proportions <- matrix(vec, nrow = 2, ncol = 7,
+                         dimnames = list( c("Insured", "Uninsured"),
+                          c("2011", "2012", "2013", "2014", "2015", "All", "" ) )
+                         )
+
+
+png("plots/Difference_in_Doctor_Utilization.png",
+     height = 240, width = 800)
+
+par(mfrow=c(1,2), mai = c(.7,.5,.7,.4), cex = .9, oma = c(0,0,2,0), font.main = 1, cex.axis = .9)
+barplot(DU.l1.proportions, beside = TRUE, 
+        names.arg = c("2011", "2012", "2013", "2014", "2015", "All Years"),
+        main = c('Checkup within 1 Year'), 
+        col = c('green', 'forestgreen'),
+        width = .9, space = c(0,1.5)
+        )
+abline(h=0)
+
+barplot(DU.g1.proportions, beside = TRUE, 
+        names.arg = c("2011", "2012", "2013", "2014", "2015", "All Years", ""),
+        main = c('No Checkup within 5 Years'), 
+        col = c('green', 'forestgreen'),
+        width = .9, space = c(0,1.5)
+        )
+legend("topright",
+       inset=0,
+       cex = .8,
+       c("Insured","Uninsured"),
+       pch=20,
+       pt.cex = 2,
+       col=c("green","forestgreen"),
+       bty = "n"
+       )
+abline(h=0)
+
+mtext('Difference in Doctor Utilization between Insured and Uninsured Individuals', outer = TRUE, font = 2)
+
+dev.off()
+
+### No for doctor utilization given personal doctor
+
+vec <- c(CUgPD11[,1], CUgPD12[,1], CUgPD13[,1], CUgPD14[,1], CUgPD15[,1], CUgPDay[,1])
+
+DUgPD.l1.proportions <- matrix(vec, nrow = 2, ncol = 6,
+                         dimnames = list( c("Insured", "Uninsured"),
+                          c("2011", "2012", "2013", "2014", "2015", "All") )
+                         )
+
+vec <- c(sum(CUgPD11[1,4:5]), sum(CUgPD11[2,4:5]),
+         sum(CUgPD12[1,4:5]), sum(CUgPD12[2,4:5]),
+         sum(CUgPD13[1,4:5]), sum(CUgPD13[2,4:5]),
+         sum(CUgPD14[1,4:5]), sum(CUgPD14[2,4:5]),
+         sum(CUgPD15[1,4:5]), sum(CUgPD15[2,4:5]),
+         sum(CUgPDay[1,4:5]), sum(CUgPDay[2,4:5]),
+         0,0)
+
+
+DUgPD.g1.proportions <- matrix(vec, nrow = 2, ncol = 7,
+                         dimnames = list( c("Insured", "Uninsured"),
+                          c("2011", "2012", "2013", "2014", "2015", "All", "" ) )
+                         )
+
+
+png("plots/Difference_in_Doctor_Utilization_Given_PD.png",
+     height = 240, width = 800)
+
+par(mfrow=c(1,2), mai = c(.7,.5,.7,.4), cex = .9, oma = c(0,0,2,0), font.main = 1, cex.axis = .9)
+barplot(DUgPD.l1.proportions, beside = TRUE, 
+        names.arg = c("2011", "2012", "2013", "2014", "2015", "All Years"),
+        main = c('Checkup within 1 Year'), 
+        col = c('green', 'forestgreen'),
+        width = .9, space = c(0,1.5)
+        )
+abline(h=0)
+
+barplot(DUgPD.g1.proportions, beside = TRUE, 
+        names.arg = c("2011", "2012", "2013", "2014", "2015", "All Years", ""),
+        main = c('No Checkup within 5 Years'), 
+        col = c('green', 'forestgreen'),
+        width = .9, space = c(0,1.5)
+        )
+legend("topright",
+       inset=0,
+       cex = .8,
+       c("Insured","Uninsured"),
+       pch=20,
+       pt.cex = 2,
+       col=c("green","forestgreen"),
+       bty = "n"
+       )
+abline(h=0)
+
+mtext('Difference in Doctor Utilization for Individuals with a Personal Doctor', outer = TRUE, font = 2)
+
+dev.off()
+
+```
+
+***
+
+![**Figure 2:** The plots above show the difference in the time since last general health checkup between insured and uninsured individuals. The plot on the left shows the proportion of individuals that have had a checkup within the past year for both insured and uninsured groups. The plot to the right shows the proportion of individuals that have not had a checkup in the last five years (including those that have never had a checkup) for both insured and uninsured groups. Note the difference in the range of the y-axis between the plot on the left and the plot on the right.](plots\Difference_in_Doctor_Utilization.png)
+
+![**Figure 3:** The plots above depict the same measures as those shown in figure 2, but only for individuals who reported having a personal doctor.](plots\Difference_in_Doctor_Utilization_Given_PD.png)
+
+***
+
+ From figures 2 and 3 above we can see that the proportion of insured individuals that had had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor.
+<br>
+  Next we will perform Peason Chi-Square tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
+<br>
+
+### Tests of General Association and Rank Correlation
+
+  The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (***link required***).
+```{r, include=F}
+
+Rank.Correlation <- function(x, alpha = 0.05){
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  cols <- dim(x)[2]
+  n <- sum(x[1,]) + sum(x[2,])
+  np <- (n*(n-1))/2
+  SE.LS.approx <- sqrt((2*(2*n+5))/(9*n*(n-1)))
+  
+  T.pairs <- sum(x[1,])*(sum(x[1,])-1)/2 + sum(x[2,])*(sum(x[2,])-1)/2
+  Tied.r <- T.pairs
+  
+  C.pairs <- 0
+  D.pairs <- 0
+  Tied.c <- 0
+  for(i in 1:cols){
+    if(i < cols){
+      for(j in (i + 1):cols){
+        C.pairs <- C.pairs + x[1,i]*x[2,j]
+        D.pairs <- D.pairs + x[2,i]*x[1,j]
+      }
+    }
+    
+    T.pairs <- T.pairs + x[1,i]*x[2,i]
+    Tied.c <- Tied.c + sum(x[,i])*(sum(x[,i])-1)/2
+    
+  }
+  
+  vt <- 0
+  v1.c <- 0
+  v2.c <- 0
+  for(i in 1:cols){
+    s <- sum(x[,i])*(sum(x[,i])-1)
+    vt <- vt + s*(2*sum(x[,i])+5)
+    v1.c <- v1.c + s
+    v2.c <- v2.c + s*(sum(x[,i])-2)
+  }
+  
+  vu <- 0
+  v1.r <- 0
+  v2.r <- 0
+  for(i in 1:2){
+    s <- sum(x[i,])*(sum(x[i,])-1)
+    vu <- vu + s*(2*sum(x[i,])+5)
+    v1.r <- v1.r + s
+    v2.r <- v2.r + s*(sum(x[i,])-2)
+  }
+  
+  v1 <- v1.c*v1.r/(2*n*(n-1))
+  v2 <- v2.c*v2.r/(9*n*(n-1)*(n-2))
+  
+  v0 <- n*(n-1)*(2*n+5)
+  
+  v <- (v0 - vt - vu) / (18) + v1 + v2
+ 
+  
+  Ktau.a <- (C.pairs - D.pairs) / np
+  Ktau.b <- (C.pairs - D.pairs) / sqrt( (np - Tied.r)*(np - Tied.c) )
+  
+  Z.a <- as.numeric( 3*(C.pairs - D.pairs) / sqrt(n*(n-1)*(2*n+5)/2) )
+  pva <- pnorm(abs(Z.a), lower.tail = F)
+  Z.a.Alt <- as.numeric( Ktau.a/SE.LS.approx )
+  pva.Alt <- pnorm(abs(Z.a.Alt), lower.tail = F)
+  
+  Ta.LB <- Ktau.a - z*SE.LS.approx
+  Ta.UB <- Ktau.a + z*SE.LS.approx
+  
+  Z.b <- as.numeric( (C.pairs - D.pairs) / sqrt(v) )
+  pvb <- pnorm(abs(Z.b), lower.tail = F)
+  Z.b.Alt <- as.numeric( Ktau.b/SE.LS.approx )
+  pvb.Alt <- pnorm(abs(Z.b.Alt), lower.tail = F)
+  
+  Tb.LB <- Ktau.b - z*SE.LS.approx
+  Tb.UB <- Ktau.b + z*SE.LS.approx
+  
+  gamma <- (C.pairs - D.pairs)/(C.pairs + D.pairs)
+  SE.gamma <- sqrt(n*(1-gamma^2)/(C.pairs+D.pairs))
+  Z.gamma <- as.numeric( gamma/SE.gamma )
+  pvg <- pnorm(abs(Z.gamma), lower.tail = F)
+  
+  G.LB <- gamma - z*SE.gamma
+  G.UB <- gamma + z*SE.gamma
+  
+  out <- matrix(c(Ta.LB, Tb.LB, G.LB, Ktau.a, Ktau.b, gamma, Ta.UB, Tb.UB, G.UB, Z.a, Z.b, Z.gamma, 
+                  pva, pvb, pvg, Z.a.Alt, Z.b.Alt, NA, pva.Alt, pvb.Alt, NA),
+                nrow = 3, ncol = 7,
+                dimnames = list(c("Tau.a", "Tau.b", "Gamma"), 
+                                c("Lower.Bound","Estimate", "Upper Bound", "TS", "p.val", "Alt.TS", "p.val")))
+  
+  out
+}
+
+roc.pd11 <- Rank.Correlation(ST_PD_t11[,2:3])
+roc.pd12 <- Rank.Correlation(ST_PD_t12[,2:3])
+roc.pd13 <- Rank.Correlation(ST_PD_t13[,2:3])
+roc.pd14 <- Rank.Correlation(ST_PD_t14[,2:3])
+roc.pd15 <- Rank.Correlation(ST_PD_t15[,2:3])
+roc.pday <- Rank.Correlation(ST_PD_ay[,2:3])
+
+```
+
+
+```{r echo=FALSE,results='asis'}
+
+t11 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pd11[2:3,1]), digits = 5),
+              round(as.numeric(roc.pd11[2:3,2]), digits = 5),
+              round(as.numeric(roc.pd11[2:3,3]), digits = 5),
+              round(as.numeric(roc.pd11[2:3,4]), digits = 5),
+              round(as.numeric(roc.pd11[2:3,5]), digits = 5))
+colnames(t11) <- c("", "95% Lower Bound", "Estimate", "95% Upper Bound", "Test Statistic", "P-value")
+rownames(t11) <- c("2011", "")
+
+t12 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pd12[2:3,1]), digits = 5),
+              round(as.numeric(roc.pd12[2:3,2]), digits = 5),
+              round(as.numeric(roc.pd12[2:3,3]), digits = 5),
+              round(as.numeric(roc.pd12[2:3,4]), digits = 5),
+              round(as.numeric(roc.pd12[2:3,5]), digits = 5))
+rownames(t12) <- c("2012", "")
+
+t13 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pd13[2:3,1]), digits = 5),
+              round(as.numeric(roc.pd13[2:3,2]), digits = 5),
+              round(as.numeric(roc.pd13[2:3,3]), digits = 5),
+              round(as.numeric(roc.pd13[2:3,4]), digits = 5),
+              round(as.numeric(roc.pd13[2:3,5]), digits = 5))
+rownames(t13) <- c("2013", "")
+
+t14 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pd14[2:3,1]), digits = 5),
+              round(as.numeric(roc.pd14[2:3,2]), digits = 5),
+              round(as.numeric(roc.pd14[2:3,3]), digits = 5),
+              round(as.numeric(roc.pd14[2:3,4]), digits = 5),
+              round(as.numeric(roc.pd14[2:3,5]), digits = 5))
+rownames(t14) <- c("2014", "")
+
+t15 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pd15[2:3,1]), digits = 5),
+              round(as.numeric(roc.pd15[2:3,2]), digits = 5),
+              round(as.numeric(roc.pd15[2:3,3]), digits = 5),
+              round(as.numeric(roc.pd15[2:3,4]), digits = 5),
+              round(as.numeric(roc.pd15[2:3,5]), digits = 5))
+rownames(t15) <- c("2015", "")
+
+tay <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.pday[2:3,1]), digits = 5),
+              round(as.numeric(roc.pday[2:3,2]), digits = 5),
+              round(as.numeric(roc.pday[2:3,3]), digits = 5),
+              round(as.numeric(roc.pday[2:3,4]), digits = 5),
+              round(as.numeric(roc.pday[2:3,5]), digits = 5))
+rownames(tay) <- c("All", "Years")
+
+
+test <- rbind(t11,t12,t13,t14,t15,tay)
+library(knitr)
+kable(test, format = "markdown", caption = "**Table 1**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate the having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the tau-b statistic indicates that the strength of the correlation is moderate.")
+
+```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
