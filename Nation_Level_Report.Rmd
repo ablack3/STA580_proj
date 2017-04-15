@@ -421,7 +421,25 @@ dev.off()
 ### Tests of General Association and Rank Correlation
 
   The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (***link required***).
+***
 ```{r, include=F}
+### Calculating pearson statistics
+
+vec <- c()
+vec <- c(vec, 
+         as.numeric(chisq.test(ST_PD_t11[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_t11[,2:3])$p.value),
+         as.numeric(chisq.test(ST_PD_t12[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_t12[,2:3])$p.value),
+         as.numeric(chisq.test(ST_PD_t13[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_t13[,2:3])$p.value),
+         as.numeric(chisq.test(ST_PD_t14[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_t14[,2:3])$p.value),
+         as.numeric(chisq.test(ST_PD_t15[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_t15[,2:3])$p.value),
+         as.numeric(chisq.test(ST_PD_ay[,2:3])$statistic), 1, as.numeric(chisq.test(ST_PD_ay[,2:3])$p.value))
+
+pcs.PD <- matrix(vec, nrow = 6, ncol = 3,
+                 dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                                      c("Test Statistic", "Degrees of Freedom", "P-Value")),
+                 byrow = T)
+
+### Calculating concordance statistics
 
 Rank.Correlation <- function(x, alpha = 0.05){
   
@@ -525,6 +543,16 @@ roc.pday <- Rank.Correlation(ST_PD_ay[,2:3])
 
 
 ```{r echo=FALSE,results='asis'}
+library(pander)
+
+### Table 1, Pearson statistics
+
+pandoc.table(pcs.PD, caption = "**Table 1**: The Pearson chi-squared test-statistics for the general association between insurance status and having a personal doctor. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and whether or not an individual has a personal doctor is highly statistically significant.", split.table = Inf)
+
+
+
+
+### Table 2, concordance statistics
 
 t11 <- cbind(c("Tau-b", "Gamma"),
               round(as.numeric(roc.pd11[2:3,1]), digits = 5),
@@ -576,11 +604,188 @@ tay <- cbind(c("Tau-b", "Gamma"),
 rownames(tay) <- c("All", "Years")
 
 
-test <- rbind(t11,t12,t13,t14,t15,tay)
-library(knitr)
-kable(test, format = "markdown", caption = "**Table 1**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate the having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the tau-b statistic indicates that the strength of the correlation is moderate.")
+rcts.PD <- rbind(t11,t12,t13,t14,t15,tay)
+rm(t11, t12, t13, t14, t15, tay)
+
+pandoc.table(rcts.PD, caption = "**Table 2**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.", split.table = Inf)
 
 ```
+***
+<br>
+
+  The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-bs indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor. 
+  
+***
+
+```{r, echo=F, results="asis"}
+### Caculate Pearson Statistics
+
+vec <- c()
+vec <- c(vec, 
+         as.numeric(chisq.test(ST_CU_t11[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_t11[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CU_t12[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_t12[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CU_t13[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_t13[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CU_t14[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_t14[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CU_t15[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_t15[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CU_ay[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CU_ay[,2:6])$p.value))
+
+pcs.CU <- matrix(vec, nrow = 6, ncol = 3,
+                 dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                                      c("Test Statistic", "Degrees of Freedom", "P-Value")),
+                 byrow = T)
+
+vec <- c()
+vec <- c(vec, 
+         as.numeric(chisq.test(ST_CUgPD_t11[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_t11[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CUgPD_t12[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_t12[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CUgPD_t13[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_t13[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CUgPD_t14[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_t14[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CUgPD_t15[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_t15[,2:6])$p.value),
+         as.numeric(chisq.test(ST_CUgPD_ay[,2:6])$statistic), 4, as.numeric(chisq.test(ST_CUgPD_ay[,2:6])$p.value))
+
+pcs.CUgPD <- matrix(vec, nrow = 6, ncol = 3,
+                 dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                                      c("Test Statistic", "Degrees of Freedom", "P-Value")),
+                 byrow = T)
+
+pandoc.table(pcs.CU, caption = "**Table 3**: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.", split.table = Inf)
+
+
+pandoc.table(pcs.CUgPD, caption = "**Table 4**: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.", split.table = Inf)
+
+
+### Calculate rank correlation statistics
+
+roc.CU11 <- Rank.Correlation(ST_CU_t11[,2:6])
+roc.CU12 <- Rank.Correlation(ST_CU_t12[,2:6])
+roc.CU13 <- Rank.Correlation(ST_CU_t13[,2:6])
+roc.CU14 <- Rank.Correlation(ST_CU_t14[,2:6])
+roc.CU15 <- Rank.Correlation(ST_CU_t15[,2:6])
+roc.CUay <- Rank.Correlation(ST_CU_ay[,2:6])
+
+t11 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CU11[2:3,1]), digits = 5),
+              round(as.numeric(roc.CU11[2:3,2]), digits = 5),
+              round(as.numeric(roc.CU11[2:3,3]), digits = 5),
+              round(as.numeric(roc.CU11[2:3,4]), digits = 5),
+              round(as.numeric(roc.CU11[2:3,5]), digits = 5))
+colnames(t11) <- c("", "95% Lower Bound", "Estimate", "95% Upper Bound", "Test Statistic", "P-value")
+rownames(t11) <- c("2011", "")
+
+t12 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CU12[2:3,1]), digits = 5),
+              round(as.numeric(roc.CU12[2:3,2]), digits = 5),
+              round(as.numeric(roc.CU12[2:3,3]), digits = 5),
+              round(as.numeric(roc.CU12[2:3,4]), digits = 5),
+              round(as.numeric(roc.CU12[2:3,5]), digits = 5))
+rownames(t12) <- c("2012", "")
+
+t13 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CU13[2:3,1]), digits = 5),
+              round(as.numeric(roc.CU13[2:3,2]), digits = 5),
+              round(as.numeric(roc.CU13[2:3,3]), digits = 5),
+              round(as.numeric(roc.CU13[2:3,4]), digits = 5),
+              round(as.numeric(roc.CU13[2:3,5]), digits = 5))
+rownames(t13) <- c("2013", "")
+
+t14 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CU14[2:3,1]), digits = 5),
+              round(as.numeric(roc.CU14[2:3,2]), digits = 5),
+              round(as.numeric(roc.CU14[2:3,3]), digits = 5),
+              round(as.numeric(roc.CU14[2:3,4]), digits = 5),
+              round(as.numeric(roc.CU14[2:3,5]), digits = 5))
+rownames(t14) <- c("2014", "")
+
+t15 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CU15[2:3,1]), digits = 5),
+              round(as.numeric(roc.CU15[2:3,2]), digits = 5),
+              round(as.numeric(roc.CU15[2:3,3]), digits = 5),
+              round(as.numeric(roc.CU15[2:3,4]), digits = 5),
+              round(as.numeric(roc.CU15[2:3,5]), digits = 5))
+rownames(t15) <- c("2015", "")
+
+tay <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUay[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUay[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUay[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUay[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUay[2:3,5]), digits = 5))
+rownames(tay) <- c("All", "Years")
+
+rcts.CU <- rbind(t11,t12,t13,t14,t15,tay)
+rm(t11, t12, t13, t14, t15, tay)
+
+
+
+roc.CUgPD11 <- Rank.Correlation(ST_CUgPD_t11[,2:6])
+roc.CUgPD12 <- Rank.Correlation(ST_CUgPD_t12[,2:6])
+roc.CUgPD13 <- Rank.Correlation(ST_CUgPD_t13[,2:6])
+roc.CUgPD14 <- Rank.Correlation(ST_CUgPD_t14[,2:6])
+roc.CUgPD15 <- Rank.Correlation(ST_CUgPD_t15[,2:6])
+roc.CUgPDay <- Rank.Correlation(ST_CUgPD_ay[,2:6])
+
+t11 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPD11[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPD11[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPD11[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPD11[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPD11[2:3,5]), digits = 5))
+colnames(t11) <- c("", "95% Lower Bound", "Estimate", "95% Upper Bound", "Test Statistic", "P-value")
+rownames(t11) <- c("2011", "")
+
+t12 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPD12[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPD12[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPD12[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPD12[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPD12[2:3,5]), digits = 5))
+rownames(t12) <- c("2012", "")
+
+t13 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPD13[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPD13[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPD13[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPD13[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPD13[2:3,5]), digits = 5))
+rownames(t13) <- c("2013", "")
+
+t14 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPD14[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPD14[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPD14[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPD14[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPD14[2:3,5]), digits = 5))
+rownames(t14) <- c("2014", "")
+
+t15 <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPD15[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPD15[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPD15[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPD15[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPD15[2:3,5]), digits = 5))
+rownames(t15) <- c("2015", "")
+
+tay <- cbind(c("Tau-b", "Gamma"),
+              round(as.numeric(roc.CUgPDay[2:3,1]), digits = 5),
+              round(as.numeric(roc.CUgPDay[2:3,2]), digits = 5),
+              round(as.numeric(roc.CUgPDay[2:3,3]), digits = 5),
+              round(as.numeric(roc.CUgPDay[2:3,4]), digits = 5),
+              round(as.numeric(roc.CUgPDay[2:3,5]), digits = 5))
+rownames(tay) <- c("All", "Years")
+
+rcts.CUgPD <- rbind(t11,t12,t13,t14,t15,tay)
+rm(t11, t12, t13, t14, t15, tay)
+
+pandoc.table(rcts.CU, caption = "**Table 5**: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.", split.table = Inf)
+
+
+pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics for the relationship between insurance status and having and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.", split.table = Inf)
+
+```
+
+***
+
+
 
 <br>
 <br>

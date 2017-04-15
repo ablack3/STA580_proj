@@ -189,130 +189,577 @@ $(document).ready(function () {
 <p>From figures 2 and 3 above we can see that the proportion of insured individuals that had had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor. <br> Next we will perform Peason Chi-Square tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association. <br></p>
 <div id="tests-of-general-association-and-rank-correlation" class="section level3">
 <h3>Tests of General Association and Rank Correlation</h3>
-<p>The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall’s tau-b and Goodman and Kruskal’s gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly <em>statistically</em> significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of <em>only discordant or concordant</em> pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (<strong><em>link required</em></strong>).</p>
-<table>
+<p>The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall’s tau-b and Goodman and Kruskal’s gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly <em>statistically</em> significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of <em>only discordant or concordant</em> pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (<strong><em>link required</em></strong>). ***</p>
+<table style="width:88%;">
+<caption><strong>Table 1</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and having a personal doctor. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and whether or not an individual has a personal doctor is highly statistically significant.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="29%"></col>
+<col width="12%"></col>
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left"></th>
-<th align="left"></th>
-<th align="left">95% Lower Bound</th>
-<th align="left">Estimate</th>
-<th align="left">95% Upper Bound</th>
-<th align="left">Test Statistic</th>
-<th align="left">P-value</th>
+<th align="center"> </th>
+<th align="center">Test Statistic</th>
+<th align="center">Degrees of Freedom</th>
+<th align="center">P-Value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">2011</td>
-<td align="left">Tau-b</td>
-<td align="left">0.42395</td>
-<td align="left">0.42404</td>
-<td align="left">0.42413</td>
-<td align="left">6472.77003</td>
-<td align="left">0</td>
+<td align="center"><strong>2011</strong></td>
+<td align="center">41896749</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="left"></td>
-<td align="left">Gamma</td>
-<td align="left">0.80316</td>
-<td align="left">0.80343</td>
-<td align="left">0.80369</td>
-<td align="left">5969.80407</td>
-<td align="left">0</td>
+<td align="center"><strong>2012</strong></td>
+<td align="center">42654228</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="odd">
-<td align="left">2012</td>
-<td align="left">Tau-b</td>
-<td align="left">0.42298</td>
-<td align="left">0.42306</td>
-<td align="left">0.42315</td>
-<td align="left">6531.02063</td>
-<td align="left">0</td>
+<td align="center"><strong>2013</strong></td>
+<td align="center">39042466</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="left"></td>
-<td align="left">Gamma</td>
-<td align="left">0.80154</td>
-<td align="left">0.8018</td>
-<td align="left">0.80206</td>
-<td align="left">6011.73871</td>
-<td align="left">0</td>
+<td align="center"><strong>2014</strong></td>
+<td align="center">33773869</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="odd">
-<td align="left">2013</td>
-<td align="left">Tau-b</td>
-<td align="left">0.40263</td>
-<td align="left">0.40272</td>
-<td align="left">0.4028</td>
-<td align="left">6248.39723</td>
-<td align="left">0</td>
+<td align="center"><strong>2015</strong></td>
+<td align="center">31142068</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="left"></td>
-<td align="left">Gamma</td>
-<td align="left">0.78625</td>
-<td align="left">0.78652</td>
-<td align="left">0.78679</td>
-<td align="left">5653.73641</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">2014</td>
-<td align="left">Tau-b</td>
-<td align="left">0.37321</td>
-<td align="left">0.3733</td>
-<td align="left">0.37338</td>
-<td align="left">5811.52918</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Gamma</td>
-<td align="left">0.7822</td>
-<td align="left">0.7825</td>
-<td align="left">0.7828</td>
-<td align="left">5130.54791</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">2015</td>
-<td align="left">Tau-b</td>
-<td align="left">0.35611</td>
-<td align="left">0.3562</td>
-<td align="left">0.35628</td>
-<td align="left">5580.50813</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left"></td>
-<td align="left">Gamma</td>
-<td align="left">0.7813</td>
-<td align="left">0.78161</td>
-<td align="left">0.78193</td>
-<td align="left">4831.62193</td>
-<td align="left">0</td>
-</tr>
-<tr class="odd">
-<td align="left">All</td>
-<td align="left">Tau-b</td>
-<td align="left">0.39597</td>
-<td align="left">0.39601</td>
-<td align="left">0.39605</td>
-<td align="left">13717.50882</td>
-<td align="left">0</td>
-</tr>
-<tr class="even">
-<td align="left">Years</td>
-<td align="left">Gamma</td>
-<td align="left">0.78938</td>
-<td align="left">0.7895</td>
-<td align="left">0.78963</td>
-<td align="left">12290.74849</td>
-<td align="left">0</td>
+<td align="center"><strong>All Years</strong></td>
+<td align="center">188170046</td>
+<td align="center">1</td>
+<td align="center">0</td>
 </tr>
 </tbody>
 </table>
+<table style="width:100%;">
+<caption><strong>Table 2</strong>: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate. *** <br></caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.42395</td>
+<td align="center">0.42404</td>
+<td align="center">0.42413</td>
+<td align="center">6472.77003</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.80316</td>
+<td align="center">0.80343</td>
+<td align="center">0.80369</td>
+<td align="center">5969.80407</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.42298</td>
+<td align="center">0.42306</td>
+<td align="center">0.42315</td>
+<td align="center">6531.02063</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.80154</td>
+<td align="center">0.8018</td>
+<td align="center">0.80206</td>
+<td align="center">6011.73871</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.40263</td>
+<td align="center">0.40272</td>
+<td align="center">0.4028</td>
+<td align="center">6248.39723</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.78625</td>
+<td align="center">0.78652</td>
+<td align="center">0.78679</td>
+<td align="center">5653.73641</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.37321</td>
+<td align="center">0.3733</td>
+<td align="center">0.37338</td>
+<td align="center">5811.52918</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.7822</td>
+<td align="center">0.7825</td>
+<td align="center">0.7828</td>
+<td align="center">5130.54791</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.35611</td>
+<td align="center">0.3562</td>
+<td align="center">0.35628</td>
+<td align="center">5580.50813</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.7813</td>
+<td align="center">0.78161</td>
+<td align="center">0.78193</td>
+<td align="center">4831.62193</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.39597</td>
+<td align="center">0.39601</td>
+<td align="center">0.39605</td>
+<td align="center">13717.50882</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.78938</td>
+<td align="center">0.7895</td>
+<td align="center">0.78963</td>
+<td align="center">12290.74849</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-bs indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor.</p>
+<hr />
+<table style="width:88%;">
+<caption><strong>Table 3</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="29%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Test Statistic</th>
+<th align="center">Degrees of Freedom</th>
+<th align="center">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">23049768</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">23869522</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">23422621</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">19343506</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">16669701</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">107205988</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>[1] “”</p>
+<table style="width:88%;">
+<caption><strong>Table 4</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="29%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Test Statistic</th>
+<th align="center">Degrees of Freedom</th>
+<th align="center">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">5372665</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">5663649</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">5342925</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">4336773</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">3195406</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">24198551</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>[1] “”</p>
+<table style="width:100%;">
+<caption><strong>Table 5</strong>: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.</caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.29001</td>
+<td align="center">0.2901</td>
+<td align="center">0.29019</td>
+<td align="center">4672.53678</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.57258</td>
+<td align="center">0.57291</td>
+<td align="center">0.57325</td>
+<td align="center">3358.50071</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.29216</td>
+<td align="center">0.29225</td>
+<td align="center">0.29233</td>
+<td align="center">4752.92101</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.57676</td>
+<td align="center">0.57709</td>
+<td align="center">0.57742</td>
+<td align="center">3421.58897</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.28753</td>
+<td align="center">0.28762</td>
+<td align="center">0.2877</td>
+<td align="center">4693.78746</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.57934</td>
+<td align="center">0.57967</td>
+<td align="center">0.58001</td>
+<td align="center">3368.33329</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.2565</td>
+<td align="center">0.25659</td>
+<td align="center">0.25667</td>
+<td align="center">4192.7664</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.56414</td>
+<td align="center">0.56452</td>
+<td align="center">0.56489</td>
+<td align="center">2950.4689</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.2345</td>
+<td align="center">0.23458</td>
+<td align="center">0.23466</td>
+<td align="center">3856.08323</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.54766</td>
+<td align="center">0.54806</td>
+<td align="center">0.54846</td>
+<td align="center">2679.68377</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.2743</td>
+<td align="center">0.27434</td>
+<td align="center">0.27438</td>
+<td align="center">9995.69784</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.57034</td>
+<td align="center">0.5705</td>
+<td align="center">0.57066</td>
+<td align="center">7111.66737</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>[1] “”</p>
+<table style="width:100%;">
+<caption><strong>Table 6</strong>: The rank correlation statistics for the relationship between insurance status and having and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.</caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.15864</td>
+<td align="center">0.15874</td>
+<td align="center">0.15883</td>
+<td align="center">2221.36295</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.4544</td>
+<td align="center">0.45501</td>
+<td align="center">0.45561</td>
+<td align="center">1473.36691</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.15757</td>
+<td align="center">0.15767</td>
+<td align="center">0.15776</td>
+<td align="center">2227.69752</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.45441</td>
+<td align="center">0.45501</td>
+<td align="center">0.45561</td>
+<td align="center">1477.7154</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.15671</td>
+<td align="center">0.1568</td>
+<td align="center">0.1569</td>
+<td align="center">2199.10999</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.46836</td>
+<td align="center">0.46899</td>
+<td align="center">0.46962</td>
+<td align="center">1454.46868</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.13381</td>
+<td align="center">0.13391</td>
+<td align="center">0.134</td>
+<td align="center">1893.69781</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.45288</td>
+<td align="center">0.4536</td>
+<td align="center">0.45432</td>
+<td align="center">1241.02916</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.11321</td>
+<td align="center">0.1133</td>
+<td align="center">0.1134</td>
+<td align="center">1626.71212</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.41611</td>
+<td align="center">0.41688</td>
+<td align="center">0.41765</td>
+<td align="center">1059.2154</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.14609</td>
+<td align="center">0.14613</td>
+<td align="center">0.14618</td>
+<td align="center">4617.18043</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.45429</td>
+<td align="center">0.45459</td>
+<td align="center">0.45488</td>
+<td align="center">3043.12286</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <p><br> <br> <br> <br> <br> <br> <br> <br> <br> <br></p>
 </div>
 </div>
