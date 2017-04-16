@@ -843,7 +843,7 @@ pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics
 
 ```{r, include=F}
 
-PD.propdif <- function(x, alpha){
+PD.propdif <- function(x, alpha = 0.05){
   
   df <- x
   
@@ -1530,9 +1530,64 @@ roc.pd11 <- Rank.Correlation(ST_PD_t11[,2:3])[2:3,1:5]
 roc.pd11
 
 ```
-  
-  
+
 <br>
+
+#### Absolute Difference of Proportions
+
+  The absolute difference (AD) in proportions is the proportion in one group minus the proportion in the other group. For example, for the personal doctor measure, the absolute difference in proportion is the difference between the proportion of insured individuals with a personal doctor and the proportion of uninsured individuals with a personal doctor.
+
+```{r, echo=F, results="asis"}
+
+x <- matrix(c(ST_PD_t11[1,2:3], ST_PD_t11[2,2:3]), 
+            nrow = 2, ncol = 2, byrow = TRUE,
+            dimnames = list(c("Insured", "Uninsured"), c("Personal Doctor", "No Personal Doctor")))
+pandoc.table(x, caption = "2011 contingency table for personal doctor")
+```
+
+<br>
+
+$$\widehat{AD}_{pd} = \widehat{p_1} - \widehat{p_2} = \frac{351558.2}{351558.2+ 55356.99} - \frac{36834.62}{36834.62 + 53211.23} \approx 0.864 - 0.409 = 0.455$$
+<br>
+  
+  The standard error is calculated as if for a difference of two proportions test.
+
+$$ \widehat{SE}[AD] = \sqrt{ \frac{\widehat{p_1}(1 - \widehat{p_1})}{n_1} + \frac{\widehat{p_2}(1 - \widehat{p_2})}{n_2}  } $$
+$$ \widehat{SE}[AD_{pd}] \approx \sqrt{ \frac{0.864(1 - 0.864)}{351558.2+ 55356.99} + \frac{0.409(1 - 0.409)}{36834.62 + 53211.23}  } = \sqrt{ \frac{0.864(.136)}{406915.19} + \frac{0.409(.591)}{90045.85}  } \approx 1.72 * 10^{-3} $$
+
+<br>
+  
+  In order to calculate the 95% confidence intervals we add and subtract $1.96*\widehat{SE}$ to the estimated absolute difference:
+  $$ 95\% \space \text{CI}[AD_{pd}] = \widehat{AD}_{pd} \pm 1.96*\widehat{SE}[AD_{pd}] \approx 0.455 \pm 1.96(1.72*10^{-3}) \approx 0.455 \pm 0.00337 \approx (0.451, 0.458) $$
+
+<br>
+
+#### Relative Difference of Proportions
+
+  The relative difference of proportions is ratio of one proportion to another. For example, for the personal doctor measure, the relative difference of proportions is the ratio of the proportion of insured individuals that have a doctor to the proportion of uninsured individuals that have a doctor. So the relative difference for the personal doctor measure in 2011 is 2.11, meaning insured individuals are estimated to be about 2.11 times as likely to have a personal doctor than uninsured individuals.
+  
+```{r, echo=F, results="asis"}
+
+x <- matrix(c(ST_PD_t11[1,2:3], ST_PD_t11[2,2:3]), 
+            nrow = 2, ncol = 2, byrow = TRUE,
+            dimnames = list(c("Insured", "Uninsured"), c("Personal Doctor", "No Personal Doctor")))
+pandoc.table(x, caption = "2011 contingency table for personal doctor")
+```
+
+<br>
+
+$$\widehat{RD}_{pd} = \frac{\widehat{p_1}}{\widehat{p_2}} \approx \frac{.864}{.409} \approx 2.11$$
+
+<br>
+
+The confidence interval for relative difference is calculated as follows.
+$$ (1- \alpha)\% \space \text{CI}[RD] = \widehat{RD}*e^{\pm z_{\alpha / 2}*\sqrt{v}}  \space  \space \space \space  \space \space \text{where:}  \space \space v = \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}}  $$
+
+<br>
+
+So the 95% confidence interval for the relative difference between the insured and uninsured for the personal doctor measure for 2011 is:
+
+$$ \sqrt{v} = \sqrt{ \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}} } \approx \sqrt{ \frac{.136}{351558.2 } + \frac{.591}{36834.62} } \approx 4.053*10^{-3} \\ 95\% \space \text{CI}[RD_{pd}] = 2.11*e^{\pm 1.96*0.004053} \approx (2.09, 2.13)$$
 <br>
 <br>
 <br>
