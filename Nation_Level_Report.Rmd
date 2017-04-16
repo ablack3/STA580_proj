@@ -254,7 +254,7 @@ dev.off()
 <br>
 <br>
 
-  Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor. For more information on the proportions for all the individual levels of the doctor utilization measure see the appendix (***link here***).
+  Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor.
   
 ```{r, include=F}
 
@@ -430,13 +430,13 @@ dev.off()
 <br>
 <br>
 
-  Next we will perform Peason Chi-squared tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
+  Next we will perform Peason chi-squared tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
 <br>
 <br>
 
 ### Tests of General Association and Rank Correlation
 
-  The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (***link required***).
+  The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the [appendix](#example-nation-level-analysis-calculations).
   
 ***
 
@@ -1330,6 +1330,208 @@ dev.off()
 
 ![**Figure 9:** The relative difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the ratio of the proportion of uninsured indviduals that have not had a checkup within five years to the proportion of insured individuals that have not. Thus, a relative difference greater than 1 indicates that uninsured individuals are more likely to not have had a checkup within five years. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor.](plots/Rel_Diff_CUg5Y.png)
 
+***
+
+<br>
+
+
+## Appendix
+
+### Example Nation Level Analysis Calculations
+
+  In order to demonstrate how the nation level analysis was done, example calculations for the personal doctor measure are shown below.
+  
+  <br>
+  
+#### Pearson Chi-Squared Test
+
+  The Pearson chi-squared test determines whether or not the distribution of the response variable (in this case whether or not an individual has a personal doctor) is the same at both levels of the explanatory variable (insurance status). The null hypothesis is that there is no association between the explanatory and response variable and thus the distribution of the response variable is the same at both levels of the explanatory variable. The alternative hypothesis is that the distribution of the response variable is not the same at both levels of the explanatory variable and thus there is an association between the explanatory and response variables.
+  
+  This test is performed with a frequency table. The test-statistic is the the sum of the squared difference between the observed and expected values for each cell divided by the expected values of each cell. Under the null hypothesis, this test-statistic has a chi-square distribution with degrees of freedom equal to the number of rows minus one times the number of columns minus one:
+
+  $$X^2 = \sum_{i=1}^n {\frac{(observed - expected)^2}{expected}}   \sim \chi^2_{(r-1)(c-1)}$$
+
+  We can easily calculate this statistic in R using the "chisq.test()" function, which takes as an argument the contingency table we are interested in. The function returns the Pearson test-statistic, the degrees of freedom, and the p-value. It can also return the observed and expected tables if requested.
+  
+```{r}
+
+# ST_PD_t11[,2:3] is the frequency table for insurance status and whether or not an individual has a personal doctor.
+
+chisq.test(ST_PD_t11[,2:3])
+
+pcs <- chisq.test(ST_PD_t11[,2:3])
+
+pcs$statistic
+
+pcs$parameter
+
+pcs$p.value
+
+pcs$observed
+
+pcs$expected
+
+```
+
+  We used this function to perform the Pearson chi-squared tests for all of our measures of interest.
+  
+  <br>
+
+#### Rank Correlation Statistics
+
+  The rank correlation statistics, or concordance statistics, indicate the direction of association between two ordinal variables. The Kendall's tau-b and Goodman and Kruskal's gamma statistics range from -1 to 1, with negative values indicating negative correlation between the two variables and positive values indicating positive correlation between the two variables. A negative 1 indicates perfect negative correlation, a positive 1 indicates perfect positive correlation, and a 0 indicates no correlation. These statistics are calculated using concordant, discordant and (for the tau-b statistic) tied pairs of observations. A concordant pair of observations is a pair for which one observation ranks higher in both the variables than the other observation. A discordant pair of observations is when one observation ranks higher in one variable but lower in the other variable compared to the other observation. A tied pair of observations is when the pair of observations tie for rank in one or both variables. For instance, if we were looking at height and weight, a pair of individuals with one individual being 6 feet tall and 180 pounds and the other individual being 5.8 feet tall and 160 pounds would be a concordant pair. On the other hand, a pair of individuals with one individual being 6 feet tall and 150 pounds and the other being 5.8 feet tall and 160 pounds would be a discordant pair. Finally, a pair of individuals with one individual being 6 feet tall and 100 pounds and one being 6 feet tall and 200 pounds would be a tied pair (as long as they are tied in at least one variable they are considered a tied pair). For a data set of *n* observations, there are $ n*(n-1)/2 $ total pairs. For hypothesis testing with both Kendall's tau-b and Goodman and Kruskal's gamma, we are testing the null hypothesis that there is no correlation between the two variables against the alternative hypothesis that there is a correlation.
+  
+  <br>
+  
+  Goodman and Kruskall's gamma is the simpler of the two rank correlation statistics that we examined, but potentially less informative. Gamma only takes into account the number of discordant and concordant pairs. Thus, a data set with 100 concordant, 10 discordant, and 5 tied pairs would have the same gamma statistic as a data set with 100 concordant, 10 discordant, and 10000 tied pairs. Gamma is calculated by taking the difference between the number of concordant and discordant pairs and dividing it by the number of concordant and discordant pairs combined.
+  
+  $$\widehat{\gamma}  = \frac{C - D}{C + D}$$
+
+* *C* is the number of concordant pairs
+* *D* is the number of discordant pairs
+
+  An approximate standard error for gamma for large samples is given by:
+  
+  $$\widehat{SE}[\gamma] = \sqrt{\frac{n(1 - \widehat{\gamma}^2)}{C + D}}$$
+  
+  We used this standard error to calculate approximate confidence intervals for gamma.
+  
+  For large samples, gamma divided by its standard error has an approximatel standard normal distribution. This is what we used as our test-statistic for gamma, in order to test if there is significant correlation between the two variables of interest (in this case, insurance status and whether or not an individual has a personal doctor).
+  
+  $$\frac{\widehat{\gamma}}{\widehat{SE}} \sim AN(0,1)$$
+
+ In order to calculate the concodance statistics (both gamma and tau), their confidence intervals, their test-statistics, and the associated p-values we created an R function called "Rank.Correlation()". This function will be described after Kendall's tau-b is described next.
+ 
+ <br>
+ 
+ Kendall's tau-b is a little more complicated to compute and interpret than gamma, but it takes ties into account. Our data contained many ties so the tau-b statistic is perhaps a more useful measure for our situation than gamma. Kendall's tau-b looks at the number of discordant pairs and concordant pairs relative to the total number of pairs (including ties) in the data set. The formula is thus more complex.
+ 
+ $$\widehat{\tau_b} = \frac{C - D} {\sqrt{(n_0 - n_1)(n_0 - n_2)}}$$
+
+* $n_0$ is the total number of pairs in the data set: $n(n-1)/2$
+* $n_1$ is the sum of total number of *tied* pairs at each level of the first variable: $n_1 = \sum{T_1}$
+* $n_2$ is the sum of total number of *tied* pairs at each level of the second variable: $n_2 = \sum{T_2}$
+
+  An approximate standard error for the tau-b statistic with large samples is:
+  
+  $$\widehat{SE}[\tau_b] = \frac{2(2n+5)}{9n(n-1)}$$
+
+  We used this standard error to caculate approximate confidence intervals for tau-b, but we did not use it to calculate our test-statistic. Instead we used a more conservative measure.
+  
+  The test-statistic we used for hypothesis testing with tau-b is given below. For large samples this test-statistic has an approximately standard normal distribution.
+  
+   $$\widehat{z_{\tau_b}} = \frac{C - D} {\sqrt{ ( \frac{v_0 - v_t - v_u}{18} )+ v_1 + v_2  }} \sim AN(0,1)$$
+
+* $v_0 = n(n-1)(2n+5)$
+* $v_t = \sum_i t_i(t_i - 1)(2t_i + 5)$
+    + $t_i$ is the total number of tied *values* (not pairs) for the $i^{th}$ level of the first variable. *Tied values* for each level of the first variable are the same as row totals (if the row variable is considered the first variable) or column totals (if the the column variable is considered the first variable).
+* $v_u = \sum_j u_j(u_j - 1)(2u_j +5)$ 
+    + $u_i$ is the total number of tied *values* (not pairs) for the $j^{th}$ level of the second variable. *Tied values* for each level of the second variable are the same as row totals (if the row variable is considered the second variable) or column totals (if the the column variable is considered the second variable).
+* $v_1 = \frac{{\sum_i t_i(t_i - 1)}{\sum_j u_j(u_j - 1)}}{2n(n-1)}$
+* $v_2 = \frac{{\sum_i t_i(t_i - 1)(t_i - 2)}{\sum_j u_j(u_j - 1)(u_j - 2)}}{9n(n-1)(n-2)}$
+  
+  To calculate both the gamma and tau-b statististics, their confidence intervals, their test-statistics, and the corresponding p-values we created the R function "Rank.Correlation()" shown below. This function also calculates the tau-a statistic (a Kendall's tau statistic that does not account for ties) and another test-statistic for the tau-b statistic. However, we found the above statistic to be more conservative and thus chose it for our report. Both test-statistics give p-values of approximately zero for all tests performed in this report.
+  
+```{r}
+
+Rank.Correlation <- function(x, alpha = 0.05){
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  cols <- dim(x)[2]
+  n <- sum(x[1,]) + sum(x[2,])
+  np <- (n*(n-1))/2
+  SE.LS.approx <- sqrt((2*(2*n+5))/(9*n*(n-1)))
+  
+  T.pairs <- sum(x[1,])*(sum(x[1,])-1)/2 + sum(x[2,])*(sum(x[2,])-1)/2
+  Tied.r <- T.pairs
+  
+  C.pairs <- 0
+  D.pairs <- 0
+  Tied.c <- 0
+  for(i in 1:cols){
+    if(i < cols){
+      for(j in (i + 1):cols){
+        C.pairs <- C.pairs + x[1,i]*x[2,j]
+        D.pairs <- D.pairs + x[2,i]*x[1,j]
+      }
+    }
+    
+    T.pairs <- T.pairs + x[1,i]*x[2,i]
+    Tied.c <- Tied.c + sum(x[,i])*(sum(x[,i])-1)/2
+    
+  }
+  
+  vt <- 0
+  v1.c <- 0
+  v2.c <- 0
+  for(i in 1:cols){
+    s <- sum(x[,i])*(sum(x[,i])-1)
+    vt <- vt + s*(2*sum(x[,i])+5)
+    v1.c <- v1.c + s
+    v2.c <- v2.c + s*(sum(x[,i])-2)
+  }
+  
+  vu <- 0
+  v1.r <- 0
+  v2.r <- 0
+  for(i in 1:2){
+    s <- sum(x[i,])*(sum(x[i,])-1)
+    vu <- vu + s*(2*sum(x[i,])+5)
+    v1.r <- v1.r + s
+    v2.r <- v2.r + s*(sum(x[i,])-2)
+  }
+  
+  v1 <- v1.c*v1.r/(2*n*(n-1))
+  v2 <- v2.c*v2.r/(9*n*(n-1)*(n-2))
+  
+  v0 <- n*(n-1)*(2*n+5)
+  
+  v <- (v0 - vt - vu) / (18) + v1 + v2
+ 
+  
+  Ktau.a <- (C.pairs - D.pairs) / np
+  Ktau.b <- (C.pairs - D.pairs) / sqrt( (np - Tied.r)*(np - Tied.c) )
+  
+  Z.a <- as.numeric( 3*(C.pairs - D.pairs) / sqrt(n*(n-1)*(2*n+5)/2) )
+  pva <- pnorm(abs(Z.a), lower.tail = F)
+  Z.a.Alt <- as.numeric( Ktau.a/SE.LS.approx )
+  pva.Alt <- pnorm(abs(Z.a.Alt), lower.tail = F)
+  
+  Ta.LB <- Ktau.a - z*SE.LS.approx
+  Ta.UB <- Ktau.a + z*SE.LS.approx
+  
+  Z.b <- as.numeric( (C.pairs - D.pairs) / sqrt(v) )
+  pvb <- pnorm(abs(Z.b), lower.tail = F)
+  Z.b.Alt <- as.numeric( Ktau.b/SE.LS.approx )
+  pvb.Alt <- pnorm(abs(Z.b.Alt), lower.tail = F)
+  
+  Tb.LB <- Ktau.b - z*SE.LS.approx
+  Tb.UB <- Ktau.b + z*SE.LS.approx
+  
+  gamma <- (C.pairs - D.pairs)/(C.pairs + D.pairs)
+  SE.gamma <- sqrt(n*(1-gamma^2)/(C.pairs+D.pairs))
+  Z.gamma <- as.numeric( gamma/SE.gamma )
+  pvg <- pnorm(abs(Z.gamma), lower.tail = F)
+  
+  G.LB <- gamma - z*SE.gamma
+  G.UB <- gamma + z*SE.gamma
+  
+  out <- matrix(c(Ta.LB, Tb.LB, G.LB, Ktau.a, Ktau.b, gamma, Ta.UB, Tb.UB, G.UB, Z.a, Z.b, Z.gamma, 
+                  pva, pvb, pvg, Z.a.Alt, Z.b.Alt, NA, pva.Alt, pvb.Alt, NA),
+                nrow = 3, ncol = 7,
+                dimnames = list(c("Tau.a", "Tau.b", "Gamma"), 
+                                c("Lower.Bound","Estimate", "Upper Bound", "TS", "p.val", "Alt.TS", "p.val")))
+  
+  out
+}
+
+roc.pd11 <- Rank.Correlation(ST_PD_t11[,2:3])[2:3,1:5]
+
+roc.pd11
+
+```
+  
+  
 <br>
 <br>
 <br>
