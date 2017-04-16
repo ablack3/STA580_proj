@@ -1566,7 +1566,83 @@ roc.pd11</code></pre>
 <pre><code>##       Lower.Bound Estimate  Upper Bound TS       p.val
 ## Tau.b 0.4221869   0.4240404 0.4258939   298.9289 0    
 ## Gamma 0.7977142   0.8034258 0.8091373   275.701  0</code></pre>
-<p><br> <br> <br> <br> <br> <br> <br></p>
+<p><br></p>
+</div>
+<div id="absolute-difference-of-proportions" class="section level4">
+<h4>Absolute Difference of Proportions</h4>
+<p>The absolute difference (AD) in proportions is the proportion in one group minus the proportion in the other group. For example, for the personal doctor measure, the absolute difference in proportion is the difference between the proportion of insured individuals with a personal doctor and the proportion of uninsured individuals with a personal doctor.</p>
+<table style="width:75%;">
+<caption>2011 contingency table for personal doctor</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="25%"></col>
+<col width="27%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Personal Doctor</th>
+<th align="center">No Personal Doctor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Insured</strong></td>
+<td align="center">351558.2</td>
+<td align="center">55356.99</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Uninsured</strong></td>
+<td align="center">36834.62</td>
+<td align="center">53211.23</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><span class="math display">\[\widehat{AD}_{pd} = \widehat{p_1} - \widehat{p_2} = \frac{351558.2}{351558.2+ 55356.99} - \frac{36834.62}{36834.62 + 53211.23} \approx 0.864 - 0.409 = 0.455\]</span> <br></p>
+<p>The standard error is calculated as if for a difference of two proportions test.</p>
+<p><span class="math display">\[ \widehat{SE}[AD] = \sqrt{ \frac{\widehat{p_1}(1 - \widehat{p_1})}{n_1} + \frac{\widehat{p_2}(1 - \widehat{p_2})}{n_2}  } \]</span> <span class="math display">\[ \widehat{SE}[AD_{pd}] \approx \sqrt{ \frac{0.864(1 - 0.864)}{351558.2+ 55356.99} + \frac{0.409(1 - 0.409)}{36834.62 + 53211.23}  } = \sqrt{ \frac{0.864(.136)}{406915.19} + \frac{0.409(.591)}{90045.85}  } \approx 1.72 * 10^{-3} \]</span></p>
+<p><br></p>
+<p>In order to calculate the 95% confidence intervals we add and subtract <span class="math inline">\(1.96*\widehat{SE}\)</span> to the estimated absolute difference: <span class="math display">\[ 95\% \space \text{CI}[AD_{pd}] = \widehat{AD}_{pd} \pm 1.96*\widehat{SE}[AD_{pd}] \approx 0.455 \pm 1.96(1.72*10^{-3}) \approx 0.455 \pm 0.00337 \approx (0.451, 0.458) \]</span></p>
+<p><br></p>
+</div>
+<div id="relative-difference-of-proportions" class="section level4">
+<h4>Relative Difference of Proportions</h4>
+<p>The relative difference of proportions is ratio of one proportion to another. For example, for the personal doctor measure, the relative difference of proportions is the ratio of the proportion of insured individuals that have a doctor to the proportion of uninsured individuals that have a doctor. So the relative difference for the personal doctor measure in 2011 is 2.11, meaning insured individuals are estimated to be about 2.11 times as likely to have a personal doctor than uninsured individuals.</p>
+<table style="width:75%;">
+<caption>2011 contingency table for personal doctor</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="25%"></col>
+<col width="27%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Personal Doctor</th>
+<th align="center">No Personal Doctor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>Insured</strong></td>
+<td align="center">351558.2</td>
+<td align="center">55356.99</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Uninsured</strong></td>
+<td align="center">36834.62</td>
+<td align="center">53211.23</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p><span class="math display">\[\widehat{RD}_{pd} = \frac{\widehat{p_1}}{\widehat{p_2}} \approx \frac{.864}{.409} \approx 2.11\]</span></p>
+<p><br></p>
+<p>The confidence interval for relative difference is calculated as follows. <span class="math display">\[ (1- \alpha)\% \space \text{CI}[RD] = \widehat{RD}*e^{\pm z_{\alpha / 2}*\sqrt{v}}  \space  \space \space \space  \space \space \text{where:}  \space \space v = \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}}  \]</span></p>
+<p><br></p>
+<p>So the 95% confidence interval for the relative difference between the insured and uninsured for the personal doctor measure for 2011 is:</p>
+<p><span class="math display">\[ \sqrt{v} = \sqrt{ \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}} } \approx \sqrt{ \frac{.136}{351558.2 } + \frac{.591}{36834.62} } \approx 4.053*10^{-3} \\ 95\% \space \text{CI}[RD_{pd}] = 2.11*e^{\pm 1.96*0.004053} \approx (2.09, 2.13)\]</span> <br> <br> <br> <br> <br> <br></p>
 </div>
 </div>
 </div>
