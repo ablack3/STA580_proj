@@ -4,6 +4,25 @@ author: "Andrew Deighan"
 date: "April 14, 2017"
 output: html_document
 ---
+## Introduction
+
+  Utilization of and access to primary healthcare has been shown time and time again to improve health outcomes and lower costs. Primary care is the single most important aspect of a health system, able to act as the initial access point to the healthcare system as a whole, and to fulfill the majority of people's needs. Even in cases where specialized care is needed, better health outcomes are regularly acheived when this specialized care is coordinated through a primary care provider [1]. From the county level to the national level, greate accessibility of primary care is strongly associated with increased general health along with decreased mortality rates, hospital admissions, overall healthcare system costs, and socieoeconomic disparities [1].
+  
+  Countries with governmental policies supportive to primary care have better primary care systems and subsequently better health outcomes at lower costs. One of the policies most consistently linked with better primary care is universal financial coverage of healthcare costs, provided by or regulated by the goverment [1]. Most industrialized countries provide universal or near-universal access to primary care. The United States is not included in this group. For the vast majority of people in the United States who do not qualify for public healthcare covereage, one of the principal benefits of private health insurance is access to primary care. This health insurance generally must be paid for privately or acquired through an employer.
+  
+  In March 2010 the Patient Protection and Affordable Care Act (ACA) was signed into law. One of the primary objectives of this legislation was to decrease the uninsured rate in the United States. Although some reforms began in 2010 directly after the signing of the bill, mast major reforms did not take effect until 2014 [2]. Beginning in 2014 the government funded Medicaid program was expanded in most states, new private insurance marketplaces selling government subsidized insurance plans were opened, and new consumer protections were placed on private insurance companies. During the first open-enrollment period of the ACA (Oct 1st 2013 through April 15th 2014) an estimated 20 million Americans gained insurance under the ACA. In roughly the same period of time the uninsured rate dropped from around 18% to about 13.4%. Since then the uninsured rate has continued to steadily drop, down to an estimated 9.1% in 2015 [Census].
+  
+  With this recent boost in the proportion of Americans with health insurance come important questions about the overall effects of more people having health insurance. Of primary interest to us is the relationship between insurance status and access to and utilization of primary care in the United States. If insurance status is indeed linked to increased utilization of primary care then the reduction in the uninsured rate could herald future overall improvement of health outcomes and decreases in costs.
+  
+  Our study uses data from the 2011 through 2015 Behavioral Risk Factor Surveillance System (BRFSS) annual surveys. We will be looking at the association between insurance status and three measures: whether or not an individual has a personal doctor, the frequency of general health checkups for all individuals, and the frequency of general health checkups for individuals that have a personal doctor.
+
+## Methods and Results
+
+### Data
+
+  The data used in this study were directly taken from the Behavioral Risk Factor Surveillance System (BRFSS) annual surveys from 2011 through 2015. The BRFSS survey is a joint effort between individual state and territory health departments and the CDC. Every year, each state does a land-line and cell-phone survey of selected telephone numbers of residents in their state and asks a set of questions. The core questions asked by each state are the same. The data used in this study came from responses to core questions of the BRFSS Survey that all states were asked. Any refusals to respond or responses of "Unsure/Don't Know" for the response variable or any of the explanatory variables of interest were ignored. Thus, only full responses were included. However, the data sets are large so the fraction of incomplete responses was negligble.
+
+### Analysis at the National Level
 
 ```{r setup, include=FALSE}
 
@@ -155,22 +174,21 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
 ```
 
 
-## Methods and Results
 
-  For our study we used data from the BRFSS surveys from 2011 through 2015 to study the relationship between insurance status and measures of primary care access and utilization.
+  For analysis at the nation level we used three questions asked in the BRFSS survey: one to pertaining to insurance status (our explanatory variable), one about whether or not an individual has a personal doctor, and one asking how long it has been since their last general health checkup. The personal doctor and time since last checkup responses are the variables that we use as measures of primary care access and utilization. 
 
-* Insurance Status: Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?
+1. Insurance Status: Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?
     + 1: Yes
     + 2: No
     + 7: Don't know/Not Sure
     + 9: Refused
-* Personal Doctor: Do you have one person you think of as your personal doctor or health care provider? (If "No" ask "Is there more than one or is there no person who you think of as your personal doctor or health care provider?".)
+2. Personal Doctor: Do you have one person you think of as your personal doctor or health care provider? (If "No" ask "Is there more than one or is there no person who you think of as your personal doctor or health care provider?".)
     + 1: Yes, only one
     + 2: More than one
     + 3: No
     + 7: Don't know/Not Sure
     + 9: Refused
-* Doctor Utilization: About how long has it been since you last visited a doctor for a routine checkup? [A routine checkup is a general physical exam, not an exam for a specific injury, illness, or condition.]
+3. Doctor Utilization: About how long has it been since you last visited a doctor for a routine checkup? [A routine checkup is a general physical exam, not an exam for a specific injury, illness, or condition.]
     + 1: Within past year (anytime less than 12 months ago)
     + 2: Within past 2 years (1 year but less than 2 years ago)
     + 3: Within past 5 years (2 years but less than 5 years ago)
@@ -181,13 +199,20 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
 <br>
 <br>
     
-  The first part of our study considers that nation as a whole when investigating the relationships between insurance status and our measures of access to, and utilization of, primary care. For this part of the study we considered three measures as proxies of primary care access and utilization:
+  From the above questions we organized three different measures that we considered For this part of the study we considered three measures as proxies of primary care access and utilization:
 
 * Personal Doctor: Whether or not an individual reported having a personal doctor
+    + Two Levels:
+        - Personal doctor
+        - No personal doctor
 * Doctor Utilization: The reported period of time since last general checkup. We only looked at two levels for this part of the analysis. For information on all levels see appendix.
-    + Within the past year
-    + Not within the past five years (aggregate of "5 or more years ago" and "Never")
-* Doctor Utilization given Personal Doctor: Same as above, but only considering individuals who reported having a personal doctor  
+    + Two Levels:
+        - Within the past year
+        - Not within the past five years (aggregate of the responses: "5 or more years ago" and "Never")
+* Doctor Utilization given Personal Doctor: Same as above, but only considering individuals who reported having a personal doctor
+    + Two Levels:
+        - Within the past year
+        - Not within the past five years
 <br>
 <br>
 
@@ -434,7 +459,7 @@ dev.off()
 <br>
 <br>
 
-### Tests of General Association and Rank Correlation
+#### Tests of General Association and Rank Correlation
 
   The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the [appendix](#example-nation-level-analysis-calculations).
   
@@ -833,7 +858,7 @@ pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics
 
 <br>
 
-### Absolute and Relative Difference of Proportions
+#### Absolute and Relative Difference of Proportions
 
   For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. The absolute difference is the algebraic difference between two proportions (one proportion minus the other). Thus, an absolute difference of 0.3 implies that one proportion is larger than the other by 0.3. The relative difference is the ratio of one proportion to another, so a relative difference of 1.3 means that one proportion is 1.3 times larger than the other. For more details on how the absolute and relative differences in proportions were calculated please see the example in the appendix (***Link Required***).
   
