@@ -3,14 +3,16 @@ title: "Untitled"
 author: "Andrew Deighan"
 date: "April 14, 2017"
 output: html_document
+bibliography: ref.bib
+csl: numeric-style.csl
 ---
 ## Introduction
 
-  Utilization of and access to primary healthcare has been shown time and time again to improve health outcomes and lower costs. Primary care is the single most important aspect of a health system, able to act as the initial access point to the healthcare system as a whole, and to fulfill the majority of people's needs. Even in cases where specialized care is needed, better health outcomes are regularly acheived when this specialized care is coordinated through a primary care provider [1]. From the county level to the national level, greate accessibility of primary care is strongly associated with increased general health along with decreased mortality rates, hospital admissions, overall healthcare system costs, and socieoeconomic disparities [1].
+  Utilization of and access to primary healthcare has been shown time and time again to improve health outcomes and lower costs. Primary care is the single most important aspect of a health system, able to act as the initial access point to the healthcare system as a whole, and to fulfill the majority of people's needs. Even in cases where specialized care is needed, better health outcomes are regularly acheived when this specialized care is coordinated through a primary care provider [@PrimaryCare]. From the county level to the national level, greate accessibility of primary care is strongly associated with increased general health along with decreased mortality rates, hospital admissions, overall healthcare system costs, and socieoeconomic disparities [@PrimaryCare].
   
-  Countries with governmental policies supportive to primary care have better primary care systems and subsequently better health outcomes at lower costs. One of the policies most consistently linked with better primary care is universal financial coverage of healthcare costs, provided by or regulated by the goverment [1]. Most industrialized countries provide universal or near-universal access to primary care. The United States is not included in this group. For the vast majority of people in the United States who do not qualify for public healthcare covereage, one of the principal benefits of private health insurance is access to primary care. This health insurance generally must be paid for privately or acquired through an employer.
+  Countries with governmental policies supportive to primary care have better primary care systems and subsequently better health outcomes at lower costs. One of the policies most consistently linked with better primary care is universal financial coverage of healthcare costs, provided by or regulated by the goverment [@PrimaryCare]. Most industrialized countries provide universal or near-universal access to primary care. The United States is not included in this group. For the vast majority of people in the United States who do not qualify for public healthcare covereage, one of the principal benefits of private health insurance is access to primary care. This health insurance generally must be paid for privately or acquired through an employer.
   
-  In March 2010 the Patient Protection and Affordable Care Act (ACA) was signed into law. One of the primary objectives of this legislation was to decrease the uninsured rate in the United States. Although some reforms began in 2010 directly after the signing of the bill, mast major reforms did not take effect until 2014 [2]. Beginning in 2014 the government funded Medicaid program was expanded in most states, new private insurance marketplaces selling government subsidized insurance plans were opened, and new consumer protections were placed on private insurance companies. During the first open-enrollment period of the ACA (Oct 1st 2013 through April 15th 2014) an estimated 20 million Americans gained insurance under the ACA. In roughly the same period of time the uninsured rate dropped from around 18% to about 13.4%. Since then the uninsured rate has continued to steadily drop, down to an estimated 9.1% in 2015 [Census].
+  In March 2010 the Patient Protection and Affordable Care Act (ACA) was signed into law. One of the primary objectives of this legislation was to decrease the uninsured rate in the United States. Although some reforms began in 2010 directly after the signing of the bill, mast major reforms did not take effect until 2014 [@ACA]. Beginning in 2014 the government funded Medicaid program was expanded in most states, new private insurance marketplaces selling government subsidized insurance plans were opened, and new consumer protections were placed on private insurance companies. During the first open-enrollment period of the ACA (Oct 1st 2013 through April 15th 2014) an estimated 20 million Americans gained insurance under the ACA. In roughly the same period of time the uninsured rate dropped from around 18% to about 13.4% [@ACA]. Since then the uninsured rate has continued to steadily drop, down to an estimated 9.1% in 2015 [@Census].
   
   With this recent boost in the proportion of Americans with health insurance come important questions about the overall effects of more people having health insurance. Of primary interest to us is the relationship between insurance status and access to and utilization of primary care in the United States. If insurance status is indeed linked to increased utilization of primary care then the reduction in the uninsured rate could herald future overall improvement of health outcomes and decreases in costs.
   
@@ -20,7 +22,7 @@ output: html_document
 
 ### Data
 
-  The data used in this study were directly taken from the Behavioral Risk Factor Surveillance System (BRFSS) annual surveys from 2011 through 2015. The BRFSS survey is a joint effort between individual state and territory health departments and the CDC. Every year, each state does a land-line and cell-phone survey of selected telephone numbers of residents in their state and asks a set of questions. The core questions asked by each state are the same. The data used in this study came from responses to core questions of the BRFSS Survey that all states were asked. Any refusals to respond or responses of "Unsure/Don't Know" for the response variable or any of the explanatory variables of interest were ignored. Thus, only full responses were included. However, the data sets are large so the fraction of incomplete responses was negligble.
+  The data used in this study were directly taken from the Behavioral Risk Factor Surveillance System (BRFSS) annual surveys from 2011 through 2015. The BRFSS survey is a joint effort between individual state and territory health departments and the CDC [@BRFSS]. Every year, each state does a land-line and cell-phone survey of selected telephone numbers of residents in their state and asks a set of questions. The core questions asked by each state are the same. The data used in this study came from responses to core questions of the BRFSS Survey that all states were asked. Any refusals to respond or responses of "Unsure/Don't Know" for the response variable or any of the explanatory variables of interest were ignored. Thus, only full responses were included. However, the data sets are large so the fraction of incomplete responses was negligble.
 
 ### Analysis at the National Level
 
@@ -852,7 +854,7 @@ pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics
 <br>
 
 ***
-  For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed a general association with insurance status. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the appendix (***link required***)
+  For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed a general association with insurance status. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the [appendix](#example-nation-level-analysis-calculations).
   
   Now that we have confirmed the presence and direction of association between insurance status and our measures of primary care access, we will examine in more detail the degree of this relationship.
 
@@ -860,7 +862,7 @@ pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics
 
 #### Absolute and Relative Difference of Proportions
 
-  For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. The absolute difference is the algebraic difference between two proportions (one proportion minus the other). Thus, an absolute difference of 0.3 implies that one proportion is larger than the other by 0.3. The relative difference is the ratio of one proportion to another, so a relative difference of 1.3 means that one proportion is 1.3 times larger than the other. For more details on how the absolute and relative differences in proportions were calculated please see the example in the appendix (***Link Required***).
+  For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. The absolute difference is the algebraic difference between two proportions (one proportion minus the other). Thus, an absolute difference of 0.3 implies that one proportion is larger than the other by 0.3. The relative difference is the ratio of one proportion to another, so a relative difference of 1.3 means that one proportion is 1.3 times larger than the other. For more details on how the absolute and relative differences in proportions were calculated please see the example in the [appendix](#absolute-difference-of-proportions).
   
   In the previous sections we showed that there is a positive correlation between having insurance and having a personal doctor. Table 7 lists the estimated absolute difference in proportion between individuals in the insured group that have a doctor and individuals in the uninsured group that have a doctor. Figure 4 graphically shows these absolute differences in proportions. The line segments on top of each bar show the 95% confidence intervals for the difference in proportions. Note that the y-axis only covers a small range, so although the differences in proportions may decrease from 2011 to 2015, the magnitude of this decrease is small. Additionally, the all the confidence intervals overlap except for those for 2011 and 2015, and even these two confidence intervals are very close.
   
@@ -1358,7 +1360,20 @@ dev.off()
 ***
 
 <br>
+<br>
 
+## Discussion
+
+  Our measures of primary care access and utilization were all strongly associated with insurance. The relationship between insuance status and primary care utilization was less strong when considering only individuals that have a personal doctor. However, for all three measures having insurance was positively correlated with primary care access and utilization. 
+  
+  Individuals with health insurance, when looking at all years combined, are estimated to be 2.12 times as likely to have a personal doctor than individuals without insurance. When looking at frequency of general health checkups, individuals with health insurance were 1.84 times as likely to have had checkup within a year. Moreover, uninsured individuals were 3.87 times as likely to have not had a checkup within the past five years. When considering only individuals who reported having a personal doctor the differences, as expected, were lower in magnitude, but still present. Insured individuals with a personal docter were 1.37 times as likely to have had a checkup within a year when compared to uninsured individuals who have a personal docter. Uninsured individuals who reported having a doctor were still 3.29 times as likely to not have had a general health checkup in the last five years than insured individuals with a personal doctor. The 95% confidence intervals for these relative differences in proportion are quite narrow, indicating that the estimated relative differences in proportion are likely close to the actual relative differences in the population.
+  
+  The degree of the relationship between insurance status and frequency of general health checkups decreased slightly from 2011 to 2015. The relative difference in the proportion of insured individuals who have had a checkup within one year and the proportion of uninsured individuals who have decreased from ~1.90 (95% CI: 1.8806,1.9126) in 2011 to ~1.75 (95% CI: 1.7357, 1.7715) in 2015. However, the relationship between insurance status and the proportion of individuals who have *not* had checkup within five years did not change significantly from 2011 to 2015.
+  
+  Our analysis indicates that insurance status in the United States is indeed correlated with better primary care access and utilization. The presence of this relationship is promising because it would imply that as uninsured rates drop in the United States, access to primary care should be expected to rise, and the subsequent improvements in health outcomes and reduction in costs should hopefully follow.
+
+<br>
+<br>
 
 ## Appendix
 
@@ -1457,7 +1472,7 @@ pcs$expected
   
   To calculate both the gamma and tau-b statististics, their confidence intervals, their test-statistics, and the corresponding p-values we created the R function "Rank.Correlation()" shown below. This function also calculates the tau-a statistic (a Kendall's tau statistic that does not account for ties) and another test-statistic for the tau-b statistic. However, we found the above statistic to be more conservative and thus chose it for our report. Both test-statistics give p-values of approximately zero for all tests performed in this report.
   
-```{r}
+```{r, results="asis"}
 
 Rank.Correlation <- function(x, alpha = 0.05){
   
@@ -1552,7 +1567,7 @@ Rank.Correlation <- function(x, alpha = 0.05){
 
 roc.pd11 <- Rank.Correlation(ST_PD_t11[,2:3])[2:3,1:5]
 
-roc.pd11
+pandoc.table(roc.pd11)
 
 ```
 
@@ -1615,10 +1630,9 @@ So the 95% confidence interval for the relative difference between the insured a
 $$ \sqrt{v} = \sqrt{ \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}} } \approx \sqrt{ \frac{.136}{351558.2 } + \frac{.591}{36834.62} } \approx 4.053*10^{-3} \\ 95\% \space \text{CI}[RD_{pd}] = 2.11*e^{\pm 1.96*0.004053} \approx (2.09, 2.13)$$
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
+
+## References
+
 
 
 
