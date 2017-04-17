@@ -1,0 +1,52 @@
+---
+title: "The association between insurance status, use of primary care, and diagnosis of chronic illness"
+author: "Andrew Deighan and Adam Black"
+date: "4/16/2017"
+output: 
+      html_document:
+            theme: paper
+---
+
+# Introduction
+In the years following the passage of the Patient Protection and Affordable Care Act (ACA) the uninsured rate has dropped from around 15% in 2010 to around 9% in 2015. Insurance coverage is thought to be associated with greater access to primary care. Greater access to primary care is strongly linked with better health outcomes and lower healthcare costs. We are interested in how presence of insurance is linked with utilization of primary care and the subsequent diagnois of chronic illness. We examined data from the Behavioral Risk Factor Surveillence System, 2011-2015, collected by the CDC. This survey is collected continuously in the United States by the CDC and asks respondents questions about their health status amoung other things.
+
+
+
+# Methods
+
+To investigate the assiciation between insurance status and use of primary care we... (Andrew)
+
+We investigated the association between having a primary care docotor (Do you have a personal docotr?) and being diagnosed with one of 11 chronic illnesses: arthritis, asthma, COPD, depression, diabetes, heart attack, high blood pressure, kidney disease, stoke, skin cancer, and cancer other than skin cancer. The questions were generally worded "Have you ever been diagnosed with _____?" Implying that we are measuring prevelence and not incidence.
+
+To investigate the association between having a primary care doctor and the likelihod of being diagnosed with a chronic illness we simply calculated the relative risk of diagnosis (risk in people with a PCP/risk in people with out a PCP). Since age and income are associated with both having a PCP and development of chronic illness we stratified our analysis by these variables. Age was broken into four categories:40-54, 55-65, 65-75, >75. Annual Household income was broken into three categories: <25K, 25-50K, >50K. The ratio of the risk of diagnosis in those with a PCP to the risk of diagnosis in those without a PCP was calculated for each combination of age an income group. The results are shown in figure/table X. These were calculated by combining all years 2011-2015 together in order increase sample size. The results did not appear to differ in a meaningful way from year to year. 
+
+The BRFSS data includes sample weights and the relative risks were calculated using both the raw conts of respondents and the weighted sample. The results were similar.However the confidence intervals differ depending on which method was used. (need to think though this a bit. not sure if we should use standard CI formula with the weighted sample counts).
+
+# Results
+We observed a stong/moderate? and consistant relationship between insurance status and use of a PCP. The rank correlation stats are shown in table X.
+
+![figure 1](./plots/Difference_in_Doctor_Utilization.png)
+
+
+(rest of Andrew's results)
+
+
+The relative risk of diagnosis of chronic illness is shown below in figure X. 
+
+![figure x](./plots/facet_plot_all.png)
+
+Nearly all of the relative risk values are (significanlty?) greater than one. In fact most are greater than 1.5. These results are also printed in table X. That is people with a PCP are much more likely than those without a personal docotor to be recieve a diagnosis for a chronic illness or cancer. While it is possible that people without a personal doctor might be healthier it does not seem likely that this accounts for the magnitude and consistancy of under diagnosis across conditions, years, age and income categories. When we examined the risk of being in fair or poor general health between those with a PCP and those without, the difference was small. See table X for these risk ratios. This indicates that people without a PCP are not so much healthier than those without as to account for the striking difference in diagnosis rates.
+
+For some chronic illness the difference in diagnosis rates seems to be more affected by age and income than others. For exmaple the young (40-55)  and poor (<25K) without a PCP are over 2.5 times more likely to be diagnosed with skin cancer than their counterpats who have a PCP. This difference is almost certainly due underdiagnosis and not a true difference in incidence. 
+
+In most chronic illness we see the difference between those with a PCP and those without getting smaller as people age. Insurance status certainly changes as people hit age 65 and qualify for Medicare. As a result the number of people without a PCP drops as age increases particularly at the age 65 cutoff. We might hypothesize that one reason the differences disappear as people get older is that those without a PCP at an old age have probably had a PCP at some point in the past and may have had the opportunity to have thier issues diagnosed. It may also be that a survivor effect is taking place. The people who say had undiagnosed skin cancer when they are age 50 may not be alive at age 75, thus causing the sample of people without a PCP to be biased toward healthier people who have surevived without medical care. These are purely speculations and would rewuire followup analysis for futher investigation.
+
+
+
+# Discussion
+We have shown that there is an association between insurance status and having a PCP. We have also investigated the association between having a PCP and likelihood of diagnosis of a chronic illness or cancer. The extent to which the likelihood of diagnosis differs between those with a PCP and those without across age, income, and condition indicates widespread underdiagnosis of these chronic illnesses and cancer. It would not be difficult to estimate the number of undiagnosed cases of chronic illness by simply assuming the prevelence rates are equal between those with a PCP and those without. (Maybe I'll do this calculaion?). This highlights the  importance of primary care in identifying diagnosing important chronic illnesses. It further highlights the importance of insurance status as a gateway to primary care access. 
+
+
+
+
+

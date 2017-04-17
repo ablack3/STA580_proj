@@ -168,6 +168,10 @@ summary_table %>% select(-hlthpln1) %>% as.matrix() %>% chisq.test()
 
 ### RESPONSE: Haha sweet, I've never used the %>% operator or the dplyr package. It's a bit confusing
 ###           at first but it does make it a lot shorter. Thanks!
+
+## :) Hey this is even shorter. 
+summary_table <- xtabs(x.llcpwt ~ hlthpln1 + checkup1, data = working.data)
+chisq.test(summary_table)
 #######################################
 
 # chi-square test of general association

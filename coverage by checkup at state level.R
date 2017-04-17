@@ -10,6 +10,7 @@ full <- read.csv("/Users/adamblack/Downloads/Behavioral_Risk_Factor_Surveillance
 g <- full[grepl("checkup", full$Question), "Question"] %>% unique()
 head(g)
 
+
 df <- full %>% filter(grepl("checkup|Do you have any kind of health care coverage?", Question)) %>% 
             filter(Break_Out == "Overall") %>% 
             filter(!(Locationabbr %in% c("US","GU","PR", "UW", "DC"))) %>%
