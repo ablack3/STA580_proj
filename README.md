@@ -9,6 +9,8 @@ To this end we directed or study down two specific avenues:
 
 The data used for this analysis was acquired from the Behavioral Risk Factor Surveillance System (BRFSS) reports compiled by the CDC. These reports are freely available at the CDC website: [BRFSS](https://www.cdc.gov/brfss/)
 
+Report website: [https://ablack3.github.io/STA580_proj/](https://ablack3.github.io/STA580_proj/)
+
 
 
 

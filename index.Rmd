@@ -2,9 +2,8 @@
 title: "The association between insurance status, use of primary care, and diagnosis of chronic illness"
 author: "Andrew Deighan and Adam Black"
 date: "4/16/2017"
-output: 
-      html_document:
-            theme: paper
+output: html_document
+
 ---
 
 # Introduction
