@@ -2,7 +2,9 @@
 title: "The association between insurance status, use of primary care, and diagnosis of chronic illness"
 author: "Andrew Deighan and Adam Black"
 date: "4/16/2017"
-output: html_document
+output: 
+      html_document:
+            theme: paper
 
 ---
 
@@ -24,7 +26,6 @@ The BRFSS data includes sample weights and the relative risks were calculated us
 # Results
 We observed a stong/moderate? and consistant relationship between insurance status and use of a PCP. The rank correlation stats are shown in table X.
 
-![figure 1](./plots/Difference_in_Doctor_Utilization.png)
 
 
 (rest of Andrew's results)
@@ -32,7 +33,7 @@ We observed a stong/moderate? and consistant relationship between insurance stat
 
 The relative risk of diagnosis of chronic illness is shown below in figure X. 
 
-![figure x](./plots/facet_plot_all.png)
+![figure x](https://github.com/ablack3/STA580_proj/blob/master/plots/facet_plot_all.png)
 
 Nearly all of the relative risk values are (significanlty?) greater than one. In fact most are greater than 1.5. These results are also printed in table X. That is people with a PCP are much more likely than those without a personal docotor to be recieve a diagnosis for a chronic illness or cancer. While it is possible that people without a personal doctor might be healthier it does not seem likely that this accounts for the magnitude and consistancy of under diagnosis across conditions, years, age and income categories. When we examined the risk of being in fair or poor general health between those with a PCP and those without, the difference was small. See table X for these risk ratios. This indicates that people without a PCP are not so much healthier than those without as to account for the striking difference in diagnosis rates.
 
