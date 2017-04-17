@@ -3,7 +3,28 @@ title: "Untitled"
 author: "Andrew Deighan"
 date: "April 14, 2017"
 output: html_document
+bibliography: ref.bib
+csl: numeric-style.csl
 ---
+## Introduction
+
+  Utilization of and access to primary healthcare has been shown time and time again to improve health outcomes and lower costs. Primary care is the single most important aspect of a health system, able to act as the initial access point to the healthcare system as a whole, and to fulfill the majority of people's needs. Even in cases where specialized care is needed, better health outcomes are regularly acheived when this specialized care is coordinated through a primary care provider [@PrimaryCare]. From the county level to the national level, greate accessibility of primary care is strongly associated with increased general health along with decreased mortality rates, hospital admissions, overall healthcare system costs, and socieoeconomic disparities [@PrimaryCare].
+  
+  Countries with governmental policies supportive to primary care have better primary care systems and subsequently better health outcomes at lower costs. One of the policies most consistently linked with better primary care is universal financial coverage of healthcare costs, provided by or regulated by the goverment [@PrimaryCare]. Most industrialized countries provide universal or near-universal access to primary care. The United States is not included in this group. For the vast majority of people in the United States who do not qualify for public healthcare covereage, one of the principal benefits of private health insurance is access to primary care. This health insurance generally must be paid for privately or acquired through an employer.
+  
+  In March 2010 the Patient Protection and Affordable Care Act (ACA) was signed into law. One of the primary objectives of this legislation was to decrease the uninsured rate in the United States. Although some reforms began in 2010 directly after the signing of the bill, mast major reforms did not take effect until 2014 [@ACA]. Beginning in 2014 the government funded Medicaid program was expanded in most states, new private insurance marketplaces selling government subsidized insurance plans were opened, and new consumer protections were placed on private insurance companies. During the first open-enrollment period of the ACA (Oct 1st 2013 through April 15th 2014) an estimated 20 million Americans gained insurance under the ACA. In roughly the same period of time the uninsured rate dropped from around 18% to about 13.4% [@ACA]. Since then the uninsured rate has continued to steadily drop, down to an estimated 9.1% in 2015 [@Census].
+  
+  With this recent boost in the proportion of Americans with health insurance come important questions about the overall effects of more people having health insurance. Of primary interest to us is the relationship between insurance status and access to and utilization of primary care in the United States. If insurance status is indeed linked to increased utilization of primary care then the reduction in the uninsured rate could herald future overall improvement of health outcomes and decreases in costs.
+  
+  Our study uses data from the 2011 through 2015 Behavioral Risk Factor Surveillance System (BRFSS) annual surveys. We will be looking at the association between insurance status and three measures: whether or not an individual has a personal doctor, the frequency of general health checkups for all individuals, and the frequency of general health checkups for individuals that have a personal doctor.
+
+## Methods and Results
+
+### Data
+
+  The data used in this study were directly taken from the Behavioral Risk Factor Surveillance System (BRFSS) annual surveys from 2011 through 2015. The BRFSS survey is a joint effort between individual state and territory health departments and the CDC [@BRFSS]. Every year, each state does a land-line and cell-phone survey of selected telephone numbers of residents in their state and asks a set of questions. The core questions asked by each state are the same. The data used in this study came from responses to core questions of the BRFSS Survey that all states were asked. Any refusals to respond or responses of "Unsure/Don't Know" for the response variable or any of the explanatory variables of interest were ignored. Thus, only full responses were included. However, the data sets are large so the fraction of incomplete responses was negligble.
+
+### Analysis at the National Level
 
 ```{r setup, include=FALSE}
 
@@ -112,6 +133,10 @@ persdoc.table <- function(x){
       tab <- x %>% group_by(hlthpln1, persdoc2) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
       tidyr::spread(key = persdoc2, value = wt_sum) %>% ungroup()
       
+      wf <- length(x$hlthpln1)/sum(x$x.llcpwt)
+      
+      tab[,2:ncol(tab)] <- tab[,2:ncol(tab)]*wf
+      
       tab
 }
 
@@ -126,6 +151,10 @@ checkup.table <- function(x){
       
       tab <- x %>% group_by(hlthpln1, checkup1) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
       tidyr::spread(key = checkup1, value = wt_sum) %>% ungroup()
+      
+      wf <- length(x$hlthpln1)/sum(x$x.llcpwt)
+      
+      tab[,2:ncol(tab)] <- tab[,2:ncol(tab)]*wf
       
       tab
 }
@@ -147,22 +176,21 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
 ```
 
 
-## Methods
 
-  For our study we used data from the BRFSS surveys from 2011 through 2015 to study the relationship between insurance status and measures of primary care access and utilization.
+  For analysis at the nation level we used three questions asked in the BRFSS survey: one to pertaining to insurance status (our explanatory variable), one about whether or not an individual has a personal doctor, and one asking how long it has been since their last general health checkup. The personal doctor and time since last checkup responses are the variables that we use as measures of primary care access and utilization. 
 
-* Insurance Status: Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?
+1. Insurance Status: Do you have any kind of health care coverage, including health insurance, prepaid plans such as HMOs, or government plans such as Medicare, or Indian Health Service?
     + 1: Yes
     + 2: No
     + 7: Don't know/Not Sure
     + 9: Refused
-* Personal Doctor: Do you have one person you think of as your personal doctor or health care provider? (If "No" ask "Is there more than one or is there no person who you think of as your personal doctor or health care provider?".)
+2. Personal Doctor: Do you have one person you think of as your personal doctor or health care provider? (If "No" ask "Is there more than one or is there no person who you think of as your personal doctor or health care provider?".)
     + 1: Yes, only one
     + 2: More than one
     + 3: No
     + 7: Don't know/Not Sure
     + 9: Refused
-* Doctor Utilization: About how long has it been since you last visited a doctor for a routine checkup? [A routine checkup is a general physical exam, not an exam for a specific injury, illness, or condition.]
+3. Doctor Utilization: About how long has it been since you last visited a doctor for a routine checkup? [A routine checkup is a general physical exam, not an exam for a specific injury, illness, or condition.]
     + 1: Within past year (anytime less than 12 months ago)
     + 2: Within past 2 years (1 year but less than 2 years ago)
     + 3: Within past 5 years (2 years but less than 5 years ago)
@@ -170,15 +198,24 @@ ST_CUgPD_ay <- checkup.table(allyears[allyears$persdoc2 == 1,])
     + 7: Don't know/Not sure
     + 8: Never
     + 9: Refused  
-<br>     
+<br>
+<br>
     
-  The first part of our study considers that nation as a whole when investigating the relationships between insurance status and our measures of access to, and utilization of, primary care. For this part of the study we considered three measures as proxies of primary care access and utilization:
+  From the above questions we organized three different measures that we considered For this part of the study we considered three measures as proxies of primary care access and utilization:
 
 * Personal Doctor: Whether or not an individual reported having a personal doctor
+    + Two Levels:
+        - Personal doctor
+        - No personal doctor
 * Doctor Utilization: The reported period of time since last general checkup. We only looked at two levels for this part of the analysis. For information on all levels see appendix.
-    + Within past year
-    + Not within past five years (aggregate of "5 or more years ago" and "Never")
-* Doctor Utilization: Same as above, but only including individuals who reported have a personal doctor  
+    + Two Levels:
+        - Within the past year
+        - Not within the past five years (aggregate of the responses: "5 or more years ago" and "Never")
+* Doctor Utilization given Personal Doctor: Same as above, but only considering individuals who reported having a personal doctor
+    + Two Levels:
+        - Within the past year
+        - Not within the past five years
+<br>
 <br>
 
   First we will look at some bar charts to get a quick visualization of the data. Figure 1 shows the proportion of insured and uninsured individuals with a personal doctor for years 2011 through 2015 and all years combined.
@@ -242,8 +279,9 @@ dev.off()
 
   From the barplot above it appears evident that the proportion of individuals that have a personal doctor is higher for those with insurance than those without. The presence of this trend appears consistent from 2011 through 2015.  
 <br>
+<br>
 
-  Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor. For more information on the proportions for all the individual levels of the doctor utilization measure see the appendix (***link here***).
+  Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor.
   
 ```{r, include=F}
 
@@ -342,7 +380,7 @@ legend("topright",
        )
 abline(h=0)
 
-mtext('Difference in Doctor Utilization between Insured and Uninsured Individuals', outer = TRUE, font = 2)
+mtext('Difference in Doctor Utilization between Insured and Uninsured Groups', outer = TRUE, font = 2)
 
 dev.off()
 
@@ -407,21 +445,28 @@ dev.off()
 
 ***
 
-![**Figure 2:** The plots above show the difference in the time since last general health checkup between insured and uninsured individuals. The plot on the left shows the proportion of individuals that have had a checkup within the past year for both insured and uninsured groups. The plot to the right shows the proportion of individuals that have not had a checkup in the last five years (including those that have never had a checkup) for both insured and uninsured groups. Note the difference in the range of the y-axis between the plot on the left and the plot on the right.](plots\Difference_in_Doctor_Utilization.png)
+![**Figure 2:** The plots above show the difference in the time since last general health checkup between the insured and uninsured groups. The plot on the left shows the proportion of individuals that have had a checkup within the past year for both insured and uninsured groups. The plot to the right shows the proportion of individuals that have not had a checkup in the last five years (including those that have never had a checkup) for both insured and uninsured groups. Note the difference in the range of the y-axis between the plot on the left and the plot on the right.](plots\Difference_in_Doctor_Utilization.png)
+
+<br>
 
 ![**Figure 3:** The plots above depict the same measures as those shown in figure 2, but only for individuals who reported having a personal doctor.](plots\Difference_in_Doctor_Utilization_Given_PD.png)
 
 ***
 
- From figures 2 and 3 above we can see that the proportion of insured individuals that had had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor.
+ From figures 2 and 3 above we can see that the proportion of insured individuals that have had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor.
 <br>
-  Next we will perform Peason Chi-Square tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
 <br>
 
-### Tests of General Association and Rank Correlation
+  Next we will perform Peason chi-squared tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association.
+<br>
+<br>
 
-  The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year in 2011 through 2015. Furthermore the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the appendix (***link required***).
+#### Tests of General Association and Rank Correlation
+
+  The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall's tau-b and Goodman and Kruskal's gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly *statistically* significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of *only discordant or concordant* pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the [appendix](#example-nation-level-analysis-calculations).
+  
 ***
+
 ```{r, include=F}
 ### Calculating pearson statistics
 
@@ -549,8 +594,11 @@ library(pander)
 
 pandoc.table(pcs.PD, caption = "**Table 1**: The Pearson chi-squared test-statistics for the general association between insurance status and having a personal doctor. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and whether or not an individual has a personal doctor is highly statistically significant.", split.table = Inf)
 
+```
 
+<br>
 
+```{r echo=FALSE,results='asis'}
 
 ### Table 2, concordance statistics
 
@@ -610,14 +658,19 @@ rm(t11, t12, t13, t14, t15, tay)
 pandoc.table(rcts.PD, caption = "**Table 2**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.", split.table = Inf)
 
 ```
-***
+
 <br>
 
-  The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-bs indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor. 
+***
+
+<br>
+
+  The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-b estimates indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor. 
   
 ***
 
 ```{r, echo=F, results="asis"}
+
 ### Caculate Pearson Statistics
 
 vec <- c()
@@ -650,9 +703,19 @@ pcs.CUgPD <- matrix(vec, nrow = 6, ncol = 3,
 
 pandoc.table(pcs.CU, caption = "**Table 3**: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.", split.table = Inf)
 
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
 
 pandoc.table(pcs.CUgPD, caption = "**Table 4**: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.", split.table = Inf)
 
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
 
 ### Calculate rank correlation statistics
 
@@ -778,75 +841,829 @@ rm(t11, t12, t13, t14, t15, tay)
 
 pandoc.table(rcts.CU, caption = "**Table 5**: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.", split.table = Inf)
 
+```
 
-pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics for the relationship between insurance status and having and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.", split.table = Inf)
+<br>
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(rcts.CUgPD, caption = "**Table 6**: The rank correlation statistics for the relationship between insurance status and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.", split.table = Inf)
 
 ```
+
+<br>
+
+***
+  For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed a general association with insurance status. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the [appendix](#example-nation-level-analysis-calculations).
+  
+  Now that we have confirmed the presence and direction of association between insurance status and our measures of primary care access, we will examine in more detail the degree of this relationship.
+
+<br>
+
+#### Absolute and Relative Difference of Proportions
+
+  For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. The absolute difference is the algebraic difference between two proportions (one proportion minus the other). Thus, an absolute difference of 0.3 implies that one proportion is larger than the other by 0.3. The relative difference is the ratio of one proportion to another, so a relative difference of 1.3 means that one proportion is 1.3 times larger than the other. For more details on how the absolute and relative differences in proportions were calculated please see the example in the [appendix](#absolute-difference-of-proportions).
+  
+  In the previous sections we showed that there is a positive correlation between having insurance and having a personal doctor. Table 7 lists the estimated absolute difference in proportion between individuals in the insured group that have a doctor and individuals in the uninsured group that have a doctor. Figure 4 graphically shows these absolute differences in proportions. The line segments on top of each bar show the 95% confidence intervals for the difference in proportions. Note that the y-axis only covers a small range, so although the differences in proportions may decrease from 2011 to 2015, the magnitude of this decrease is small. Additionally, the all the confidence intervals overlap except for those for 2011 and 2015, and even these two confidence intervals are very close.
+  
+***
+
+```{r, include=F}
+
+PD.propdif <- function(x, alpha = 0.05){
+  
+  df <- x
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  n1 <- as.numeric( sum(df[1,2:3]) )
+  n2 <- as.numeric( sum(df[2,2:3]) )
+
+  p1 <- as.numeric( df[1,2]/sum(df[1,2:3]) )
+  p2 <- as.numeric( df[2,2]/sum(df[2,2:3]) )
+  dif <- p1 - p2
+  
+  LB <- dif - z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  UB <- dif + z*sqrt( (p1*(1-p1))/n1 + (p2*(1-p2))/n2 )
+  
+  vec <- c(LB, dif, UB)
+  vec
+}
+
+PD.pd <- c()
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t11, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t12, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t13, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t14, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_t15, 0.05))
+PD.pd <- c(PD.pd, PD.propdif(ST_PD_ay, 0.05))
+
+Persdoc.pdif.95CI <- matrix(PD.pd, nrow = 6, ncol = 3, byrow = TRUE, 
+                            dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All"), 
+                                            c("Lower Bound", "Estimate", "Upper Bound")))
+
+png("plots/Difference_in_Props_PD.png",
+     height = 400, width = 480)
+ 
+barcenters <- barplot(Persdoc.pdif.95CI[,2], 
+                      ylim = c( min(Persdoc.pdif.95CI[,1]) - 0.001  , max(Persdoc.pdif.95CI[,3]) ),
+                      main = "Absolute Difference of Proportion of Persons with a Personal Doctor
+                      \n Insured v.s. Uninsured", 
+                      xpd = FALSE, cex.names = .9, cex.main = 1 )
+
+abline(h=min(Persdoc.pdif.95CI[,1]) - 0.001)
+
+segments(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], 
+         lwd = 1.5)
+
+arrows(barcenters, Persdoc.pdif.95CI[,1], barcenters, Persdoc.pdif.95CI[,3], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+dev.off()
+
+```
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(Persdoc.pdif.95CI, caption = "**Table 7:** 95% Confidence intervals for the absolute differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the absolute differences appear to decrease from 2011 to 2015, the confidence intervals for consecutive years overlap.", digits = 5)
+
+```
+
+<br>
+
+![**Figure 4:** Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. The error bars at the top show the 95% confidence intervals for each year. Note that the range of the y-axis is small so that although the estimated absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. Moreover, it is clear from the error bars that the confidence intervals for each consecutive year overlap with each other. Even the confidence intervals for 2011 and 2015 are close. ](plots/Difference_in_Props_PD.png)
 
 ***
 
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <br>
 
+  Table 8 and figure 5 show the confidence intervals for the relative difference in the proportion of insured individuals with a doctor to uninsured individuals with a doctor. When looking at all the years combined, insured individuals were 2.13 times more likely to have a personal doctor than uninsured individuals. For every year from 2011 through 2015, individuals with insurance were estimated to be between 2.08 and 2.19 times more likely to have a personal doctor than individuals without insurance.
+  
+***
+  
+```{r, echo=F, results="asis"}
 
+Relative.Risk <- function(x, coi = c(1), alpha = 0.05){
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  
+  n1 <- as.numeric( sum(x[1,]) )
+  n2 <- as.numeric( sum(x[2,]) )
+  
+  p1 <- as.numeric( x[1,coi]/n1 )
+  p2 <- as.numeric( x[2,coi]/n2 )
+  
+  rr <- p1/p2
+  v <- sqrt( (1-p1)/x[1,coi] + (1-p2)/x[2,coi] )
+  
+  LB <- rr*exp(-z*v)
+  UB <- rr*exp(z*v)
+  
+  vec <- c(LB, rr, UB)
+  vec
 
+}
 
+PD.RR <- matrix(c(Relative.Risk(ST_PD_t11[,2:3]),
+                  Relative.Risk(ST_PD_t12[,2:3]),
+                  Relative.Risk(ST_PD_t13[,2:3]),
+                  Relative.Risk(ST_PD_t14[,2:3]),
+                  Relative.Risk(ST_PD_t15[,2:3]),
+                  Relative.Risk(ST_PD_ay[,2:3])),
+                nrow = 6, ncol = 3, byrow = T,
+                dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                                c("Lower Bound", "Estimate", "Upper Bound"))
+                )
 
+pandoc.table(PD.RR, caption = "**Table 8:** 95% Confidence intervals for the relative differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor.", digits = 5)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+<br>
 
-You can also embed plots, for example:
+```{r, include=F}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+png("plots/Relative_Difference_in_Props_PD.png",
+     height = 480, width = 480)
+
+plot(x = c(1:6), y = PD.RR[,2], 
+     main = "Relative Difference of Proportion of Persons with a Personal Doctor \n Insured v.s. Uninsured", 
+     ylab = "Relative Difference",
+     xlab = NA,
+     xlim = c(1,6), 
+     ylim = c(2.00, 2.25), 
+     pch=20, col = "red",
+     axes = FALSE, cex.main = 1, cex = 1, cex.lab = 1)
+box()
+
+axis(1, at = c(1:6), labels = c ("2011", "2012", "2013", "2014", "2015", "All Years"), cex.axis = 1)
+axis(2, at = seq(from = 2.00, to = 2.25, by = 0.05), las = 2, cex.axis = .8)
+
+
+segments(c(1:6), as.numeric(PD.RR[,1]), c(1:6), as.numeric(PD.RR[,3]), lwd = 1.5)
+arrows(c(1:6), as.numeric(PD.RR[,1]), c(1:6), as.numeric(PD.RR[,3]), lwd = 1.5, angle = 90, code = 3, length = 0.03)
+
+dev.off()
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+![**Figure 5:** 95% confidence intervals for relative difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. As with absolute difference, the relative differences fluctuate from year to year but the magnitude of this variation is small (note the range of the y-axis).](plots/Relative_Difference_in_Props_PD.png)
+
+***
+
+<br>
+
+  Table 9 shows the absolute differences between the proportion of insured individuals that have had a checkup within a year and the proportion of uninsured individuals that have. Table 10 shows the same but when considering only indiviuals that reported having a personal doctor. For all the years combined the absolute difference in proportion was about 0.34 when considering all individuals and about 0.22 when considering only individuals that had a personal doctor. Also note, that the absolute differences for both groups tend to decrease slightly from 2011 to 2015. Figure 6 shows the absolute differences for each year in barchart form where the decreases from 2011 to 2015 are easier to see.
+
+***
+
+```{r, echo=F, results="asis"}
+
+CU.AbandRR <- function(x, alpha = 0.05){
+
+  z <- qnorm(alpha/2, lower.tail = F)
+  
+  n1 <- as.numeric( sum(x[1,]) )
+  n2 <- as.numeric( sum(x[2,]) )
+  
+  n11 <- as.numeric(x[1,1])
+  n21 <- as.numeric(x[2,1])
+  
+  n1g5 <- as.numeric(sum(x[1,4:5]))
+  n2g5 <- as.numeric(sum(x[2,4:5]))
+  
+  p11 <- n11 / n1
+  p21 <- n21 / n2
+  
+  p1g5 <- n1g5 / n1
+  p2g5 <- n2g5 / n2
+  
+  dif.1 <- p11 - p21
+  se.1 <- sqrt( (p11*(1-p11))/n1 + (p21*(1-p21))/n2 )
+  LB.d1 <- dif.1 - z*se.1
+  UB.d1 <- dif.1 + z*se.1
+  
+  dif.g5 <- p2g5 - p1g5
+  se.g5 <- sqrt( (p2g5*(1-p2g5))/n2 + (p1g5*(1-p1g5))/n1 )
+  LB.dg5 <- dif.g5 - z*se.g5
+  UB.dg5 <- dif.g5 + z*se.g5
+  
+  rr.1 <- p11 / p21
+  v.1 <- sqrt( (1-p11)/n11 + (1-p21)/n21 )
+  LB.r1 <- rr.1*exp(-z*v.1)
+  UB.r1 <- rr.1*exp(z*v.1)
+  
+  rr.g5 <- p2g5 / p1g5
+  v.g5 <- sqrt( (1-p2g5)/n2g5 + (1-p1g5)/n1g5 )
+  LB.rg5 <- rr.g5*exp(-z*v.g5)
+  UB.rg5 <- rr.g5*exp(z*v.g5)
+  
+  vec <- c(LB.d1, dif.1, UB.d1, 
+           LB.r1, rr.1, UB.r1, 
+           LB.dg5, dif.g5, UB.dg5, 
+           LB.rg5, rr.g5, UB.rg5)
+  
+  vec
+}
+
+DU <- matrix(c(CU.AbandRR(ST_CU_t11[,2:6]),
+               CU.AbandRR(ST_CU_t12[,2:6]),
+               CU.AbandRR(ST_CU_t13[,2:6]),
+               CU.AbandRR(ST_CU_t14[,2:6]),
+               CU.AbandRR(ST_CU_t15[,2:6]),
+               CU.AbandRR(ST_CU_ay[,2:6])),
+             nrow = 6, ncol = 12, byrow = T,
+             dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                             rep(c("Lower Bound", "Estimate", "Upper Bound"),4) )
+             )
+
+DUgPD <- matrix(c(CU.AbandRR(ST_CUgPD_t11[,2:6]),
+               CU.AbandRR(ST_CUgPD_t12[,2:6]),
+               CU.AbandRR(ST_CUgPD_t13[,2:6]),
+               CU.AbandRR(ST_CUgPD_t14[,2:6]),
+               CU.AbandRR(ST_CUgPD_t15[,2:6]),
+               CU.AbandRR(ST_CUgPD_ay[,2:6])),
+             nrow = 6, ncol = 12, byrow = T,
+             dimnames = list(c("2011", "2012", "2013", "2014", "2015", "All Years"),
+                             rep(c("Lower Bound", "Estimate", "Upper Bound"),4) )
+             )
+
+pandoc.table(DU[,1:3], caption = "**Table 9:** 95% Confidence intervals for the absolute differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DUgPD[,1:3], caption = "**Table 10:** 95% Confidence intervals for the absolute differences between the proportion of insured and uninsured individuals who have had a checkup within a year, only considering individuals who reported having personal doctor. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+```{r, include=F}
+
+png("plots/Abs_Diff_CU1Y.png",
+     height = 400, width = 760)
+
+par(mfrow=c(1,2))
+ 
+barcenters <- barplot(DU[,2], 
+                      ylim = c( .175, .350 ),
+                      main = NA,
+                      sub = "All Individuals",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=.175)
+
+segments(barcenters, DU[,1], barcenters, DU[,3], 
+         lwd = 1.5)
+
+arrows(barcenters, DU[,1], barcenters, DU[,3], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+##
+
+barcenters <- barplot(DUgPD[,2], 
+                      ylim = c( .175, .350 ),
+                      main = NA,
+                      sub = "Individuals with a Personal Doctor",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=.175)
+
+segments(barcenters, DUgPD[,1], barcenters, DUgPD[,3], 
+         lwd = 1.5)
+
+arrows(barcenters, DUgPD[,1], barcenters, DUgPD[,3], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+mtext('Absolute Difference in Doctor Utilization:\n Proportion who have had a Checkup within 1 Year', 
+       outer = T, font = 2, cex = 1.2, adj = .5, padj = 1.5)
+
+dev.off()
+
+```
+
+![**Figure 6:** The absolute difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the 95% confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note the range of the y-axis is the same for both plots. It is clear that the difference between insured and uninsured is smaller when considering only individuals that have a personal doctor.](plots/Abs_Diff_CU1Y.png)
+
+***
+
+<br>
+
+  Table 11 gives the confidence intervals for the relative differences between the proportion of insured individuals that have had a checkup within a year and the proportion of uninsured individuals that have. Table 12 also reports the confidence intervals for these relative differences, but when considering only individuals that reported having a personal doctor. When looking at all the years combined, individuals with insurance are about 1.84 times as likely to have had a checkup within a year. When we only consider individuals who reported having a doctor this figure drops to about 1.37 times as likely. Also note that, as with absolute difference, the relative difference decreases from 2011 to 2015. Figure 7 shows this visually. When looking at all individuals, the relative difference drops from about 1.90 in 2011 to around 1.75 in 2015. When considering only individuals that have a doctor the drop is similar in magnitude, from 1.41 in 2011 to 1.31 in 2015.
+  
+***
+  
+```{r, echo=F, results="asis"}
+
+pandoc.table(DU[,4:6], caption = "**Table 11:** 95% Confidence intervals for the relative differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DUgPD[,4:6], caption = "**Table 12:** 95% Confidence intervals for the relative differences between the proportion of individuals who have had a checkup within a year, only considering individuals who reported having a personal doctor. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.", digits = 5)
+
+```
+
+<br>
+
+```{r, include=F}
+
+png("plots/Rel_Diff_CU1Y.png",
+     height = 400, width = 760)
+
+par(mfrow=c(1,2))
+ 
+barcenters <- barplot(DU[,5], 
+                      ylim = c( 1.25, 1.95 ),
+                      main = NA,
+                      sub = "All Individuals",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=1.25)
+
+segments(barcenters, DU[,4], barcenters, DU[,6], 
+         lwd = 1.5)
+
+arrows(barcenters, DU[,4], barcenters, DU[,6], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+##
+
+barcenters <- barplot(DUgPD[,5], 
+                      ylim = c( 1.25, 1.95 ),
+                      main = NA,
+                      sub = "Individuals with a Personal Doctor",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=1.25)
+
+segments(barcenters, DUgPD[,4], barcenters, DUgPD[,6], 
+         lwd = 1.5)
+
+arrows(barcenters, DUgPD[,4], barcenters, DUgPD[,6], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+mtext('Relative Difference in Doctor Utilization:\n Proportion who have had a Checkup within 1 Year', 
+       outer = T, font = 2, cex = 1.2, adj = .5, padj = 2)
+
+dev.off()
+
+```
+
+![**Figure 7:** The relative difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note that the range of the y-axis is the same for both plots, it is clear that the relative difference between insured and uninsured is smaller when considering only individuals that have a personal doctor. For both groups the relative difference decreases from 2011 to 2015.](plots/Rel_Diff_CU1Y.png)
+
+***
+
+<br>
+
+ Table 13 shows the absolute difference between the proportion of uninsured individuals that have not had a checkup within five years and the proportion of insured individuals that have not. Note that in this case the difference is between uninsured and insured, not the other way around. So, the absolute diference of 0.182 for all the years combined means the proportion of insured individuals that have not had a checkup within five years is 0.182 *less* than the proportion of uninsured individuals that have not. Table 14 reports the same information but when considering only individuals who have a personal doctor. The absolute difference in proportions is much less when considering only individuals with personal doctors than when considering all individuals.
+ 
+***
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DU[,7:9], caption = "**Table 13:** 95% Confidence intervals for the absolute differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.", digits = 5)
+
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DUgPD[,7:9], caption = "**Table 14:** 95% Confidence intervals for the absolute differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.", digits = 5)
+
+```
+
+<br>
+
+```{r, include=F}
+
+png("plots/Abs_Diff_CUg5Y.png",
+     height = 400, width = 760)
+
+par(mfrow=c(1,2))
+ 
+barcenters <- barplot(DU[,8], 
+                      ylim = c( .075, .2 ),
+                      main = NA,
+                      sub = "All Individuals",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=.075)
+
+segments(barcenters, DU[,7], barcenters, DU[,9], 
+         lwd = 1.5)
+
+arrows(barcenters, DU[,7], barcenters, DU[,9], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+##
+
+barcenters <- barplot(DUgPD[,8], 
+                      ylim = c( 0.075, 0.200 ),
+                      main = NA,
+                      sub = "Individuals with a Personal Doctor",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=0.075)
+
+segments(barcenters, DUgPD[,7], barcenters, DUgPD[,9], 
+         lwd = 1.5)
+
+arrows(barcenters, DUgPD[,7], barcenters, DUgPD[,9], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+mtext('Absolute Difference in Doctor Utilization:\n Proportion who have not had a Checkup within 5 Years', 
+       outer = T, font = 2, cex = 1.2, adj = .5, padj = 1.4)
+
+dev.off()
+
+```
+
+![**Figure 8:** The absolute difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the proportion for uninsured indviduals minus the proportion for insured individuals, so a positive difference indicates the the proportion of uninsured that have not had a checkup within five years is greater than the proportion of insured indviduals that have not. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. The difference between uninsured and insured is much smaller when only considering individuals that have a personal doctor..](plots/Abs_Diff_CUg5Y.png)
+
+***
+
+<br>
+
+ Table 15 reports the relative difference between the proportion of uninsured individuals that have not had a checkup within five years and the proportion of insured individuals that have not. Again, as with the absolute difference reported in tables 13 and 14, we are comparing uninsured to insured, not the other way around. So a relative difference greater than one indicates that uninsured individuals are *more* likely to not have had a checkup within five years than insured individuals are. For instance, the relative difference of about 3.87 for all years combined indicates that when looking at all years, uninsured individuals are 3.87 times as likely to not have had a checkup within five years than insured individuals. Table 16 reports the same information but only considering individuals that have a personal doctor. Note that the relative difference for all years is slightly lower in the group that had a personal doctor (about 3.29 compared to 3.87). Figure 9 gives a visual of the relative differences observed for each year and for all years combined. Note that in contrast to the all the relationships previously looked at (where the difference between insured and uninsured appeared to decrease slightly from 2011 to 2015), the relative difference here does not appear to steadily decrease from 2011 to 2015 but rather to peak around 2013 and 2014.
+ 
+ ***
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DU[,10:12], caption = "**Table 15:** 95% Confidence intervals for the relative differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.", digits = 5)
+
+```
+
+<br>
+
+```{r, echo=F, results="asis"}
+
+pandoc.table(DUgPD[,10:12], caption = "**Table 16:** 95% Confidence intervals for the relative differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.", digits = 5)
+
+```
+
+<br>
+
+```{r, include=F}
+
+png("plots/Rel_Diff_CUg5Y.png",
+     height = 400, width = 760)
+
+par(mfrow=c(1,2))
+ 
+barcenters <- barplot(DU[,11], 
+                      ylim = c( 2.8, 4.20 ),
+                      main = NA,
+                      sub = "All Individuals",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=2.8)
+
+segments(barcenters, DU[,10], barcenters, DU[,12], 
+         lwd = 1.5)
+
+arrows(barcenters, DU[,10], barcenters, DU[,12], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+##
+
+barcenters <- barplot(DUgPD[,11], 
+                      ylim = c( 2.8, 4.2 ),
+                      main = NA,
+                      sub = "Individuals with a Personal Doctor",
+                      xpd = FALSE, cex.names = .9, cex.sub = 1.1 )
+
+abline(h=2.8)
+
+segments(barcenters, DUgPD[,10], barcenters, DUgPD[,12], 
+         lwd = 1.5)
+
+arrows(barcenters, DUgPD[,10], barcenters, DUgPD[,12], 
+       lwd = 1.5, angle = 90, code = 3, length = 0.05)
+
+mtext('Relative Difference in Doctor Utilization:\n Proportion who have not had a Checkup within 5 Years', 
+       outer = T, font = 2, cex = 1.2, adj = .5, padj = 1.5)
+
+dev.off()
+
+```
+
+![**Figure 9:** The relative difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the ratio of the proportion of uninsured indviduals that have not had a checkup within five years to the proportion of insured individuals that have not. Thus, a relative difference greater than 1 indicates that uninsured individuals are more likely to not have had a checkup within five years. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor.](plots/Rel_Diff_CUg5Y.png)
+
+***
+
+<br>
+<br>
+
+## Discussion
+
+  Our measures of primary care access and utilization were all strongly associated with insurance. The relationship between insuance status and primary care utilization was less strong when considering only individuals that have a personal doctor. However, for all three measures having insurance was positively correlated with primary care access and utilization. 
+  
+  Individuals with health insurance, when looking at all years combined, are estimated to be 2.12 times as likely to have a personal doctor than individuals without insurance. When looking at frequency of general health checkups, individuals with health insurance were 1.84 times as likely to have had checkup within a year. Moreover, uninsured individuals were 3.87 times as likely to have not had a checkup within the past five years. When considering only individuals who reported having a personal doctor the differences, as expected, were lower in magnitude, but still present. Insured individuals with a personal docter were 1.37 times as likely to have had a checkup within a year when compared to uninsured individuals who have a personal docter. Uninsured individuals who reported having a doctor were still 3.29 times as likely to not have had a general health checkup in the last five years than insured individuals with a personal doctor. The 95% confidence intervals for these relative differences in proportion are quite narrow, indicating that the estimated relative differences in proportion are likely close to the actual relative differences in the population.
+  
+  The degree of the relationship between insurance status and frequency of general health checkups decreased slightly from 2011 to 2015. The relative difference in the proportion of insured individuals who have had a checkup within one year and the proportion of uninsured individuals who have decreased from ~1.90 (95% CI: 1.8806,1.9126) in 2011 to ~1.75 (95% CI: 1.7357, 1.7715) in 2015. However, the relationship between insurance status and the proportion of individuals who have *not* had checkup within five years did not change significantly from 2011 to 2015.
+  
+  Our analysis indicates that insurance status in the United States is indeed correlated with better primary care access and utilization. The presence of this relationship is promising because it would imply that as uninsured rates drop in the United States, access to primary care should be expected to rise, and the subsequent improvements in health outcomes and reduction in costs should hopefully follow.
+
+<br>
+<br>
+
+## Appendix
+
+### Example Nation Level Analysis Calculations
+
+  In order to demonstrate how the nation level analysis was done, example calculations for the personal doctor measure are shown below.
+  
+  <br>
+  
+#### Pearson Chi-Squared Test
+
+  The Pearson chi-squared test determines whether or not the distribution of the response variable (in this case whether or not an individual has a personal doctor) is the same at both levels of the explanatory variable (insurance status). The null hypothesis is that there is no association between the explanatory and response variable and thus the distribution of the response variable is the same at both levels of the explanatory variable. The alternative hypothesis is that the distribution of the response variable is not the same at both levels of the explanatory variable and thus there is an association between the explanatory and response variables.
+  
+  This test is performed with a frequency table. The test-statistic is the the sum of the squared difference between the observed and expected values for each cell divided by the expected values of each cell. Under the null hypothesis, this test-statistic has a chi-square distribution with degrees of freedom equal to the number of rows minus one times the number of columns minus one:
+
+  $$X^2 = \sum_{i=1}^n {\frac{(observed - expected)^2}{expected}}   \sim \chi^2_{(r-1)(c-1)}$$
+
+  We can easily calculate this statistic in R using the "chisq.test()" function, which takes as an argument the contingency table we are interested in. The function returns the Pearson test-statistic, the degrees of freedom, and the p-value. It can also return the observed and expected tables if requested.
+  
+```{r}
+
+# ST_PD_t11[,2:3] is the frequency table for insurance status and whether or not an individual has a personal doctor.
+
+chisq.test(ST_PD_t11[,2:3])
+
+pcs <- chisq.test(ST_PD_t11[,2:3])
+
+pcs$statistic
+
+pcs$parameter
+
+pcs$p.value
+
+pcs$observed
+
+pcs$expected
+
+```
+
+  We used this function to perform the Pearson chi-squared tests for all of our measures of interest.
+  
+  <br>
+
+#### Rank Correlation Statistics
+
+  The rank correlation statistics, or concordance statistics, indicate the direction of association between two ordinal variables. The Kendall's tau-b and Goodman and Kruskal's gamma statistics range from -1 to 1, with negative values indicating negative correlation between the two variables and positive values indicating positive correlation between the two variables. A negative 1 indicates perfect negative correlation, a positive 1 indicates perfect positive correlation, and a 0 indicates no correlation. These statistics are calculated using concordant, discordant and (for the tau-b statistic) tied pairs of observations. A concordant pair of observations is a pair for which one observation ranks higher in both the variables than the other observation. A discordant pair of observations is when one observation ranks higher in one variable but lower in the other variable compared to the other observation. A tied pair of observations is when the pair of observations tie for rank in one or both variables. For instance, if we were looking at height and weight, a pair of individuals with one individual being 6 feet tall and 180 pounds and the other individual being 5.8 feet tall and 160 pounds would be a concordant pair. On the other hand, a pair of individuals with one individual being 6 feet tall and 150 pounds and the other being 5.8 feet tall and 160 pounds would be a discordant pair. Finally, a pair of individuals with one individual being 6 feet tall and 100 pounds and one being 6 feet tall and 200 pounds would be a tied pair (as long as they are tied in at least one variable they are considered a tied pair). For a data set of *n* observations, there are $ n*(n-1)/2 $ total pairs. For hypothesis testing with both Kendall's tau-b and Goodman and Kruskal's gamma, we are testing the null hypothesis that there is no correlation between the two variables against the alternative hypothesis that there is a correlation.
+  
+  <br>
+  
+  Goodman and Kruskall's gamma is the simpler of the two rank correlation statistics that we examined, but potentially less informative. Gamma only takes into account the number of discordant and concordant pairs. Thus, a data set with 100 concordant, 10 discordant, and 5 tied pairs would have the same gamma statistic as a data set with 100 concordant, 10 discordant, and 10000 tied pairs. Gamma is calculated by taking the difference between the number of concordant and discordant pairs and dividing it by the number of concordant and discordant pairs combined.
+  
+  $$\widehat{\gamma}  = \frac{C - D}{C + D}$$
+
+* *C* is the number of concordant pairs
+* *D* is the number of discordant pairs
+
+  An approximate standard error for gamma for large samples is given by:
+  
+  $$\widehat{SE}[\gamma] = \sqrt{\frac{n(1 - \widehat{\gamma}^2)}{C + D}}$$
+  
+  We used this standard error to calculate approximate confidence intervals for gamma.
+  
+  For large samples, gamma divided by its standard error has an approximatel standard normal distribution. This is what we used as our test-statistic for gamma, in order to test if there is significant correlation between the two variables of interest (in this case, insurance status and whether or not an individual has a personal doctor).
+  
+  $$\frac{\widehat{\gamma}}{\widehat{SE}} \sim AN(0,1)$$
+
+ In order to calculate the concodance statistics (both gamma and tau), their confidence intervals, their test-statistics, and the associated p-values we created an R function called "Rank.Correlation()". This function will be described after Kendall's tau-b is described next.
+ 
+ <br>
+ 
+ Kendall's tau-b is a little more complicated to compute and interpret than gamma, but it takes ties into account. Our data contained many ties so the tau-b statistic is perhaps a more useful measure for our situation than gamma. Kendall's tau-b looks at the number of discordant pairs and concordant pairs relative to the total number of pairs (including ties) in the data set. The formula is thus more complex.
+ 
+ $$\widehat{\tau_b} = \frac{C - D} {\sqrt{(n_0 - n_1)(n_0 - n_2)}}$$
+
+* $n_0$ is the total number of pairs in the data set: $n(n-1)/2$
+* $n_1$ is the sum of total number of *tied* pairs at each level of the first variable: $n_1 = \sum{T_1}$
+* $n_2$ is the sum of total number of *tied* pairs at each level of the second variable: $n_2 = \sum{T_2}$
+
+  An approximate standard error for the tau-b statistic with large samples is:
+  
+  $$\widehat{SE}[\tau_b] = \frac{2(2n+5)}{9n(n-1)}$$
+
+  We used this standard error to caculate approximate confidence intervals for tau-b, but we did not use it to calculate our test-statistic. Instead we used a more conservative measure.
+  
+  The test-statistic we used for hypothesis testing with tau-b is given below. For large samples this test-statistic has an approximately standard normal distribution.
+  
+   $$\widehat{z_{\tau_b}} = \frac{C - D} {\sqrt{ ( \frac{v_0 - v_t - v_u}{18} )+ v_1 + v_2  }} \sim AN(0,1)$$
+
+* $v_0 = n(n-1)(2n+5)$
+* $v_t = \sum_i t_i(t_i - 1)(2t_i + 5)$
+    + $t_i$ is the total number of tied *values* (not pairs) for the $i^{th}$ level of the first variable. *Tied values* for each level of the first variable are the same as row totals (if the row variable is considered the first variable) or column totals (if the the column variable is considered the first variable).
+* $v_u = \sum_j u_j(u_j - 1)(2u_j +5)$ 
+    + $u_i$ is the total number of tied *values* (not pairs) for the $j^{th}$ level of the second variable. *Tied values* for each level of the second variable are the same as row totals (if the row variable is considered the second variable) or column totals (if the the column variable is considered the second variable).
+* $v_1 = \frac{{\sum_i t_i(t_i - 1)}{\sum_j u_j(u_j - 1)}}{2n(n-1)}$
+* $v_2 = \frac{{\sum_i t_i(t_i - 1)(t_i - 2)}{\sum_j u_j(u_j - 1)(u_j - 2)}}{9n(n-1)(n-2)}$
+  
+  To calculate both the gamma and tau-b statististics, their confidence intervals, their test-statistics, and the corresponding p-values we created the R function "Rank.Correlation()" shown below. This function also calculates the tau-a statistic (a Kendall's tau statistic that does not account for ties) and another test-statistic for the tau-b statistic. However, we found the above statistic to be more conservative and thus chose it for our report. Both test-statistics give p-values of approximately zero for all tests performed in this report.
+  
+```{r, results="asis"}
+
+Rank.Correlation <- function(x, alpha = 0.05){
+  
+  z <- qnorm(alpha/2, lower.tail = F)
+  cols <- dim(x)[2]
+  n <- sum(x[1,]) + sum(x[2,])
+  np <- (n*(n-1))/2
+  SE.LS.approx <- sqrt((2*(2*n+5))/(9*n*(n-1)))
+  
+  T.pairs <- sum(x[1,])*(sum(x[1,])-1)/2 + sum(x[2,])*(sum(x[2,])-1)/2
+  Tied.r <- T.pairs
+  
+  C.pairs <- 0
+  D.pairs <- 0
+  Tied.c <- 0
+  for(i in 1:cols){
+    if(i < cols){
+      for(j in (i + 1):cols){
+        C.pairs <- C.pairs + x[1,i]*x[2,j]
+        D.pairs <- D.pairs + x[2,i]*x[1,j]
+      }
+    }
+    
+    T.pairs <- T.pairs + x[1,i]*x[2,i]
+    Tied.c <- Tied.c + sum(x[,i])*(sum(x[,i])-1)/2
+    
+  }
+  
+  vt <- 0
+  v1.c <- 0
+  v2.c <- 0
+  for(i in 1:cols){
+    s <- sum(x[,i])*(sum(x[,i])-1)
+    vt <- vt + s*(2*sum(x[,i])+5)
+    v1.c <- v1.c + s
+    v2.c <- v2.c + s*(sum(x[,i])-2)
+  }
+  
+  vu <- 0
+  v1.r <- 0
+  v2.r <- 0
+  for(i in 1:2){
+    s <- sum(x[i,])*(sum(x[i,])-1)
+    vu <- vu + s*(2*sum(x[i,])+5)
+    v1.r <- v1.r + s
+    v2.r <- v2.r + s*(sum(x[i,])-2)
+  }
+  
+  v1 <- v1.c*v1.r/(2*n*(n-1))
+  v2 <- v2.c*v2.r/(9*n*(n-1)*(n-2))
+  
+  v0 <- n*(n-1)*(2*n+5)
+  
+  v <- (v0 - vt - vu) / (18) + v1 + v2
+ 
+  
+  Ktau.a <- (C.pairs - D.pairs) / np
+  Ktau.b <- (C.pairs - D.pairs) / sqrt( (np - Tied.r)*(np - Tied.c) )
+  
+  Z.a <- as.numeric( 3*(C.pairs - D.pairs) / sqrt(n*(n-1)*(2*n+5)/2) )
+  pva <- pnorm(abs(Z.a), lower.tail = F)
+  Z.a.Alt <- as.numeric( Ktau.a/SE.LS.approx )
+  pva.Alt <- pnorm(abs(Z.a.Alt), lower.tail = F)
+  
+  Ta.LB <- Ktau.a - z*SE.LS.approx
+  Ta.UB <- Ktau.a + z*SE.LS.approx
+  
+  Z.b <- as.numeric( (C.pairs - D.pairs) / sqrt(v) )
+  pvb <- pnorm(abs(Z.b), lower.tail = F)
+  Z.b.Alt <- as.numeric( Ktau.b/SE.LS.approx )
+  pvb.Alt <- pnorm(abs(Z.b.Alt), lower.tail = F)
+  
+  Tb.LB <- Ktau.b - z*SE.LS.approx
+  Tb.UB <- Ktau.b + z*SE.LS.approx
+  
+  gamma <- (C.pairs - D.pairs)/(C.pairs + D.pairs)
+  SE.gamma <- sqrt(n*(1-gamma^2)/(C.pairs+D.pairs))
+  Z.gamma <- as.numeric( gamma/SE.gamma )
+  pvg <- pnorm(abs(Z.gamma), lower.tail = F)
+  
+  G.LB <- gamma - z*SE.gamma
+  G.UB <- gamma + z*SE.gamma
+  
+  out <- matrix(c(Ta.LB, Tb.LB, G.LB, Ktau.a, Ktau.b, gamma, Ta.UB, Tb.UB, G.UB, Z.a, Z.b, Z.gamma, 
+                  pva, pvb, pvg, Z.a.Alt, Z.b.Alt, NA, pva.Alt, pvb.Alt, NA),
+                nrow = 3, ncol = 7,
+                dimnames = list(c("Tau.a", "Tau.b", "Gamma"), 
+                                c("Lower.Bound","Estimate", "Upper Bound", "TS", "p.val", "Alt.TS", "p.val")))
+  
+  out
+}
+
+roc.pd11 <- Rank.Correlation(ST_PD_t11[,2:3])[2:3,1:5]
+
+pandoc.table(roc.pd11)
+
+```
+
+<br>
+
+#### Absolute Difference of Proportions
+
+  The absolute difference (AD) in proportions is the proportion in one group minus the proportion in the other group. For example, for the personal doctor measure, the absolute difference in proportion is the difference between the proportion of insured individuals with a personal doctor and the proportion of uninsured individuals with a personal doctor.
+
+```{r, echo=F, results="asis"}
+
+x <- matrix(c(ST_PD_t11[1,2:3], ST_PD_t11[2,2:3]), 
+            nrow = 2, ncol = 2, byrow = TRUE,
+            dimnames = list(c("Insured", "Uninsured"), c("Personal Doctor", "No Personal Doctor")))
+pandoc.table(x, caption = "2011 contingency table for personal doctor")
+```
+
+<br>
+
+$$\widehat{AD}_{pd} = \widehat{p_1} - \widehat{p_2} = \frac{351558.2}{351558.2+ 55356.99} - \frac{36834.62}{36834.62 + 53211.23} \approx 0.864 - 0.409 = 0.455$$
+<br>
+  
+  The standard error is calculated as if for a difference of two proportions test.
+
+$$ \widehat{SE}[AD] = \sqrt{ \frac{\widehat{p_1}(1 - \widehat{p_1})}{n_1} + \frac{\widehat{p_2}(1 - \widehat{p_2})}{n_2}  } $$
+$$ \widehat{SE}[AD_{pd}] \approx \sqrt{ \frac{0.864(1 - 0.864)}{351558.2+ 55356.99} + \frac{0.409(1 - 0.409)}{36834.62 + 53211.23}  } = \sqrt{ \frac{0.864(.136)}{406915.19} + \frac{0.409(.591)}{90045.85}  } \approx 1.72 * 10^{-3} $$
+
+<br>
+  
+  In order to calculate the 95% confidence intervals we add and subtract $1.96*\widehat{SE}$ to the estimated absolute difference:
+  $$ 95\% \space \text{CI}[AD_{pd}] = \widehat{AD}_{pd} \pm 1.96*\widehat{SE}[AD_{pd}] \approx 0.455 \pm 1.96(1.72*10^{-3}) \approx 0.455 \pm 0.00337 \approx (0.451, 0.458) $$
+
+<br>
+
+#### Relative Difference of Proportions
+
+  The relative difference of proportions is ratio of one proportion to another. For example, for the personal doctor measure, the relative difference of proportions is the ratio of the proportion of insured individuals that have a doctor to the proportion of uninsured individuals that have a doctor. So the relative difference for the personal doctor measure in 2011 is 2.11, meaning insured individuals are estimated to be about 2.11 times as likely to have a personal doctor than uninsured individuals.
+  
+```{r, echo=F, results="asis"}
+
+x <- matrix(c(ST_PD_t11[1,2:3], ST_PD_t11[2,2:3]), 
+            nrow = 2, ncol = 2, byrow = TRUE,
+            dimnames = list(c("Insured", "Uninsured"), c("Personal Doctor", "No Personal Doctor")))
+pandoc.table(x, caption = "2011 contingency table for personal doctor")
+```
+
+<br>
+
+$$\widehat{RD}_{pd} = \frac{\widehat{p_1}}{\widehat{p_2}} \approx \frac{.864}{.409} \approx 2.11$$
+
+<br>
+
+The confidence interval for relative difference is calculated as follows.
+$$ (1- \alpha)\% \space \text{CI}[RD] = \widehat{RD}*e^{\pm z_{\alpha / 2}*\sqrt{v}}  \space  \space \space \space  \space \space \text{where:}  \space \space v = \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}}  $$
+
+<br>
+
+So the 95% confidence interval for the relative difference between the insured and uninsured for the personal doctor measure for 2011 is:
+
+$$ \sqrt{v} = \sqrt{ \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}} } \approx \sqrt{ \frac{.136}{351558.2 } + \frac{.591}{36834.62} } \approx 4.053*10^{-3} \\ 95\% \space \text{CI}[RD_{pd}] = 2.11*e^{\pm 1.96*0.004053} \approx (2.09, 2.13)$$
+<br>
+<br>
+
+## References
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
