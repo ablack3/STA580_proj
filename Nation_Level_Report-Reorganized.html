@@ -204,7 +204,7 @@ $(document).ready(function () {
 </div>
 <hr />
 <p>From the barplot above it appears evident that the proportion of individuals that have a personal doctor is higher for those with insurance than those without. The presence of this trend appears consistent from 2011 through 2015.<br />
-<br> <br></p>
+<br></p>
 <p>Now we will look at doctor utilization for insured and uninsured individuals. Figure 2 shows information on the proportion of individuals that have had a general checkup within one year and those that have not had a checkup within the last five years. Figure 3 shows the same thing but it restricts the pool to only individuals that reported having a personal doctor.</p>
 <hr />
 <div class="figure">
@@ -217,11 +217,11 @@ $(document).ready(function () {
 <p class="caption"><strong>Figure 3:</strong> The plots above depict the same measures as those shown in figure 2, but only for individuals who reported having a personal doctor.</p>
 </div>
 <hr />
-<p>From figures 2 and 3 above we can see that the proportion of insured individuals that have had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is a little less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor. <br> <br></p>
+<p>From figures 2 and 3 above we can see that the proportion of insured individuals that have had a general health checkup within the past year is greater than that for uninsured individuals. This is true across all years both when looking at all respondents and when restricting our investigation to only those that reported having a personal doctor. However, the difference between insured and uninsured is less in magnitude when we only look at respondents that have a personal doctor. Additionally, the proportion of uninsured individuals that have not seen a doctor in the last five years is higher than that for insured individuals. This is also true across all years and when we only look at respondents that reported having a personal doctor. <br></p>
 <p>Next we will perform Peason chi-squared tests and rank correlation tests to determine if there is any association between insurance status and our measures of primary care access and the direction of that association. <br> <br></p>
 <div id="tests-of-general-association-and-rank-correlation" class="section level4">
 <h4>Tests of General Association and Rank Correlation</h4>
-<p>The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall’s tau-b and Goodman and Kruskal’s gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly <em>statistically</em> significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of <em>only discordant or concordant</em> pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the <a href="#example-nation-level-analysis-calculations">appendix</a>.</p>
+<p>The Pearson chi-squared tests confirmed the presence of an association between insurance status and having a personal doctor for every year from 2011 through 2015. Furthermore, the Kendall’s tau-b and Goodman and Kruskal’s gamma statistics confirm that the direction of this association is towards insured individuals being more likely to have a personal doctor. Table 1 lists the Pearson test-statistics and their associated p-valus for each year and for all years combined. The large test statistics and correspondingly low p-values indicate the association is highly statistically significant. Table 2 reports the calculated rank correlation statistics, their confidence intervals, their test-statistics and their p-values for all years combined. For information on the rank correlation statistics for specific years see table A1 in the <a href="#pearson-and-concordance-statistics-tables">appendix</a>. Again, the large test-statistics and low p-values indicate that the positive correlation between insurance status and having a personal doctor is highly <em>statistically</em> significant. The difference in the magnitude of the tau-b and gamma statistics is due to the way they are calculated. The gamma statistic looks at the difference between the number of concordant and discordant pairs relative to the total number of <em>only discordant or concordant</em> pairs. So ties do not effect the gamma statistic. On the other hand, the tau-b statistic does take ties into account. For more information on the performance of the Pearson chi-squared test and the calculation of the rank correlation statistics please see the <a href="#example-nation-level-analysis-calculations">appendix</a>.</p>
 <hr />
 <table style="width:88%;">
 <caption><strong>Table 1</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and having a personal doctor. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and whether or not an individual has a personal doctor is highly statistically significant.</caption>
@@ -280,19 +280,17 @@ $(document).ready(function () {
 </table>
 <p><br></p>
 <table style="width:100%;">
-<caption><strong>Table 2</strong>: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.</caption>
+<caption><strong>Table 2</strong>: The rank correlation statistics for the relationship between insurance status and having a personal doctor for all years combined. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.</caption>
 <colgroup>
+<col width="14%"></col>
+<col width="21%"></col>
 <col width="12%"></col>
-<col width="9%"></col>
-<col width="19%"></col>
-<col width="11%"></col>
-<col width="19%"></col>
-<col width="18%"></col>
-<col width="9%"></col>
+<col width="21%"></col>
+<col width="20%"></col>
+<col width="10%"></col>
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
 <th align="center"> </th>
 <th align="center">95% Lower Bound</th>
 <th align="center">Estimate</th>
@@ -303,98 +301,7 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.42219</td>
-<td align="center">0.42404</td>
-<td align="center">0.42589</td>
-<td align="center">298.92892</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.79771</td>
-<td align="center">0.80343</td>
-<td align="center">0.80914</td>
-<td align="center">275.70095</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2012</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.42115</td>
-<td align="center">0.42306</td>
-<td align="center">0.42497</td>
-<td align="center">289.0915</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.79589</td>
-<td align="center">0.8018</td>
-<td align="center">0.8077</td>
-<td align="center">266.1061</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.40084</td>
-<td align="center">0.40272</td>
-<td align="center">0.4046</td>
-<td align="center">279.65897</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.78043</td>
-<td align="center">0.78652</td>
-<td align="center">0.79261</td>
-<td align="center">253.04405</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2014</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.37136</td>
-<td align="center">0.3733</td>
-<td align="center">0.37523</td>
-<td align="center">251.8112</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.7756</td>
-<td align="center">0.7825</td>
-<td align="center">0.7894</td>
-<td align="center">222.30481</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.35421</td>
-<td align="center">0.3562</td>
-<td align="center">0.35819</td>
-<td align="center">234.15651</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.77406</td>
-<td align="center">0.78161</td>
-<td align="center">0.78917</td>
-<td align="center">202.73369</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>All</strong></td>
-<td align="center">Tau-b</td>
+<td align="center"><strong>Tau-b</strong></td>
 <td align="center">0.39516</td>
 <td align="center">0.39601</td>
 <td align="center">0.39687</td>
@@ -402,8 +309,7 @@ $(document).ready(function () {
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Years</strong></td>
-<td align="center">Gamma</td>
+<td align="center"><strong>Gamma</strong></td>
 <td align="center">0.78665</td>
 <td align="center">0.7895</td>
 <td align="center">0.79236</td>
@@ -415,15 +321,15 @@ $(document).ready(function () {
 <p><br></p>
 <hr />
 <p><br></p>
-<p>The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Tables 3 and 4 report the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, respectively. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year, both when looking at all individuals and only individuals with a personal doctor. Tables 5 and 6 report the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor, respectively. Again, the large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant, the relatively small magnitudes of the tau-b estimates indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker in the group of individuals who reported having a personal doctor.</p>
+<p>The association between insurance status and doctor utilization was investigated both for all individuals and for individuals who reported having a personal doctor. For both of these groups the Pearson chi-squared test confirmed the presence of an association between insurance status and doctor utilization, while the rank correlation statistics confirmed that the direction of this association was towards individuals with insurance having a general health checkup more recently. Table 3 reports the Pearson chi-squared statistics for all individuals and for only individuals who reported having a personal doctor, for all years combined. For information on individual years see tables A2 and A3 in the <a href="#pearson-and-concordance-statistics-tables">appendix</a>. The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant, both when looking at all individuals and only individuals with a personal doctor. Table 4 reports the rank correlation statistics for all individuals and for only individuals who reported having a personal doctor when looking at all years combined. For information the concorance statistics for specific years see tables A4 and A5 in the <a href="#pearson-and-concordance-statistics-tables">appendix</a>. The large test-statistics and p-values of approximately zero indicate that the positive correlation between insurance status and doctor utilization is highly statistically significant. However, the relatively small magnitudes of the tau-b estimates indicate that the strength of this correlation is not necessarily very strong. Moreover, the strength of the correlation is weaker when considering only individuals who reported having a personal doctor.</p>
 <hr />
-<table style="width:88%;">
-<caption><strong>Table 3</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.</caption>
+<table>
+<caption><strong>Table 3</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant.</caption>
 <colgroup>
-<col width="22%"></col>
-<col width="23%"></col>
-<col width="29%"></col>
-<col width="12%"></col>
+<col width="40%"></col>
+<col width="21%"></col>
+<col width="26%"></col>
+<col width="11%"></col>
 </colgroup>
 <thead>
 <tr class="header">
@@ -435,110 +341,31 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">49161</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">46768</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">46920</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">36317</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
+<td align="center"><strong>All Individuals</strong></td>
 <td align="center">29349</td>
 <td align="center">4</td>
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">208477</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:88%;">
-<caption><strong>Table 4</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="23%"></col>
-<col width="29%"></col>
-<col width="12%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Test Statistic</th>
-<th align="center">Degrees of Freedom</th>
-<th align="center">P-Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">12568</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">12135</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">11731</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">8918</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
+<td align="center"><strong>Individuals with a Personal Doctor</strong></td>
 <td align="center">6115</td>
 <td align="center">4</td>
 <td align="center">0</td>
 </tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">51461</td>
-<td align="center">4</td>
-<td align="center">0</td>
-</tr>
 </tbody>
 </table>
+<hr />
 <p><br></p>
-<table style="width:100%;">
-<caption><strong>Table 5</strong>: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.</caption>
+<table>
+<caption><strong>Table 4</strong>: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.</caption>
 <colgroup>
-<col width="12%"></col>
-<col width="9%"></col>
-<col width="19%"></col>
-<col width="11%"></col>
-<col width="19%"></col>
-<col width="18%"></col>
-<col width="9%"></col>
+<col width="24%"></col>
+<col width="8%"></col>
+<col width="16%"></col>
+<col width="10%"></col>
+<col width="16%"></col>
+<col width="15%"></col>
+<col width="8%"></col>
 </colgroup>
 <thead>
 <tr class="header">
@@ -553,97 +380,7 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.28825</td>
-<td align="center">0.2901</td>
-<td align="center">0.29195</td>
-<td align="center">215.78958</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.56567</td>
-<td align="center">0.57291</td>
-<td align="center">0.58015</td>
-<td align="center">155.10423</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2012</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.29033</td>
-<td align="center">0.29225</td>
-<td align="center">0.29416</td>
-<td align="center">210.38504</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.56962</td>
-<td align="center">0.57709</td>
-<td align="center">0.58455</td>
-<td align="center">151.45463</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.28574</td>
-<td align="center">0.28762</td>
-<td align="center">0.2895</td>
-<td align="center">210.07944</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.57214</td>
-<td align="center">0.57967</td>
-<td align="center">0.58721</td>
-<td align="center">150.75636</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2014</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.25465</td>
-<td align="center">0.25659</td>
-<td align="center">0.25852</td>
-<td align="center">181.67087</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.55586</td>
-<td align="center">0.56452</td>
-<td align="center">0.57317</td>
-<td align="center">127.84276</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.23259</td>
-<td align="center">0.23458</td>
-<td align="center">0.23657</td>
-<td align="center">161.80014</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.53851</td>
-<td align="center">0.54806</td>
-<td align="center">0.55761</td>
-<td align="center">112.43889</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>All</strong></td>
+<td align="center"><strong>All Individuals</strong></td>
 <td align="center">Tau-b</td>
 <td align="center">0.27349</td>
 <td align="center">0.27434</td>
@@ -652,7 +389,7 @@ $(document).ready(function () {
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Years</strong></td>
+<td align="center"></td>
 <td align="center">Gamma</td>
 <td align="center">0.56693</td>
 <td align="center">0.5705</td>
@@ -660,124 +397,8 @@ $(document).ready(function () {
 <td align="center">313.61055</td>
 <td align="center">0</td>
 </tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:100%;">
-<caption><strong>Table 6</strong>: The rank correlation statistics for the relationship between insurance status and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.</caption>
-<colgroup>
-<col width="12%"></col>
-<col width="9%"></col>
-<col width="19%"></col>
-<col width="11%"></col>
-<col width="19%"></col>
-<col width="18%"></col>
-<col width="9%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center"> </th>
-<th align="center">95% Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">95% Upper Bound</th>
-<th align="center">Test Statistic</th>
-<th align="center">P-value</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.15673</td>
-<td align="center">0.15874</td>
-<td align="center">0.16074</td>
-<td align="center">107.4396</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.44249</td>
-<td align="center">0.45501</td>
-<td align="center">0.46752</td>
-<td align="center">71.26172</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2012</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.1556</td>
-<td align="center">0.15767</td>
-<td align="center">0.15974</td>
-<td align="center">103.11534</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.44197</td>
-<td align="center">0.45501</td>
-<td align="center">0.46805</td>
-<td align="center">68.40036</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.15475</td>
-<td align="center">0.1568</td>
-<td align="center">0.15886</td>
-<td align="center">103.04601</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.4555</td>
-<td align="center">0.46899</td>
-<td align="center">0.48248</td>
-<td align="center">68.15365</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2014</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.1318</td>
-<td align="center">0.13391</td>
-<td align="center">0.13601</td>
-<td align="center">85.87215</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.4378</td>
-<td align="center">0.4536</td>
-<td align="center">0.4694</td>
-<td align="center">56.27613</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">Tau-b</td>
-<td align="center">0.11116</td>
-<td align="center">0.1133</td>
-<td align="center">0.11545</td>
-<td align="center">71.16148</td>
-<td align="center">0</td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center">Gamma</td>
-<td align="center">0.39925</td>
-<td align="center">0.41688</td>
-<td align="center">0.43451</td>
-<td align="center">46.33606</td>
-<td align="center">0</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>All</strong></td>
+<td align="center"><strong>Those with a Personal Doctor</strong></td>
 <td align="center">Tau-b</td>
 <td align="center">0.14521</td>
 <td align="center">0.14613</td>
@@ -786,7 +407,7 @@ $(document).ready(function () {
 <td align="center">0</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Years</strong></td>
+<td align="center"></td>
 <td align="center">Gamma</td>
 <td align="center">0.44824</td>
 <td align="center">0.45459</td>
@@ -796,21 +417,20 @@ $(document).ready(function () {
 </tr>
 </tbody>
 </table>
-<p><br></p>
 <hr />
-<p>For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed a general association with insurance status. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the <a href="#example-nation-level-analysis-calculations">appendix</a>.</p>
+<p><br> For all three measures of primary care accessibility and utilization, the Pearson chi-squared tests confirmed a general association with insurance status. Furthermore, the rank correlation tests showed that the direction of this association was towards individuals with insurance having better primary care access. For more information on how these tests were performed see the example in the <a href="#example-nation-level-analysis-calculations">appendix</a>.</p>
 <p>Now that we have confirmed the presence and direction of association between insurance status and our measures of primary care access, we will examine in more detail the degree of this relationship.</p>
-<p><br></p>
+<p><br> <br></p>
 </div>
 <div id="absolute-and-relative-difference-of-proportions" class="section level4">
 <h4>Absolute and Relative Difference of Proportions</h4>
 <p>For each of our three measures, we will examine how the proportion of individuals at different levels of our measures differ between the insured and uninsured groups. The absolute difference is the algebraic difference between two proportions (one proportion minus the other). Thus, an absolute difference of 0.3 implies that one proportion is larger than the other by 0.3. The relative difference is the ratio of one proportion to another, so a relative difference of 1.3 means that one proportion is 1.3 times larger than the other. For more details on how the absolute and relative differences in proportions were calculated please see the example in the <a href="#absolute-difference-of-proportions">appendix</a>.</p>
-<p>In the previous sections we showed that there is a positive correlation between having insurance and having a personal doctor. Table 7 lists the estimated absolute difference in proportion between individuals in the insured group that have a doctor and individuals in the uninsured group that have a doctor. Figure 4 graphically shows these absolute differences in proportions. The line segments on top of each bar show the 95% confidence intervals for the difference in proportions. Note that the y-axis only covers a small range, so although the differences in proportions may decrease from 2011 to 2015, the magnitude of this decrease is small. Additionally, the all the confidence intervals overlap except for those for 2011 and 2015, and even these two confidence intervals are very close.</p>
+<p>In the previous sections we showed that there is a positive correlation between having insurance and having a personal doctor. Table 5 lists the estimated absolute and relative differences in proportion between individuals in the insured group that have a doctor and individuals in the uninsured group that have a doctor. Table 5 only contains the statistics calculated for all years combined. For specific years see tables A6 and A7 in the <a href="#proportional-differences">appendix</a>. Figures 4 and 5 graphically shows the absolute and relative differences in proportions for each year. The line segments on top of each bar show the 95% confidence intervals. Note that the y-axis in figure 4 only covers a small range, so although the differences in proportions may decrease from 2011 to 2015, the magnitude of this decrease is small. Additionally, all the confidence intervals overlap except for those for 2011 and 2015, and even these two confidence intervals are very close. Moreover, in figure 5 when we look at the relative differences for each year we do see the same decreasing trend. Overall, individuals with insurance were estimated to be around 2.13 times more likely to have a personal doctor than individuals without health insurance.</p>
 <hr />
-<table style="width:68%;">
-<caption><strong>Table 7:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the absolute differences appear to decrease from 2011 to 2015, the confidence intervals for consecutive years overlap.</caption>
+<table style="width:89%;">
+<caption><strong>Table 5:</strong> 95% Confidence intervals for the absolute and relative differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor.</caption>
 <colgroup>
-<col width="15%"></col>
+<col width="36%"></col>
 <col width="19%"></col>
 <col width="15%"></col>
 <col width="18%"></col>
@@ -825,101 +445,13 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">0.45151</td>
-<td align="center">0.45489</td>
-<td align="center">0.45827</td>
+<td align="center"><strong>Absolute Difference</strong></td>
+<td align="center">0.4483744</td>
+<td align="center">0.4500297</td>
+<td align="center">0.451685</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">0.44907</td>
-<td align="center">0.45255</td>
-<td align="center">0.45603</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">0.44806</td>
-<td align="center">0.45156</td>
-<td align="center">0.45507</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">0.44735</td>
-<td align="center">0.45133</td>
-<td align="center">0.4553</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">0.44191</td>
-<td align="center">0.44627</td>
-<td align="center">0.45062</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All</strong></td>
-<td align="center">0.44837</td>
-<td align="center">0.45003</td>
-<td align="center">0.45169</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<div class="figure">
-<img src="data:image/png;base64,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" alt="Figure 4: Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. The error bars at the top show the 95% confidence intervals for each year. Note that the range of the y-axis is small so that although the estimated absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. Moreover, it is clear from the error bars that the confidence intervals for each consecutive year overlap with each other. Even the confidence intervals for 2011 and 2015 are close." />
-<p class="caption"><strong>Figure 4:</strong> Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. The error bars at the top show the 95% confidence intervals for each year. Note that the range of the y-axis is small so that although the estimated absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. Moreover, it is clear from the error bars that the confidence intervals for each consecutive year overlap with each other. Even the confidence intervals for 2011 and 2015 are close.</p>
-</div>
-<hr />
-<p><br></p>
-<p>Table 8 and figure 5 show the confidence intervals for the relative difference in the proportion of insured individuals with a doctor to uninsured individuals with a doctor. When looking at all the years combined, insured individuals were 2.13 times more likely to have a personal doctor than uninsured individuals. For every year from 2011 through 2015, individuals with insurance were estimated to be between 2.08 and 2.19 times more likely to have a personal doctor than individuals without insurance.</p>
-<hr />
-<table style="width:75%;">
-<caption><strong>Table 8:</strong> 95% Confidence intervals for the relative differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">2.095321</td>
-<td align="center">2.112033</td>
-<td align="center">2.128879</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">2.082682</td>
-<td align="center">2.099672</td>
-<td align="center">2.116801</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">2.133082</td>
-<td align="center">2.151443</td>
-<td align="center">2.169962</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">2.146895</td>
-<td align="center">2.168344</td>
-<td align="center">2.190007</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">2.102963</td>
-<td align="center">2.125541</td>
-<td align="center">2.148361</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
+<td align="center"><strong>Relative Difference</strong></td>
 <td align="center">2.116665</td>
 <td align="center">2.125125</td>
 <td align="center">2.13362</td>
@@ -928,23 +460,29 @@ $(document).ready(function () {
 </table>
 <p><br></p>
 <div class="figure">
+<img src="data:image/png;base64,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" alt="Figure 4: Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. The error bars at the top show the 95% confidence intervals for each year. Note that the range of the y-axis is small so that although the estimated absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. Moreover, it is clear from the error bars that the confidence intervals for each consecutive year overlap with each other. Even the confidence intervals for 2011 and 2015 are close." />
+<p class="caption"><strong>Figure 4:</strong> Graphical depiction of the absolute difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. The error bars at the top show the 95% confidence intervals for each year. Note that the range of the y-axis is small so that although the estimated absolute differences decrease from 2011 through 2015, the magnitude of the reduction is small. Moreover, it is clear from the error bars that the confidence intervals for each consecutive year overlap with each other. Even the confidence intervals for 2011 and 2015 are close.</p>
+</div>
+<div class="figure">
 <img src="data:image/png;base64,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" alt="Figure 5: 95% confidence intervals for relative difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. As with absolute difference, the relative differences fluctuate from year to year but the magnitude of this variation is small (note the range of the y-axis)." />
 <p class="caption"><strong>Figure 5:</strong> 95% confidence intervals for relative difference in proportion of insured individuals with a doctor compared to uninsured individuals with doctor. As with absolute difference, the relative differences fluctuate from year to year but the magnitude of this variation is small (note the range of the y-axis).</p>
 </div>
 <hr />
 <p><br></p>
-<p>Table 9 shows the absolute differences between the proportion of insured individuals that have had a checkup within a year and the proportion of uninsured individuals that have. Table 10 shows the same but when considering only indiviuals that reported having a personal doctor. For all the years combined the absolute difference in proportion was about 0.34 when considering all individuals and about 0.22 when considering only individuals that had a personal doctor. Also note, that the absolute differences for both groups tend to decrease slightly from 2011 to 2015. Figure 6 shows the absolute differences for each year in barchart form where the decreases from 2011 to 2015 are easier to see.</p>
+<p>Table 6 shows the absolute and relative differences between the proportion of insured individuals that have had a checkup within a year and the proportion of uninsured individuals that have. For information on specific years see tables A8 - A11 in the <a href="#proportional-differences">appendix</a>. The absolute difference in proportions is slightly less when considering only individuals with a doctor, about .22 compared to .34 when looking at all individuals. Similarily, the relative difference was less when considering only individuals that had a personal doctor compared to all individuals. When considering only individuals that had a doctor, insured indiviudals were 1.37 times as likely to have has a checkup within a year. On the other hand, when considering all individuals, those with insurance were 1.84 times as likely to have had a checkup within a year compared to those without insurance. Figures 6 and 7 show the absolute and relative differences for each year. From these figures it appears that the difference between insured and uninsured individuals decreased from 2011 to 105. This reduction, however, was small.</p>
 <hr />
-<table style="width:75%;">
-<caption><strong>Table 9:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.</caption>
+<table>
+<caption><strong>Table 6:</strong> 95% Confidence intervals for the absolute and relative differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have.</caption>
 <colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
+<col width="36%"></col>
+<col width="12%"></col>
 <col width="18%"></col>
+<col width="14%"></col>
+<col width="17%"></col>
 </colgroup>
 <thead>
 <tr class="header">
+<th align="center"> </th>
 <th align="center"> </th>
 <th align="center">Lower Bound</th>
 <th align="center">Estimate</th>
@@ -953,96 +491,32 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">0.34289</td>
-<td align="center">0.34635</td>
-<td align="center">0.34981</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">0.34252</td>
-<td align="center">0.34608</td>
-<td align="center">0.34965</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">0.34171</td>
-<td align="center">0.3453</td>
-<td align="center">0.3489</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">0.32521</td>
-<td align="center">0.3293</td>
-<td align="center">0.33339</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">0.31361</td>
-<td align="center">0.31807</td>
-<td align="center">0.32254</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
+<td align="center"><strong>All</strong></td>
+<td align="center">Absolute</td>
 <td align="center">0.33719</td>
 <td align="center">0.33889</td>
 <td align="center">0.34058</td>
 </tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:75%;">
-<caption><strong>Table 10:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured and uninsured individuals who have had a checkup within a year, only considering individuals who reported having personal doctor. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">0.22187</td>
-<td align="center">0.22689</td>
-<td align="center">0.23191</td>
-</tr>
 <tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">0.21393</td>
-<td align="center">0.21905</td>
-<td align="center">0.22418</td>
+<td align="center"></td>
+<td align="center">Relative</td>
+<td align="center">1.83326</td>
+<td align="center">1.84062</td>
+<td align="center">1.84801</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">0.21907</td>
-<td align="center">0.22435</td>
-<td align="center">0.22963</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">0.20193</td>
-<td align="center">0.20797</td>
-<td align="center">0.214</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">0.18163</td>
-<td align="center">0.18814</td>
-<td align="center">0.19465</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
+<td align="center"><strong>Personal Doctor Only</strong></td>
+<td align="center">Absolute</td>
 <td align="center">0.21387</td>
 <td align="center">0.21635</td>
 <td align="center">0.21882</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Relative</td>
+<td align="center">1.36716</td>
+<td align="center">1.37292</td>
+<td align="center">1.37871</td>
 </tr>
 </tbody>
 </table>
@@ -1051,140 +525,26 @@ $(document).ready(function () {
 <img src="data:image/png;base64,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" alt="Figure 6: The absolute difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the 95% confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note the range of the y-axis is the same for both plots. It is clear that the difference between insured and uninsured is smaller when considering only individuals that have a personal doctor." />
 <p class="caption"><strong>Figure 6:</strong> The absolute difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the 95% confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note the range of the y-axis is the same for both plots. It is clear that the difference between insured and uninsured is smaller when considering only individuals that have a personal doctor.</p>
 </div>
-<hr />
-<p><br></p>
-<p>Table 11 gives the confidence intervals for the relative differences between the proportion of insured individuals that have had a checkup within a year and the proportion of uninsured individuals that have. Table 12 also reports the confidence intervals for these relative differences, but when considering only individuals that reported having a personal doctor. When looking at all the years combined, individuals with insurance are about 1.84 times as likely to have had a checkup within a year. When we only consider individuals who reported having a doctor this figure drops to about 1.37 times as likely. Also note that, as with absolute difference, the relative difference decreases from 2011 to 2015. Figure 7 shows this visually. When looking at all individuals, the relative difference drops from about 1.90 in 2011 to around 1.75 in 2015. When considering only individuals that have a doctor the drop is similar in magnitude, from 1.41 in 2011 to 1.31 in 2015.</p>
-<hr />
-<table style="width:75%;">
-<caption><strong>Table 11:</strong> 95% Confidence intervals for the relative differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">1.8806</td>
-<td align="center">1.8965</td>
-<td align="center">1.9126</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">1.8585</td>
-<td align="center">1.8744</td>
-<td align="center">1.8904</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">1.8417</td>
-<td align="center">1.8574</td>
-<td align="center">1.8732</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">1.7719</td>
-<td align="center">1.7886</td>
-<td align="center">1.8055</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">1.7357</td>
-<td align="center">1.7535</td>
-<td align="center">1.7715</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">1.8333</td>
-<td align="center">1.8406</td>
-<td align="center">1.848</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:75%;">
-<caption><strong>Table 12:</strong> 95% Confidence intervals for the relative differences between the proportion of individuals who have had a checkup within a year, only considering individuals who reported having a personal doctor. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">1.3957</td>
-<td align="center">1.4082</td>
-<td align="center">1.4207</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">1.3706</td>
-<td align="center">1.3828</td>
-<td align="center">1.395</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">1.3754</td>
-<td align="center">1.3878</td>
-<td align="center">1.4004</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">1.335</td>
-<td align="center">1.3484</td>
-<td align="center">1.362</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">1.2939</td>
-<td align="center">1.3076</td>
-<td align="center">1.3215</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">1.3672</td>
-<td align="center">1.3729</td>
-<td align="center">1.3787</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
 <div class="figure">
 <img src="data:image/png;base64,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" alt="Figure 7: The relative difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note that the range of the y-axis is the same for both plots, it is clear that the relative difference between insured and uninsured is smaller when considering only individuals that have a personal doctor. For both groups the relative difference decreases from 2011 to 2015." />
 <p class="caption"><strong>Figure 7:</strong> The relative difference between the proportion of insured individuals who have had a general health checkup within one year and uninsured individuals who have. The lines at the top of each bar represent the confidence intervals. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. Note that the range of the y-axis is the same for both plots, it is clear that the relative difference between insured and uninsured is smaller when considering only individuals that have a personal doctor. For both groups the relative difference decreases from 2011 to 2015.</p>
 </div>
 <hr />
 <p><br></p>
-<p>Table 13 shows the absolute difference between the proportion of uninsured individuals that have not had a checkup within five years and the proportion of insured individuals that have not. Note that in this case the difference is between uninsured and insured, not the other way around. So, the absolute diference of 0.182 for all the years combined means the proportion of insured individuals that have not had a checkup within five years is 0.182 <em>less</em> than the proportion of uninsured individuals that have not. Table 14 reports the same information but when considering only individuals who have a personal doctor. The absolute difference in proportions is much less when considering only individuals with personal doctors than when considering all individuals.</p>
+<p>Table 7 shows the absolute and relative difference between the proportion of uninsured individuals that have not had a checkup within five years and the proportion of insured individuals that have not. Note that in this case the difference is between uninsured and insured, not the other way around. So, the absolute diference of 0.182 for all individuals means the proportion of insured individuals that have not had a checkup within five years is 0.182 <em>less</em> than the proportion of uninsured individuals that have not. For information on specific years see tables A12 - A15 in the <a href="#proportional-differences">appendix</a>. The absolute difference in proportions is much less when considering only individuals with personal doctors than when considering all individuals. However, when we look at the relative difference we see that for both groups (all individuals and only those that have a personal doctor), uninsured individuals are much more likely to not have had a checkup within 5 years than uninsured individuals. Figures 7 and 8 show that the absolute and relative differences in proportion did not change much between years.</p>
 <hr />
-<table style="width:75%;">
-<caption><strong>Table 13:</strong> 95% Confidence intervals for the absolute differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.</caption>
+<table>
+<caption><strong>Table 7:</strong> 95% Confidence intervals for the absolute and relative differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.</caption>
 <colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
+<col width="36%"></col>
+<col width="12%"></col>
 <col width="18%"></col>
+<col width="14%"></col>
+<col width="17%"></col>
 </colgroup>
 <thead>
 <tr class="header">
+<th align="center"> </th>
 <th align="center"> </th>
 <th align="center">Lower Bound</th>
 <th align="center">Estimate</th>
@@ -1193,96 +553,32 @@ $(document).ready(function () {
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">0.18391</td>
-<td align="center">0.18685</td>
-<td align="center">0.1898</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">0.17839</td>
-<td align="center">0.18138</td>
-<td align="center">0.18437</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">0.17978</td>
-<td align="center">0.18279</td>
-<td align="center">0.1858</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">0.17494</td>
-<td align="center">0.17836</td>
-<td align="center">0.18178</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">0.17474</td>
-<td align="center">0.17849</td>
-<td align="center">0.18225</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
+<td align="center"><strong>All</strong></td>
+<td align="center">Absolute</td>
 <td align="center">0.18068</td>
 <td align="center">0.1821</td>
 <td align="center">0.18353</td>
 </tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:75%;">
-<caption><strong>Table 14:</strong> 95% Confidence intervals for the absolute differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">0.083867</td>
-<td align="center">0.087207</td>
-<td align="center">0.090547</td>
-</tr>
 <tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">0.084034</td>
-<td align="center">0.087436</td>
-<td align="center">0.090838</td>
+<td align="center"></td>
+<td align="center">Relative</td>
+<td align="center">3.8444</td>
+<td align="center">3.8745</td>
+<td align="center">3.9048</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">0.082483</td>
-<td align="center">0.085923</td>
-<td align="center">0.089363</td>
+<td align="center"><strong>Personal Doctor Only</strong></td>
+<td align="center">Absolute</td>
+<td align="center">0.08484</td>
+<td align="center">0.08647</td>
+<td align="center">0.0881</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">0.083365</td>
-<td align="center">0.087346</td>
-<td align="center">0.091327</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">0.076596</td>
-<td align="center">0.080836</td>
-<td align="center">0.085077</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">0.084842</td>
-<td align="center">0.086473</td>
-<td align="center">0.088103</td>
+<td align="center"></td>
+<td align="center">Relative</td>
+<td align="center">3.239</td>
+<td align="center">3.2875</td>
+<td align="center">3.3367</td>
 </tr>
 </tbody>
 </table>
@@ -1291,122 +587,6 @@ $(document).ready(function () {
 <img src="data:image/png;base64,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" alt="Figure 8: The absolute difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the proportion for uninsured indviduals minus the proportion for insured individuals, so a positive difference indicates the the proportion of uninsured that have not had a checkup within five years is greater than the proportion of insured indviduals that have not. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. The difference between uninsured and insured is much smaller when only considering individuals that have a personal doctor.." />
 <p class="caption"><strong>Figure 8:</strong> The absolute difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the proportion for uninsured indviduals minus the proportion for insured individuals, so a positive difference indicates the the proportion of uninsured that have not had a checkup within five years is greater than the proportion of insured indviduals that have not. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor. The difference between uninsured and insured is much smaller when only considering individuals that have a personal doctor..</p>
 </div>
-<hr />
-<p><br></p>
-<p>Table 15 reports the relative difference between the proportion of uninsured individuals that have not had a checkup within five years and the proportion of insured individuals that have not. Again, as with the absolute difference reported in tables 13 and 14, we are comparing uninsured to insured, not the other way around. So a relative difference greater than one indicates that uninsured individuals are <em>more</em> likely to not have had a checkup within five years than insured individuals are. For instance, the relative difference of about 3.87 for all years combined indicates that when looking at all years, uninsured individuals are 3.87 times as likely to not have had a checkup within five years than insured individuals. Table 16 reports the same information but only considering individuals that have a personal doctor. Note that the relative difference for all years is slightly lower in the group that had a personal doctor (about 3.29 compared to 3.87). Figure 9 gives a visual of the relative differences observed for each year and for all years combined. Note that in contrast to the all the relationships previously looked at (where the difference between insured and uninsured appeared to decrease slightly from 2011 to 2015), the relative difference here does not appear to steadily decrease from 2011 to 2015 but rather to peak around 2013 and 2014.</p>
-<hr />
-<table style="width:75%;">
-<caption><strong>Table 15:</strong> 95% Confidence intervals for the relative differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">3.7078</td>
-<td align="center">3.7675</td>
-<td align="center">3.8282</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">3.7553</td>
-<td align="center">3.8192</td>
-<td align="center">3.8841</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">3.9498</td>
-<td align="center">4.018</td>
-<td align="center">4.0874</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">3.8264</td>
-<td align="center">3.8979</td>
-<td align="center">3.9707</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">3.7548</td>
-<td align="center">3.8289</td>
-<td align="center">3.9044</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">3.8444</td>
-<td align="center">3.8745</td>
-<td align="center">3.9048</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<table style="width:75%;">
-<caption><strong>Table 16:</strong> 95% Confidence intervals for the relative differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.</caption>
-<colgroup>
-<col width="22%"></col>
-<col width="19%"></col>
-<col width="15%"></col>
-<col width="18%"></col>
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Lower Bound</th>
-<th align="center">Estimate</th>
-<th align="center">Upper Bound</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>2011</strong></td>
-<td align="center">2.9539</td>
-<td align="center">3.0419</td>
-<td align="center">3.1324</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2012</strong></td>
-<td align="center">3.07</td>
-<td align="center">3.1654</td>
-<td align="center">3.2638</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2013</strong></td>
-<td align="center">3.3084</td>
-<td align="center">3.4179</td>
-<td align="center">3.5311</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>2014</strong></td>
-<td align="center">3.367</td>
-<td align="center">3.4919</td>
-<td align="center">3.6215</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>2015</strong></td>
-<td align="center">3.1359</td>
-<td align="center">3.2637</td>
-<td align="center">3.3966</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>All Years</strong></td>
-<td align="center">3.239</td>
-<td align="center">3.2875</td>
-<td align="center">3.3367</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
 <div class="figure">
 <img src="data:image/png;base64,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" alt="Figure 9: The relative difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the ratio of the proportion of uninsured indviduals that have not had a checkup within five years to the proportion of insured individuals that have not. Thus, a relative difference greater than 1 indicates that uninsured individuals are more likely to not have had a checkup within five years. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor." />
 <p class="caption"><strong>Figure 9:</strong> The relative difference between the proportion of uninsured individuals who have not had a general health checkup within five years and insured individuals who have not. The lines at the top of each bar represent the confidence intervals. The difference is measured as the ratio of the proportion of uninsured indviduals that have not had a checkup within five years to the proportion of insured individuals that have not. Thus, a relative difference greater than 1 indicates that uninsured individuals are more likely to not have had a checkup within five years. Note the plot on the left is when considering all respondents to the BRFSS survey, while the plot on the right is when considering only respondents who reported having a personal doctor.</p>
@@ -1717,6 +897,1105 @@ pandoc.table(roc.pd11)</code></pre>
 <p><br></p>
 <p>So the 95% confidence interval for the relative difference between the insured and uninsured for the personal doctor measure for 2011 is:</p>
 <p><span class="math display">\[ \sqrt{v} = \sqrt{ \frac{1-\widehat{p_1}}{n_{11}} + \frac{1-\widehat{p_2}}{n_{12}} } \approx \sqrt{ \frac{.136}{351558.2 } + \frac{.591}{36834.62} } \approx 4.053*10^{-3} \\ 95\% \space \text{CI}[RD_{pd}] = 2.11*e^{\pm 1.96*0.004053} \approx (2.09, 2.13)\]</span> <br> <br></p>
+</div>
+</div>
+<div id="additional-tables-and-figures" class="section level3">
+<h3>Additional Tables and Figures</h3>
+<div id="pearson-and-concordance-statistics-tables" class="section level4">
+<h4>Pearson and Concordance Statistics Tables</h4>
+<table style="width:100%;">
+<caption><strong>Table A1</strong>: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.</caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.42219</td>
+<td align="center">0.42404</td>
+<td align="center">0.42589</td>
+<td align="center">298.92892</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.79771</td>
+<td align="center">0.80343</td>
+<td align="center">0.80914</td>
+<td align="center">275.70095</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.42115</td>
+<td align="center">0.42306</td>
+<td align="center">0.42497</td>
+<td align="center">289.0915</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.79589</td>
+<td align="center">0.8018</td>
+<td align="center">0.8077</td>
+<td align="center">266.1061</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.40084</td>
+<td align="center">0.40272</td>
+<td align="center">0.4046</td>
+<td align="center">279.65897</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.78043</td>
+<td align="center">0.78652</td>
+<td align="center">0.79261</td>
+<td align="center">253.04405</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.37136</td>
+<td align="center">0.3733</td>
+<td align="center">0.37523</td>
+<td align="center">251.8112</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.7756</td>
+<td align="center">0.7825</td>
+<td align="center">0.7894</td>
+<td align="center">222.30481</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.35421</td>
+<td align="center">0.3562</td>
+<td align="center">0.35819</td>
+<td align="center">234.15651</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.77406</td>
+<td align="center">0.78161</td>
+<td align="center">0.78917</td>
+<td align="center">202.73369</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.39516</td>
+<td align="center">0.39601</td>
+<td align="center">0.39687</td>
+<td align="center">604.91504</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.78665</td>
+<td align="center">0.7895</td>
+<td align="center">0.79236</td>
+<td align="center">541.99784</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:88%;">
+<caption><strong>Table A2</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="29%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Test Statistic</th>
+<th align="center">Degrees of Freedom</th>
+<th align="center">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">49161</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">46768</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">46920</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">36317</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">29349</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">208477</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:88%;">
+<caption><strong>Table A3</strong>: The Pearson chi-squared test-statistics for the general association between insurance status and doctor utilization when only considering individuals who reported having a personal doctor. Although the test-statistics are smaller than those observed when looking at all individuals, they are still very large and the p-values are still virtually zero, indicating that the association between insurance status and doctor utilization is still highly statistically significant.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="23%"></col>
+<col width="29%"></col>
+<col width="12%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Test Statistic</th>
+<th align="center">Degrees of Freedom</th>
+<th align="center">P-Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">12568</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">12135</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">11731</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">8918</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">6115</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">51461</td>
+<td align="center">4</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:100%;">
+<caption><strong>Table A4</strong>: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.</caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.28825</td>
+<td align="center">0.2901</td>
+<td align="center">0.29195</td>
+<td align="center">215.78958</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.56567</td>
+<td align="center">0.57291</td>
+<td align="center">0.58015</td>
+<td align="center">155.10423</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.29033</td>
+<td align="center">0.29225</td>
+<td align="center">0.29416</td>
+<td align="center">210.38504</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.56962</td>
+<td align="center">0.57709</td>
+<td align="center">0.58455</td>
+<td align="center">151.45463</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.28574</td>
+<td align="center">0.28762</td>
+<td align="center">0.2895</td>
+<td align="center">210.07944</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.57214</td>
+<td align="center">0.57967</td>
+<td align="center">0.58721</td>
+<td align="center">150.75636</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.25465</td>
+<td align="center">0.25659</td>
+<td align="center">0.25852</td>
+<td align="center">181.67087</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.55586</td>
+<td align="center">0.56452</td>
+<td align="center">0.57317</td>
+<td align="center">127.84276</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.23259</td>
+<td align="center">0.23458</td>
+<td align="center">0.23657</td>
+<td align="center">161.80014</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.53851</td>
+<td align="center">0.54806</td>
+<td align="center">0.55761</td>
+<td align="center">112.43889</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.27349</td>
+<td align="center">0.27434</td>
+<td align="center">0.2752</td>
+<td align="center">440.79052</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.56693</td>
+<td align="center">0.5705</td>
+<td align="center">0.57407</td>
+<td align="center">313.61055</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:100%;">
+<caption><strong>Table A5</strong>: The rank correlation statistics for the relationship between insurance status and doctor utilization when considering only individuals who reported having a personal doctor. Again, the positive tau-b and gamma statistics (and the p-values of approximately zero) indicate that having insurance is correlated with having a checkup more recently. However, the magnitude of the tau-b statistics are less than those observed when considering all individuals. Thus the strength of the correlation appears weaker when cosidering only individuals who reported having a personal doctor.</caption>
+<colgroup>
+<col width="12%"></col>
+<col width="9%"></col>
+<col width="19%"></col>
+<col width="11%"></col>
+<col width="19%"></col>
+<col width="18%"></col>
+<col width="9%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center"> </th>
+<th align="center">95% Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">95% Upper Bound</th>
+<th align="center">Test Statistic</th>
+<th align="center">P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.15673</td>
+<td align="center">0.15874</td>
+<td align="center">0.16074</td>
+<td align="center">107.4396</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.44249</td>
+<td align="center">0.45501</td>
+<td align="center">0.46752</td>
+<td align="center">71.26172</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2012</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.1556</td>
+<td align="center">0.15767</td>
+<td align="center">0.15974</td>
+<td align="center">103.11534</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.44197</td>
+<td align="center">0.45501</td>
+<td align="center">0.46805</td>
+<td align="center">68.40036</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.15475</td>
+<td align="center">0.1568</td>
+<td align="center">0.15886</td>
+<td align="center">103.04601</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.4555</td>
+<td align="center">0.46899</td>
+<td align="center">0.48248</td>
+<td align="center">68.15365</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2014</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.1318</td>
+<td align="center">0.13391</td>
+<td align="center">0.13601</td>
+<td align="center">85.87215</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.4378</td>
+<td align="center">0.4536</td>
+<td align="center">0.4694</td>
+<td align="center">56.27613</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.11116</td>
+<td align="center">0.1133</td>
+<td align="center">0.11545</td>
+<td align="center">71.16148</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center">Gamma</td>
+<td align="center">0.39925</td>
+<td align="center">0.41688</td>
+<td align="center">0.43451</td>
+<td align="center">46.33606</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>All</strong></td>
+<td align="center">Tau-b</td>
+<td align="center">0.14521</td>
+<td align="center">0.14613</td>
+<td align="center">0.14706</td>
+<td align="center">212.92215</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>Years</strong></td>
+<td align="center">Gamma</td>
+<td align="center">0.44824</td>
+<td align="center">0.45459</td>
+<td align="center">0.46093</td>
+<td align="center">140.33422</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br> <br></p>
+</div>
+<div id="proportional-differences" class="section level4">
+<h4>Proportional Differences</h4>
+<table style="width:68%;">
+<caption><strong>Table A6:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the absolute differences appear to decrease from 2011 to 2015, the confidence intervals for consecutive years overlap.</caption>
+<colgroup>
+<col width="15%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">0.45151</td>
+<td align="center">0.45489</td>
+<td align="center">0.45827</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">0.44907</td>
+<td align="center">0.45255</td>
+<td align="center">0.45603</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">0.44806</td>
+<td align="center">0.45156</td>
+<td align="center">0.45507</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">0.44735</td>
+<td align="center">0.45133</td>
+<td align="center">0.4553</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">0.44191</td>
+<td align="center">0.44627</td>
+<td align="center">0.45062</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All</strong></td>
+<td align="center">0.44837</td>
+<td align="center">0.45003</td>
+<td align="center">0.45169</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A7:</strong> 95% Confidence intervals for the relative differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">2.095321</td>
+<td align="center">2.112033</td>
+<td align="center">2.128879</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">2.082682</td>
+<td align="center">2.099672</td>
+<td align="center">2.116801</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">2.133082</td>
+<td align="center">2.151443</td>
+<td align="center">2.169962</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">2.146895</td>
+<td align="center">2.168344</td>
+<td align="center">2.190007</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">2.102963</td>
+<td align="center">2.125541</td>
+<td align="center">2.148361</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">2.116665</td>
+<td align="center">2.125125</td>
+<td align="center">2.13362</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A8:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">0.34289</td>
+<td align="center">0.34635</td>
+<td align="center">0.34981</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">0.34252</td>
+<td align="center">0.34608</td>
+<td align="center">0.34965</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">0.34171</td>
+<td align="center">0.3453</td>
+<td align="center">0.3489</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">0.32521</td>
+<td align="center">0.3293</td>
+<td align="center">0.33339</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">0.31361</td>
+<td align="center">0.31807</td>
+<td align="center">0.32254</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">0.33719</td>
+<td align="center">0.33889</td>
+<td align="center">0.34058</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A9:</strong> 95% Confidence intervals for the absolute differences between the proportion of insured and uninsured individuals who have had a checkup within a year, only considering individuals who reported having personal doctor. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">0.22187</td>
+<td align="center">0.22689</td>
+<td align="center">0.23191</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">0.21393</td>
+<td align="center">0.21905</td>
+<td align="center">0.22418</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">0.21907</td>
+<td align="center">0.22435</td>
+<td align="center">0.22963</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">0.20193</td>
+<td align="center">0.20797</td>
+<td align="center">0.214</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">0.18163</td>
+<td align="center">0.18814</td>
+<td align="center">0.19465</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">0.21387</td>
+<td align="center">0.21635</td>
+<td align="center">0.21882</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A10:</strong> 95% Confidence intervals for the relative differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">1.8806</td>
+<td align="center">1.8965</td>
+<td align="center">1.9126</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">1.8585</td>
+<td align="center">1.8744</td>
+<td align="center">1.8904</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">1.8417</td>
+<td align="center">1.8574</td>
+<td align="center">1.8732</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">1.7719</td>
+<td align="center">1.7886</td>
+<td align="center">1.8055</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">1.7357</td>
+<td align="center">1.7535</td>
+<td align="center">1.7715</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">1.8333</td>
+<td align="center">1.8406</td>
+<td align="center">1.848</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A11:</strong> 95% Confidence intervals for the relative differences between the proportion of individuals who have had a checkup within a year, only considering individuals who reported having a personal doctor. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">1.3957</td>
+<td align="center">1.4082</td>
+<td align="center">1.4207</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">1.3706</td>
+<td align="center">1.3828</td>
+<td align="center">1.395</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">1.3754</td>
+<td align="center">1.3878</td>
+<td align="center">1.4004</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">1.335</td>
+<td align="center">1.3484</td>
+<td align="center">1.362</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">1.2939</td>
+<td align="center">1.3076</td>
+<td align="center">1.3215</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">1.3672</td>
+<td align="center">1.3729</td>
+<td align="center">1.3787</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A12:</strong> 95% Confidence intervals for the absolute differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">0.18391</td>
+<td align="center">0.18685</td>
+<td align="center">0.1898</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">0.17839</td>
+<td align="center">0.18138</td>
+<td align="center">0.18437</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">0.17978</td>
+<td align="center">0.18279</td>
+<td align="center">0.1858</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">0.17494</td>
+<td align="center">0.17836</td>
+<td align="center">0.18178</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">0.17474</td>
+<td align="center">0.17849</td>
+<td align="center">0.18225</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">0.18068</td>
+<td align="center">0.1821</td>
+<td align="center">0.18353</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A13:</strong> 95% Confidence intervals for the absolute differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">0.083867</td>
+<td align="center">0.087207</td>
+<td align="center">0.090547</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">0.084034</td>
+<td align="center">0.087436</td>
+<td align="center">0.090838</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">0.082483</td>
+<td align="center">0.085923</td>
+<td align="center">0.089363</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">0.083365</td>
+<td align="center">0.087346</td>
+<td align="center">0.091327</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">0.076596</td>
+<td align="center">0.080836</td>
+<td align="center">0.085077</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">0.084842</td>
+<td align="center">0.086473</td>
+<td align="center">0.088103</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table A14:</strong> 95% Confidence intervals for the relative differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">3.7078</td>
+<td align="center">3.7675</td>
+<td align="center">3.8282</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">3.7553</td>
+<td align="center">3.8192</td>
+<td align="center">3.8841</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">3.9498</td>
+<td align="center">4.018</td>
+<td align="center">4.0874</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">3.8264</td>
+<td align="center">3.8979</td>
+<td align="center">3.9707</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">3.7548</td>
+<td align="center">3.8289</td>
+<td align="center">3.9044</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">3.8444</td>
+<td align="center">3.8745</td>
+<td align="center">3.9048</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<table style="width:75%;">
+<caption><strong>Table 16:</strong> 95% Confidence intervals for the relative differences between the proportion of individuals who have not had a checkup within five years, only considering individuals who reported having a personal doctor.</caption>
+<colgroup>
+<col width="22%"></col>
+<col width="19%"></col>
+<col width="15%"></col>
+<col width="18%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Lower Bound</th>
+<th align="center">Estimate</th>
+<th align="center">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>2011</strong></td>
+<td align="center">2.9539</td>
+<td align="center">3.0419</td>
+<td align="center">3.1324</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2012</strong></td>
+<td align="center">3.07</td>
+<td align="center">3.1654</td>
+<td align="center">3.2638</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2013</strong></td>
+<td align="center">3.3084</td>
+<td align="center">3.4179</td>
+<td align="center">3.5311</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>2014</strong></td>
+<td align="center">3.367</td>
+<td align="center">3.4919</td>
+<td align="center">3.6215</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>2015</strong></td>
+<td align="center">3.1359</td>
+<td align="center">3.2637</td>
+<td align="center">3.3966</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>All Years</strong></td>
+<td align="center">3.239</td>
+<td align="center">3.2875</td>
+<td align="center">3.3367</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><br></p>
+<p><br> <br></p>
 </div>
 </div>
 </div>
