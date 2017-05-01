@@ -108,7 +108,7 @@ library(dplyr)
 
 persdoc.table <- function(x){
       
-      tab <- x %>% group_by(hlthpln1, persdoc2) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tab <- x %>% group_by(hlthpln1, persdoc2) %>% dplyr::summarize(wt_sum = sum(x.llcpwt)) %>% 
       tidyr::spread(key = persdoc2, value = wt_sum) %>% ungroup()
       
       wf <- length(x$hlthpln1)/sum(x$x.llcpwt)
@@ -127,7 +127,7 @@ ST_PD_ay <- persdoc.table(allyears)
 
 checkup.table <- function(x){
       
-      tab <- x %>% group_by(hlthpln1, checkup1) %>% summarize(wt_sum = sum(x.llcpwt)) %>% 
+      tab <- x %>% group_by(hlthpln1, checkup1) %>% dplyr::summarize(wt_sum = sum(x.llcpwt)) %>% 
       tidyr::spread(key = checkup1, value = wt_sum) %>% ungroup()
       
       wf <- length(x$hlthpln1)/sum(x$x.llcpwt)

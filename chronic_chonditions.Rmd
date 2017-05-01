@@ -1,7 +1,18 @@
+---
+title: "Personal doc ~ chronic conditions"
+author: "Adam Black"
+date: "5/1/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 library(purrr)
 library(dplyr)
 library(tidyr)
+```
 
+```{r clean_data, echo=T, cache=TRUE}
 
 analysis_vars <- c("hlthpln1", "persdoc2", "x.incomg", "x.llcpwt", "x.ageg5yr", 
                    "diabete3", "asthma3", "x.drdxar1","chccopd1", "addepev2","cvdstrk3",
@@ -29,8 +40,8 @@ analysis_vars %in% names(BRFSS2011full) %>% rbind(analysis_vars) #chccopd -> chc
 BRFSS2011full$chccopd1 <- BRFSS2011full$chccopd
 
 # example code for loctating variables
-vars <- map(BRFSS2015full, ~attr(., "label")) %>% unlist()
-grep("DOCTOR", vars, value = T)
+# vars <- map(BRFSS2015full, ~attr(., "label")) %>% unlist()
+# grep("DOCTOR", vars, value = T)
 
 
 clean_brfss <- function(raw_brfss){
@@ -78,18 +89,23 @@ bfs_all <- union(bfs15, bfs14, bfs13, bfs12, bfs11)
 bfs_head <- head(bfs_all, 100)
 
 ######### QC and data checking  ##########
-xtabs(~ age4 + no_doctor, data = bfs_all) %>% as.matrix() %>% gmodels::CrossTable()
+# xtabs(~ age4 + no_doctor, data = bfs_all) %>% as.matrix() %>% gmodels::CrossTable()
+# 
+# bfs_all %>% 
+#       filter(age4 == "40-54", income == "<25K") %>% 
+#       xtabs(~ no_doctor + arthritis, data = .) %>% 
+#       as.matrix() %>% 
+#       epitools::epitab(method = "riskratio", rev="columns")
+# 
+# # skin cancer example
+# v <- (1-0.0316188)/927 + (1- 0.0169369)/164
+# c(lower = 1.866859*exp(-1.96*sqrt(v)), upper = 1.866859*exp(1.96*sqrt(v))) 
 
-bfs_all %>% 
-      filter(age4 == "40-54", income == "<25K") %>% 
-      xtabs(~ no_doctor + arthritis, data = .) %>% 
-      as.matrix() %>% 
-      epitools::epitab(method = "riskratio", rev="columns")
+```
 
-# skin cancer example
-v <- (1-0.0316188)/927 + (1- 0.0169369)/164
-c(lower = 1.866859*exp(-1.96*sqrt(v)), upper = 1.866859*exp(1.96*sqrt(v))) 
+## relative risk tables
 
+```{r calc_rr, echo=T, cache = T}
 ########## 
 calc_rel_risk <- function(df){
       df2 <- df %>% 
@@ -129,16 +145,38 @@ rr12 <- calc_rel_risk(bfs12)
 rr11 <- calc_rel_risk(bfs11)
 rr_all <- calc_rel_risk(bfs_all)
 
+
+rr_table_all <- rr_all %>% 
+      select(condition, age4, income, rel_risk, rr_lower, rr_upper) %>% 
+      arrange(condition, age4, income) %>% 
+      rename(age=age4) %>% 
+      dmap_if(~class(.x)=="numeric", ~round(., 3))
+
+
+#unweighted rel risk estimates
+rr_table_all_uw <- rr_all %>% 
+      select(condition, age4, income, rel_risk_uw, rr_uw_lower, rr_uw_upper) %>% 
+      arrange(condition, age4, income) %>% 
+      rename(age=age4) %>% 
+      dmap_if(~class(.x)=="numeric", ~round(., 3))
+
+print(rr_table_all_uw)
+```
+
+## relative risk plots
+
+```{r, echo = T}
 plot_rel_risk <- function(df, year){
       library(ggplot2)
       pal <- RColorBrewer::brewer.pal(4,"YlOrRd")[2:4] %>% rev()
-      plot <-  ggplot(df, aes(x=age4, y=rel_risk, color = income, group = income)) +
+      rrplot <-  ggplot(df, aes(x=age4, y=rel_risk, color = income, group = income)) +
             geom_point() + geom_line() + facet_wrap(~condition, nrow = 3, ncol = 4) +
-            ggtitle("Relative Risk of being diagnosed with chronic condition") +
+            ggtitle(paste(year, "- Relative Risk of being diagnosed with chronic condition")) +
             geom_abline(slope = 0, intercept = 1, color = "black") +
             scale_color_manual(values = pal) 
             # scale_y_continuous(limits = c(.5, max(rr13$rel_risk)+.1), breaks = 1:6 ) 
-      ggsave(paste0("./plots/facet_plot", year,".png"), plot=plot, width = 10, height = 8)
+      # ggsave(paste0("./plots/facet_plot", year,".png"), plot=rrplot, width = 10, height = 8)\
+      rrplot
 }
 
 plot_rel_risk(rr15, "2015")
@@ -147,24 +185,12 @@ plot_rel_risk(rr13, "2013")
 plot_rel_risk(rr13, "2012")
 plot_rel_risk(rr12, "2011")
 plot_rel_risk(rr_all, "_all")
+```
 
 
-rr_table_all <- rr_all %>% 
-      select(condition, age4, income, rel_risk, rr_lower, rr_upper) %>% 
-      arrange(condition, age4, income) %>% 
-      rename(age=age4) %>% 
-      dmap_if(~class(.x)=="numeric", ~round(., 3))
+## logistic regression models
 
-rr_table_all_uw <- rr_all %>% 
-      select(condition, age4, income, rel_risk_uw, rr_uw_lower, rr_uw_upper) %>% 
-      arrange(condition, age4, income) %>% 
-      rename(age=age4) %>% 
-      dmap_if(~class(.x)=="numeric", ~round(., 3))
-
-
-unique(rr_table_all_uw$condition)
-
-
+```{r}
 # logistic regression models
 regression_table <- function(df){
       df$has_doctor = 1-df$no_doctor
@@ -180,7 +206,7 @@ regression_table <- function(df){
       # dfh <- head(df)
       
       m1 <- glm(chronic_illness ~ age + income + has_doctor, data = df, family = "binomial")
-      # summary(m1)
+      summary(m1) %>% print()
       # coef(m1) %>% exp() %>% .["has_doctor"]
       # stderr(coef(m1))
       
@@ -197,11 +223,17 @@ regression_table <- function(df){
 lr_tables <- map(list(bfs11=bfs11,bfs12=bfs12,bfs13=bfs13,bfs14=bfs14,bfs15=bfs15,bfs_all=bfs_all), regression_table)      
 lr_tables      
 
-?do.call
- doc_or <- do.call(rbind, lr_tables) %>% filter(parameter == "has_doctor")
+doc_or <- do.call(rbind, lr_tables) %>% filter(parameter == "has_doctor")
 doc_or$year <- factor(1:6, levels = 1:6, labels = c(2011:2015,"All years"))
 doc_or
 
+
+```
+
+
+## Odds ratio plot - all years - adjusting for age, income
+
+```{r }
 ggplot(doc_or, aes(y = odds_ratio, x = year, ymin = or_lower, ymax = or_upper)) + 
       geom_point() + geom_errorbar(width = .1) +
       geom_abline(slope = 0, intercept = 1) +
@@ -209,5 +241,58 @@ ggplot(doc_or, aes(y = odds_ratio, x = year, ymin = or_lower, ymax = or_upper)) 
       ggtitle("Odds of being diagnosed with a chronic illness") +
       xlab("") + ylab("Odds ratio (has doctor vs. no doctor)") +
       theme_minimal()
-ggsave("./plots/Odds ratio plot.png")
-            ?scale_y_continuous
+```
+
+
+## logistic regression models including poor health
+
+```{r}
+# logistic regression models
+regression_table <- function(df){
+      df$has_doctor = 1-df$no_doctor
+      
+      df <- df %>% 
+            mutate(has_doctor = 1-no_doctor, 
+                   chronic_illness = pmax(arthritis, asthma, copd, depression, diabetes, heart_attack,
+                                         kidney_disease, other_cancer, skin_cancer, stroke)) %>% 
+            rename(age = age4)
+      
+      # table(df$chronic_illness)
+      # xtabs(swt ~ chronic_illness, data = df) %>% as.matrix() %>%  gmodels::CrossTable()
+      # dfh <- head(df)
+      
+      m1 <- glm(chronic_illness ~ poor_health + age + income + has_doctor, data = df, family = "binomial")
+      summary(m1) %>% print()
+      # coef(m1) %>% exp() %>% .["has_doctor"]
+      # stderr(coef(m1))
+      
+      sm <- coef(summary(m1)) %>% as.data.frame() 
+      lr_table <- tibble(parameter = rownames(sm),
+             odds_ratio = exp(sm$Estimate),
+             or_lower = exp(sm$Estimate - 1.96*sm$`Std. Error`),
+             or_upper = exp(sm$Estimate + 1.96*sm$`Std. Error`)) %>% 
+            filter(parameter != "(Intercept)") %>% 
+            dmap_if(~class(.x) == "numeric", ~round(.,3))
+      lr_table
+}
+
+lr_tables <- map(list(bfs11=bfs11,bfs12=bfs12,bfs13=bfs13,bfs14=bfs14,bfs15=bfs15,bfs_all=bfs_all), regression_table)      
+lr_tables      
+
+doc_or <- do.call(rbind, lr_tables) %>% filter(parameter == "has_doctor")
+doc_or$year <- factor(1:6, levels = 1:6, labels = c(2011:2015,"All years"))
+doc_or
+```
+
+## Odds ratio plot - all years - adjusting for age, income, general health
+
+```{r , echo=FALSE}
+ggplot(doc_or, aes(y = odds_ratio, x = year, ymin = or_lower, ymax = or_upper)) + 
+      geom_point() + geom_errorbar(width = .1) +
+      geom_abline(slope = 0, intercept = 1) +
+      scale_y_continuous(limits = c(1, 3)) + 
+      ggtitle("Odds of being diagnosed with a chronic illness") +
+      xlab("") + ylab("Odds ratio (has doctor vs. no doctor)") +
+      theme_minimal()
+```
+

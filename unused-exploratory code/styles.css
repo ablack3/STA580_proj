@@ -1,0 +1,8 @@
+th,td{
+     padding:4px 10px 4px 10px;
+   }
+		
+img, .figure {
+    float: right;
+    margin: 0 0 10px 10px;
+}
