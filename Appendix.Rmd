@@ -731,9 +731,17 @@ pdif.DU1ay <- rbind(round(DU[6,1:3], digits = 5),
 
 # Appendix
 
-## Additional Tables and Figures
+
+<br>
+
+## Additional Tables
+
+
+<br>
 
 ### Pearson and Concordance Statistics Tables
+
+***
 
 ```{r echo=FALSE,results='asis'}
 library(pander)
@@ -747,6 +755,7 @@ pandoc.table(pcs.PD, caption = "**Table A1**: The Pearson chi-squared test-stati
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(rcts.PD, caption = "**Table A2**: The rank correlation statistics for the relationship between insurance status and having a personal doctor. The positive tau-b and gamma statistics indicate that having insurance is correlated with having a personal doctor. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is moderate.", split.table = Inf)
@@ -754,12 +763,14 @@ pandoc.table(rcts.PD, caption = "**Table A2**: The rank correlation statistics f
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(pcs.CU, caption = "**Table A3**: The Pearson chi-squared test-statistics for the general association between insurance status and time since last general health checkup (doctor utilization). The large test-statistics and p-values of virtually zero indicate that the association between insurance status and doctor utilization is highly statistically significant for every year.", split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -770,12 +781,14 @@ pandoc.table(pcs.CUgPD, caption = "**Table A4**: The Pearson chi-squared test-st
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(rcts.CU, caption = "**Table A5**: The rank correlation statistics for the relationship between insurance status and time since last general health checkup (doctor utilizationt). The positive tau-b and gamma statistics indicate that having insurance is correlated with having a checkup more recently. While the large test-statistics and p-values of virtually zero indicate that this correlation is highly statistically significant, the magnitude of the tau-b statistic indicates that the strength of the correlation is not very strong.", split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -785,14 +798,18 @@ pandoc.table(rcts.CUgPD, caption = "**Table A6**: The rank correlation statistic
 ***
 <br>
 <br>
+<br>
 
 ### Proportional Differences
+
+***
 
 ```{r, echo=F, results="asis"}
 pandoc.table(Persdoc.pdif.95CI, caption = "**Table A7:** 95% Confidence intervals for the absolute differences between the proportion of insured individuals with a doctor and uninsured individuals with a doctor. Note that although the absolute differences appear to decrease from 2011 to 2015, the confidence intervals for consecutive years overlap.", digits = 5, split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -801,12 +818,14 @@ pandoc.table(PD.RR, caption = "**Table A8:** 95% Confidence intervals for the re
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(DU[,1:3], caption = "**Table A9:** 95% Confidence intervals for the absolute differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the differences are very close from year to year they do generally decrease from 2011 to 2015.", digits = 5, split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -815,12 +834,14 @@ pandoc.table(DUgPD[,1:3], caption = "**Table A10:** 95% Confidence intervals for
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(DU[,4:6], caption = "**Table A11:** 95% Confidence intervals for the relative differences between the proportion of insured individuals who have had a checkup within a year and the proportion of uninsured individuals that have. Note that although the relative differences are close from year to year they do generally decrease from 2011 to 2015.", digits = 5, split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -829,12 +850,14 @@ pandoc.table(DUgPD[,4:6], caption = "**Table A12:** 95% Confidence intervals for
 
 ***
 <br>
+<br>
 
 ```{r, echo=F, results="asis"}
 pandoc.table(DU[,7:9], caption = "**Table A13:** 95% Confidence intervals for the absolute differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.", digits = 5, split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -843,11 +866,14 @@ pandoc.table(DUgPD[,7:9], caption = "**Table A14:** 95% Confidence intervals for
 
 ***
 <br>
+<br>
+
 ```{r, echo=F, results="asis"}
 pandoc.table(DU[,10:12], caption = "**Table A15:** 95% Confidence intervals for the relative differences between the proportion of uninsured individuals who have not had a checkup within five years and the proportion of insured individuals that have not.", digits = 5, split.table = Inf)
 ```
 
 ***
+<br>
 <br>
 
 ```{r, echo=F, results="asis"}
@@ -856,8 +882,13 @@ pandoc.table(DUgPD[,10:12], caption = "**Table A16:** 95% Confidence intervals f
 
 ***
 <br>
+<br>
+<br>
 
 ### Data-Set Cleaning
+
+***
+
 ```{r, echo=F, results="asis"}
 
 removed.vals <- data.frame(read.csv("removedvaluestable.csv"))
@@ -869,9 +900,15 @@ pandoc.table(removed.vals,
 
 ```
 
+***
+<br>
+<br>
+<br>
+
 ## Technical Section: Example Equations and Code
 
   In order to demonstrate how the nation level analysis was done, example calculations for the personal doctor measure are shown below.
+  
   
   <br>
   
@@ -906,6 +943,7 @@ pcs$expected
 ```
 
   We used this function to perform the Pearson chi-squared tests for all of our measures of interest.
+  
   
   <br>
 
@@ -1063,6 +1101,8 @@ pandoc.table(roc.pd11)
 
 ```
 
+
+<br>
 <br>
 
 ### Absolute Difference of Proportions
@@ -1092,6 +1132,8 @@ $$ \widehat{SE}[AD_{pd}] \approx \sqrt{ \frac{0.864(1 - 0.864)}{351558.2+ 55356.
   In order to calculate the 95% confidence intervals we add and subtract $1.96*\widehat{SE}$ to the estimated absolute difference:
   $$ 95\% \space \text{CI}[AD_{pd}] = \widehat{AD}_{pd} \pm 1.96*\widehat{SE}[AD_{pd}] \approx 0.455 \pm 1.96(1.72*10^{-3}) \approx 0.455 \pm 0.00337 \approx (0.451, 0.458) $$
 
+
+<br>
 <br>
 
 ### Relative Difference of Proportions
